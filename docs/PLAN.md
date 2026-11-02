@@ -3,26 +3,48 @@
 Deadline: Wednesday Nov 4, 9 PM ET (Thursday Nov 5, 6:30 AM IST). We submit Wednesday night IST.
 Decided: Aniket's scenes are shot on Day 2 (he leaves Nov 4). Swapnil and the WhatsApp reminder template are dropped; the demo uses Aniket, who sends "hi" to +1 555-208-7343 before recording so plain-text reminders reach him. Plan out loud stays as is (names picked by hand). Feature freeze from Nov 2: no new features (forward-in, mediator, speaks-up, accuracy page dropped); only bug fixes, speed and polish.
 
-## Day 2: Tuesday, Nov 3 (going public + every scene that needs Aniket; he leaves on Nov 4)
-1. **Rotate the Meta key** — You: new key at dev.meta.ai into `.env.local` (5 min). Me: check it works.
-2. **Prepare the code** — Me: git repo, secrets scan, kickoff screenshots out of `public/`, Render config.
-3. **Render deploy** — Me: step-by-step instructions, then check the live site end to end. You: private GitHub repo + Render account, card (~$7 + disk), paste the secrets (~20 min).
-4. **Shot list for Aniket's scenes** — Me: write the exact shots, in order, with what each of you taps and says. You: read it with Aniket.
-5. **Real-phone run-through with Aniket** — You + Aniket: every feature on the live address (~45 min). Me: fix anything found on the spot.
-6. **Shoot Aniket's scenes** (live address, both phones) — You + Aniket: record on your phones:
-   - Live new group: QR scan to join, a short Hinglish chat, Sorted reading it (0:10–0:35).
-   - Payment screenshot from Aniket's side, checked, you confirm; the same screenshot caught as a duplicate (1:05–1:20).
-   - Aniket sends "hi" to +1 555-208-7343, then the reminder: your tap and Send, **his phone buzzing**, him opening the link and landing in Flat 7B as himself (1:20–1:40).
-   - Spare takes of each, and any shot with both of you in it.
-   Me: check every clip the same day; re-shoot list if anything is missing.
-7. **README and docs** — Me: write everything, including eval scores and traces. You: read it once.
+Live: https://sorted-n8v4.onrender.com · Repo: github.com/kruthikvarshan/sorted · Meta budget on Render: hard $62, soft $45, $8 per group per day ($75.04 credit left on Nov 2). Test and record only on the live site.
 
-## Day 3: Wednesday, Nov 4 (pitch, video, submit)
-8. **Demo script** (main ~3 min, every feature; walkthrough ~6–8 min) — Me: write it shot by shot. You: approve; tell me the video length limit.
-9. **Slides and submission text** — Me: write. You: approve.
-10. **Recording the rest** — Me: screen parts. You: your solo phone moments and the voice-over.
-11. **Video edit** — Me: full edit of both videos, drafts for feedback. You: `brew install ffmpeg`, feedback.
-12. **Final check and submit** — Me: check everything on the live address. You: press Submit.
+## Done
+Key rotated · code prepared and scanned · renamed to Sorted everywhere · repo public · Render live (Starter + disk) · Flat 7B and Aniket added · shot list written (docs/SHOTLIST.md).
+
+## Part 1: live site ready (tonight, ~15 min)
+1. Check the redeploy: still logged in, Flat 7B + Aniket there, QR link uses the live address. — You
+2. Delete the old Meta key at dev.meta.ai. — You
+3. Aniket signs up on the live site with his own number. — Aniket
+4. Aniket sends "hi" to +1 555-208-7343 (within 24 h of the reminder shot). — Aniket
+5. Health and spend check. — Me
+
+## Part 2: run-through with Aniket (~45 min, not recorded, group "Test run")
+6. New group + QR join. 7. Hinglish chat, Read now, topics, money, tap-to-quote. 8. Real small UPI payment, screenshot, "mil gaya", duplicate. 9. @Sorted question. 10. Remind from Flat 7B, phone buzzes, joins as himself. 11. Chat screenshot import. 12. Trip planner. 13. Voice note, Plan out loud, Wrapped. 14. My Sorted. — You + Aniket
+15. Fix anything found, on the spot. — Me
+
+## Part 3: record Aniket's scenes (~60 min, docs/SHOTLIST.md)
+16. Phone setup. 17. Scene A: new group, QR, Hinglish read. 18. Scene B: payment screenshot + duplicate. 19. Scene C: reminder, phone buzzes, joins as himself. 20. Spare takes. 21. AirDrop clips to ~/Desktop/sorted-clips/day2/. — You + Aniket
+22. Check every clip; re-shoot list before Aniket leaves. — Me
+
+## Part 4: docs (Tuesday)
+23. README: live link, what it does, how it's built, Meta tools, eval scores. — Me
+24. Read it once. — You
+
+## Part 5: Wednesday Nov 4 (script, record, edit, submit)
+25. Send me the video length limit and submission form fields. — You
+26. Demo script shot by shot (3 min main + 6–8 min walkthrough) with voice-over text. — Me
+27. Approve the script. — You
+28. Slides + submission text. — Me
+29. Approve. — You
+30. `brew install ffmpeg`. — You
+31. Screen recordings on the live site (Flat 7B money, @Sorted, import, trip planner, My Sorted, how it's built). — Me + you
+32. Solo phone moments: voice note, Plan out loud, Wrapped. — You
+33. Voice-over. — You
+34. Video edit, both videos, captions, number blurring; draft 1. — Me
+35. Feedback, draft 2. — You, then me
+36. Upload videos. — You
+37. Final check on the live site + spend report. — Me
+38. Fill in the form, links, press Submit (Wednesday night IST). — You
+
+## Part 6: after submitting
+39. Keep Render running until judging ends. 40. After results: delete the Render service, remove the WhatsApp token. — You
 
 ## Main video (~3 min)
 | Time | Scene |
