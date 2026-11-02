@@ -409,7 +409,7 @@ export function snapshot(roomId: string, token: string) {
     start: Math.max(0, entry.messages.length - 400),
     /** People's messages Sorted has read (its own messages are never read). */
     ...readingStatus(entry),
-    panel: buildPanel(workspaceOf(entry.room), entry.room.state, entry.messages, { defaultCurrency: '₹' }),
+    panel: panelOf(entry),
     analysing: entry.room.analysing,
     label: entry.room.analysing ? entry.label : undefined,
     lastAnalysis: entry.room.lastAnalysis,
@@ -541,6 +541,22 @@ function schedule(entry: Entry, now = false) {
   }, wait);
 }
 
+/**
+ * A group's Money tab, worked out once per change: phones ask for the group list every few seconds, and rebuilding every
+ * group's panel each time kept the server too busy to answer. The state is always replaced, never edited, so a new state,
+ * a new message or a member change makes a fresh one.
+ */
+const panels = new WeakMap<object, { key: string; panel: Panel }>();
+function panelOf(entry: Entry): Panel {
+  const state = entry.room.state;
+  const key = `${entry.messages.length}|${entry.room.members.map(m => m.name).join(',')}`;
+  const hit = panels.get(state);
+  if (hit && hit.key === key) return hit.panel;
+  const panel = buildPanel(workspaceOf(entry.room), state, entry.messages, { defaultCurrency: '₹' });
+  panels.set(state, { key, panel });
+  return panel;
+}
+
 /** Only people's messages are read: Sorted's own messages are never evidence. */
 const peopleMessages = (entry: Entry) => entry.messages.filter(m => m.speakerId !== 'groupos');
 
@@ -618,7 +634,7 @@ export async function analyse(entry: Entry): Promise<void> {
 }
 
 export function pushPanel(entry: Entry) {
-  emit(entry, { type: 'panel', panel: buildPanel(workspaceOf(entry.room), entry.room.state, entry.messages, { defaultCurrency: '₹' }), analysing: entry.room.analysing, lastAnalysis: entry.room.lastAnalysis, read: entry.room.state.readThrough ?? 0, people: peopleMessages(entry).length });
+  emit(entry, { type: 'panel', panel: panelOf(entry), analysing: entry.room.analysing, lastAnalysis: entry.room.lastAnalysis, read: entry.room.state.readThrough ?? 0, people: peopleMessages(entry).length });
 }
 
 const topicTitle = (state: GroupIntelligenceState, topicId?: string) => state.topics?.find(t => t.id === topicId)?.title;
@@ -669,7 +685,7 @@ async function answerMention(entry: Entry, question: string, asker?: string) {
     if (!entry.room.analysing) await analyse(entry);
     for (let i = 0; i < 120 && entry.room.analysing; i++) await new Promise(r => setTimeout(r, 1000));
   }
-  const moneyLines = answerMoneyLines(buildPanel(workspaceOf(entry.room), entry.room.state, entry.messages, { defaultCurrency: '₹' }));
+  const moneyLines = answerMoneyLines(panelOf(entry));
   emit(entry, { type: 'analysing', on: true, label: 'Sorted is typing…' });
   const res = await answerGroupQuestion(key(), question.replace(new RegExp(MENTION.source, 'gi'), '').trim(), {
     groupTitle: entry.room.title,
@@ -861,7 +877,7 @@ function ensureArt(entry: Entry, prompt: string): Promise<string | undefined> {
 }
 
 const wrappedStats = (entry: Entry) =>
-  computeWrapped(entry.room.title, entry.messages, entry.room.state, buildPanel(workspaceOf(entry.room), entry.room.state, entry.messages, { defaultCurrency: '₹' }));
+  computeWrapped(entry.room.title, entry.messages, entry.room.state, panelOf(entry));
 
 /** The recap, counted in code, with the background painted by Muse Image. */
 export async function wrapped(roomId: string, token: string) {
@@ -883,7 +899,7 @@ export function myGroups(seats: { roomId: string; token: string }[]) {
       const ws = workspaceOf(entry.room);
       const raw = computeGroupLedger(ws, s.decisions, s.commitments, { conflicts: s.conflicts, evidenceMap: s.evidenceMap, messages: entry.messages, defaultCurrency: '₹', topics: s.topics });
       // The same amounts as the group's Money tab.
-      const ledger = withPanelPairs(raw, buildPanel(ws, entry.room.state, entry.messages, { defaultCurrency: '₹' }));
+      const ledger = withPanelPairs(raw, panelOf(entry));
       const mine = computeMySettlement([ledger], member.name);
       const last = entry.messages[entry.messages.length - 1];
       return {
@@ -964,7 +980,7 @@ export function privateDetails(seats: { roomId: string; token: string }[]) {
     const group = entry.room.title;
     const roomId = entry.room.id;
     const me = (n?: string) => !!n && sameName(n, member.name) === true;
-    const panel = buildPanel(ws, entry.room.state, entry.messages, { defaultCurrency: '₹' });
+    const panel = panelOf(entry);
 
     // Money: every topic's netted pairs that involve me, kept per group (never netted against another group).
     const byPerson = new Map<string, (typeof money)[number]>();
@@ -1035,7 +1051,7 @@ export async function privateAnswer(seats: { roomId: string; token: string }[], 
   const groups = mine.flatMap(({ entry, member }) => {
     const ws = workspaceOf(entry.room);
     const s = dedupeBills(entry.room.state);
-    const ledger = withPanelPairs(computeGroupLedger(ws, s.decisions, s.commitments, { conflicts: s.conflicts, evidenceMap: s.evidenceMap, messages: entry.messages, defaultCurrency: '₹', topics: entry.room.state.topics }), buildPanel(ws, entry.room.state, entry.messages, { defaultCurrency: '₹' }));
+    const ledger = withPanelPairs(computeGroupLedger(ws, s.decisions, s.commitments, { conflicts: s.conflicts, evidenceMap: s.evidenceMap, messages: entry.messages, defaultCurrency: '₹', topics: entry.room.state.topics }), panelOf(entry));
     const mineHere = computeMySettlement([ledger], member.name);
     mineHere.oweTotals.forEach(t => sums.owe.set(normalizeCurrency(t.currency) ?? t.currency, (sums.owe.get(normalizeCurrency(t.currency) ?? t.currency) ?? 0) + t.amount));
     mineHere.owedTotals.forEach(t => sums.owed.set(normalizeCurrency(t.currency) ?? t.currency, (sums.owed.get(normalizeCurrency(t.currency) ?? t.currency) ?? 0) + t.amount));
@@ -1121,7 +1137,7 @@ export async function remind(roomId: string, token: string, name: string, link: 
   if (entry.room.example) return { ok: false, message: `${target.name} is a made-up person in an example group, so there is no one to message.` };
   if (!target.phone) return { ok: false, message: `${target.name} has no WhatsApp number yet. Add it under People in this group.` };
   const s = dedupeBills(entry.room.state);
-  const panel = buildPanel(workspaceOf(entry.room), entry.room.state, entry.messages, { defaultCurrency: '₹' });
+  const panel = panelOf(entry);
   // Only promises from the last two weeks of the chat, newest first, and not "in 2 minutes" errands: an old cricket
   // plan is not something to remind anyone about.
   const at = new Map(entry.messages.map(m => [m.id, m.createdAt]));
