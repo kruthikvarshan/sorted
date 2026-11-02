@@ -1,0 +1,60 @@
+{
+  "group": "gymsquad",
+  "title": "Gym Squad 💪",
+  "messages": 867,
+  "read": 842,
+  "taggedEvents": 28,
+  "pairsExact": "3/7",
+  "paymentsFound": "12/12",
+  "rows": [
+    {
+      "pair": "Manoj & Tarun",
+      "truth": "Tarun → Manoj ₹2,000",
+      "groupOs": "settled",
+      "exact": false,
+      "off": 2000
+    },
+    {
+      "pair": "Neha & Tarun",
+      "truth": "Tarun → Neha ₹2,000",
+      "groupOs": "settled",
+      "exact": false,
+      "off": 2000
+    },
+    {
+      "pair": "Aisha & Tarun",
+      "truth": "Tarun → Aisha ₹3,200",
+      "groupOs": "Tarun → Aisha ₹1,200",
+      "exact": false,
+      "off": 2000
+    },
+    {
+      "pair": "Bhavya & Tarun",
+      "truth": "Bhavya → Tarun ₹6,000",
+      "groupOs": "Bhavya → Tarun ₹8,000",
+      "exact": false,
+      "off": 2000
+    },
+    {
+      "pair": "Aisha & Neha",
+      "truth": "Neha → Aisha ₹1,200",
+      "groupOs": "Neha → Aisha ₹1,200",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Aisha & Bhavya",
+      "truth": "Bhavya → Aisha ₹1,200",
+      "groupOs": "Bhavya → Aisha ₹1,200",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Aisha & Manoj",
+      "truth": "Manoj → Aisha ₹1,200",
+      "groupOs": "Manoj → Aisha ₹1,200",
+      "exact": true,
+      "off": 0
+    }
+  ]
+}

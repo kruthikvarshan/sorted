@@ -1,0 +1,42 @@
+
+> react-example@0.0.0 eval
+> tsx eval/run.ts --runs=3
+
+
+Group OS evaluation | model muse-spark-1.3 | 6 scenario(s) x 3 run(s)
+
+scenario              recall   traps hit  rejected  rounds  tokens   secs
+telugu_friends        88%      0          0         2       16673    20.4
+   missed: tf-kiran-claim
+                      75%      0          0         2       17058    23.3
+   missed: tf-train
+   missed: tf-madhu-bus
+                      100%     0          0         2       18011    33.7
+                      stability: recall 75% to 100% across 3 runs
+telugu_family         100%     0          0         1       7850     22.5
+                      100%     0          0         1       8582     27.7
+                      100%     0          0         1       8294     27.0
+                      stability: recall 100% to 100% across 3 runs
+hinglish_flat         100%     0          0         1       8140     29.1
+                      100%     0          0         1       8298     31.6
+                      100%     0          0         3       20916    35.1
+                      stability: recall 100% to 100% across 3 runs
+office_offsite        100%     0          1         2       13516    29.1
+                      100%     0          0         1       7218     25.1
+                      100%     0          0         1       6666     20.9
+                      stability: recall 100% to 100% across 3 runs
+multilingual_stress   83%      0          1         3       20346    35.9
+   missed: ms-time
+                      67%      0          1         3       21472    39.4
+   missed: ms-venue
+   missed: ms-anji-conflict
+                      83%      0          1         3       21353    27.1
+   missed: ms-time
+                      stability: recall 67% to 83% across 3 runs
+adversarial           100%     0          0         2       10210    13.8
+                      100%     0          0         2       10339    12.7
+                      100%     0          0         2       10684    13.0
+                      stability: recall 100% to 100% across 3 runs
+
+OVERALL  expected items found: 107/114 (94%)  | traps triggered: 0  | model outputs rejected by the validator: 4  | errors: 0
+

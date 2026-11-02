@@ -1,0 +1,81 @@
+{
+  "group": "productsquad",
+  "title": "Product Squad 💼",
+  "messages": 1207,
+  "read": 1182,
+  "taggedEvents": 16,
+  "pairsExact": "3/10",
+  "paymentsFound": "2/2",
+  "rows": [
+    {
+      "pair": "Neha & Rahul",
+      "truth": "Neha → Rahul ₹100",
+      "groupOs": "Rahul → Neha ₹800",
+      "exact": false,
+      "off": -900
+    },
+    {
+      "pair": "Fatima & Neha",
+      "truth": "Neha → Fatima ₹2,200",
+      "groupOs": "Fatima → Neha ₹800",
+      "exact": false,
+      "off": 3000
+    },
+    {
+      "pair": "Joel & Neha",
+      "truth": "Joel → Neha ₹800",
+      "groupOs": "Joel → Neha ₹800",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Ananya & Neha",
+      "truth": "Ananya → Neha ₹800",
+      "groupOs": "Ananya → Neha ₹800",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Karthik & Neha",
+      "truth": "Karthik → Neha ₹800",
+      "groupOs": "Karthik → Neha ₹800",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Fatima & Rahul",
+      "truth": "Fatima → Rahul ₹900",
+      "groupOs": "Rahul → Fatima ₹3,000",
+      "exact": false,
+      "off": -3900
+    },
+    {
+      "pair": "Joel & Rahul",
+      "truth": "Joel → Rahul ₹900",
+      "groupOs": "settled",
+      "exact": false,
+      "off": -900
+    },
+    {
+      "pair": "Ananya & Rahul",
+      "truth": "Ananya → Rahul ₹900",
+      "groupOs": "settled",
+      "exact": false,
+      "off": -900
+    },
+    {
+      "pair": "Karthik & Rahul",
+      "truth": "Karthik → Rahul ₹900",
+      "groupOs": "settled",
+      "exact": false,
+      "off": -900
+    },
+    {
+      "pair": "Ananya & Fatima",
+      "truth": "Ananya → Fatima ₹3,000",
+      "groupOs": "settled",
+      "exact": false,
+      "off": -3000
+    }
+  ]
+}

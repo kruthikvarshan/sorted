@@ -1,0 +1,37 @@
+# Deploy on Render (render.com → New → Blueprint → this repo).
+# Gives Group OS a permanent https address for the live app (/live) and the trace page (/whatsapp/trace).
+# Secrets are entered in Render's dashboard when asked, never here.
+services:
+  - type: web
+    name: group-os
+    runtime: node
+    # Starter, not free: the free plan sleeps when idle and has no disk, so accounts and groups would be lost.
+    plan: starter
+    region: singapore
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /live
+    autoDeploy: true
+    # Accounts, groups, messages, images and the spend counter live in data/ (SQLite): kept on this disk across
+    # restarts and redeploys.
+    disk:
+      name: group-os-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: 24.7.0
+      # Meta Model API key (Muse Spark, Muse Voice, Muse Image, web search).
+      - key: MODEL_API_KEY
+        sync: false
+      # WhatsApp Cloud API (reminders): the system-user token and the test number's phone number ID.
+      - key: WHATSAPP_TOKEN
+        sync: false
+      - key: WHATSAPP_PHONE_NUMBER_ID
+        sync: false
+      # The https address Render gives this service (used in invite QR codes and reminder links).
+      - key: PUBLIC_URL
+        sync: false
+      # Any long random text: locks the trace page and the spend page (/whatsapp/trace?key=…).
+      - key: TRACE_TOKEN
+        generateValue: true

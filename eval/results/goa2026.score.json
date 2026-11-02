@@ -1,0 +1,53 @@
+{
+  "group": "goa2026",
+  "title": "Goa Trip 2026 🏖️",
+  "messages": 1461,
+  "read": 1436,
+  "taggedEvents": 27,
+  "pairsExact": "1/6",
+  "paymentsFound": "3/3",
+  "rows": [
+    {
+      "pair": "Arjun & Neha",
+      "truth": "Neha → Arjun ₹15,500",
+      "groupOs": "Neha → Arjun ₹9,300",
+      "exact": false,
+      "off": 6200
+    },
+    {
+      "pair": "Arjun & Kavya",
+      "truth": "Kavya → Arjun ₹14,300",
+      "groupOs": "Kavya → Arjun ₹9,300",
+      "exact": false,
+      "off": 5000
+    },
+    {
+      "pair": "Arjun & Rohan",
+      "truth": "Rohan → Arjun ₹15,500",
+      "groupOs": "Rohan → Arjun ₹9,300",
+      "exact": false,
+      "off": 6200
+    },
+    {
+      "pair": "Arjun & Meera",
+      "truth": "Meera → Arjun ₹7,200",
+      "groupOs": "Meera → Arjun ₹1,000",
+      "exact": false,
+      "off": 6200
+    },
+    {
+      "pair": "Arjun & Sid",
+      "truth": "Sid → Arjun ₹13,500",
+      "groupOs": "Sid → Arjun ₹7,300",
+      "exact": false,
+      "off": 6200
+    },
+    {
+      "pair": "Rohan & Sid",
+      "truth": "Rohan → Sid ₹2,000",
+      "groupOs": "Rohan → Sid ₹2,000",
+      "exact": true,
+      "off": 0
+    }
+  ]
+}

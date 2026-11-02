@@ -1,0 +1,67 @@
+{
+  "group": "raofamily",
+  "title": "Rao Family 🏡",
+  "messages": 5002,
+  "read": 4977,
+  "taggedEvents": 17,
+  "pairsExact": "0/8",
+  "paymentsFound": "12/13",
+  "rows": [
+    {
+      "pair": "Nanna & Neha",
+      "truth": "Nanna → Neha ₹60,000",
+      "groupOs": "settled",
+      "exact": false,
+      "off": -60000
+    },
+    {
+      "pair": "Nanna & Vamsi",
+      "truth": "Nanna → Vamsi ₹60,000",
+      "groupOs": "settled",
+      "exact": false,
+      "off": -60000
+    },
+    {
+      "pair": "Nanna & Srinu",
+      "truth": "Nanna → Srinu ₹12,000",
+      "groupOs": "Nanna → Srinu ₹12,900",
+      "exact": false,
+      "off": 900
+    },
+    {
+      "pair": "Srinu & Vamsi",
+      "truth": "Vamsi → Srinu ₹12,000",
+      "groupOs": "Vamsi → Srinu ₹12,900",
+      "exact": false,
+      "off": -900
+    },
+    {
+      "pair": "Neha & Vamsi",
+      "truth": "Vamsi → Neha ₹24,000",
+      "groupOs": "Vamsi → Neha ₹69,000",
+      "exact": false,
+      "off": -45000
+    },
+    {
+      "pair": "Neha & Srinu",
+      "truth": "settled",
+      "groupOs": "Neha → Srinu ₹900",
+      "exact": false,
+      "off": 900
+    },
+    {
+      "pair": "Pinky & Srinu",
+      "truth": "settled",
+      "groupOs": "Pinky → Srinu ₹900",
+      "exact": false,
+      "off": 900
+    },
+    {
+      "pair": "Amma & Srinu",
+      "truth": "settled",
+      "groupOs": "Amma → Srinu ₹900",
+      "exact": false,
+      "off": 900
+    }
+  ]
+}

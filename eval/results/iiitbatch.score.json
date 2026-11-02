@@ -1,0 +1,116 @@
+{
+  "group": "iiitbatch",
+  "title": "IIIT Batch 2019 🎓",
+  "messages": 3002,
+  "read": 2977,
+  "taggedEvents": 27,
+  "pairsExact": "6/15",
+  "paymentsFound": "1/1",
+  "rows": [
+    {
+      "pair": "Neha & Sandeep",
+      "truth": "Neha → Sandeep ₹9,500",
+      "groupOs": "Neha → Sandeep ₹6,000",
+      "exact": false,
+      "off": -3500
+    },
+    {
+      "pair": "Harsha & Sandeep",
+      "truth": "Harsha → Sandeep ₹6,000",
+      "groupOs": "Harsha → Sandeep ₹6,000",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Divya & Sandeep",
+      "truth": "Divya → Sandeep ₹13,000",
+      "groupOs": "Divya → Sandeep ₹6,000",
+      "exact": false,
+      "off": -7000
+    },
+    {
+      "pair": "Imran & Sandeep",
+      "truth": "Imran → Sandeep ₹11,950",
+      "groupOs": "Imran → Sandeep ₹4,950",
+      "exact": false,
+      "off": -7000
+    },
+    {
+      "pair": "Pooja & Sandeep",
+      "truth": "Pooja → Sandeep ₹12,000",
+      "groupOs": "Pooja → Sandeep ₹5,000",
+      "exact": false,
+      "off": -7000
+    },
+    {
+      "pair": "Sandeep & Venky",
+      "truth": "Venky → Sandeep ₹13,000",
+      "groupOs": "Venky → Sandeep ₹6,000",
+      "exact": false,
+      "off": 7000
+    },
+    {
+      "pair": "Imran & Neha",
+      "truth": "Neha → Imran ₹1,050",
+      "groupOs": "Neha → Imran ₹1,050",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Pooja & Venky",
+      "truth": "Pooja → Venky ₹50",
+      "groupOs": "Pooja → Venky ₹50",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Divya & Venky",
+      "truth": "Divya → Venky ₹1,050",
+      "groupOs": "Divya → Venky ₹1,050",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Neha & Pooja",
+      "truth": "Pooja → Neha ₹2,500",
+      "groupOs": "Pooja → Neha ₹2,500",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Imran & Pooja",
+      "truth": "Imran → Pooja ₹1,000",
+      "groupOs": "Imran → Pooja ₹1,000",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Imran & Venky",
+      "truth": "Venky → Imran ₹1,500",
+      "groupOs": "settled",
+      "exact": false,
+      "off": 1500
+    },
+    {
+      "pair": "Harsha & Neha",
+      "truth": "Harsha → Neha ₹3,500",
+      "groupOs": "settled",
+      "exact": false,
+      "off": -3500
+    },
+    {
+      "pair": "Divya & Neha",
+      "truth": "Divya → Neha ₹3,500",
+      "groupOs": "settled",
+      "exact": false,
+      "off": -3500
+    },
+    {
+      "pair": "Neha & Venky",
+      "truth": "Venky → Neha ₹3,500",
+      "groupOs": "settled",
+      "exact": false,
+      "off": 3500
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+.venv/
+__pycache__/
+*.pyc
+state.json
+*.key
+*.pem
+credentials.json
+.meta_key*
+*.zip
+
+# Raw chat exports and anything personal: keep local, never commit
+private/
+*.tar.gz
+
+# WhatsApp bot database: real people's messages, never commit
+data/
+
+# Local tool settings
+.claude/
+
+# Scratch debugging scripts
+eval/tmp/

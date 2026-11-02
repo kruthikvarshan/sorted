@@ -1,0 +1,102 @@
+{
+  "group": "flat402",
+  "title": "Flat 402 & friends",
+  "messages": 1966,
+  "read": 1941,
+  "taggedEvents": 79,
+  "pairsExact": "4/13",
+  "paymentsFound": "14/17",
+  "rows": [
+    {
+      "pair": "Arjun & Neha",
+      "truth": "Arjun → Neha ₹27,500",
+      "groupOs": "Arjun → Neha ₹10,100",
+      "exact": false,
+      "off": -17400
+    },
+    {
+      "pair": "Dev & Neha",
+      "truth": "Dev → Neha ₹22,400",
+      "groupOs": "Dev → Neha ₹10,100",
+      "exact": false,
+      "off": -12300
+    },
+    {
+      "pair": "Neha & Priya",
+      "truth": "Priya → Neha ₹2,200",
+      "groupOs": "settled",
+      "exact": false,
+      "off": 2200
+    },
+    {
+      "pair": "Arjun & Dev",
+      "truth": "Dev → Arjun ₹2,100",
+      "groupOs": "Dev → Arjun ₹2,400",
+      "exact": false,
+      "off": -300
+    },
+    {
+      "pair": "Dev & Priya",
+      "truth": "Priya → Dev ₹1,900",
+      "groupOs": "Priya → Dev ₹1,600",
+      "exact": false,
+      "off": 300
+    },
+    {
+      "pair": "Arjun & Sita",
+      "truth": "Arjun → Sita ₹600",
+      "groupOs": "Sita → Arjun ₹3,400",
+      "exact": false,
+      "off": -4000
+    },
+    {
+      "pair": "Dev & Sita",
+      "truth": "Sita → Dev ₹800",
+      "groupOs": "Sita → Dev ₹800",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Neha & Ravi",
+      "truth": "Neha → Ravi ₹2,050",
+      "groupOs": "Neha → Ravi ₹800",
+      "exact": false,
+      "off": -1250
+    },
+    {
+      "pair": "Arjun & Ravi",
+      "truth": "Ravi → Arjun ₹1,950",
+      "groupOs": "Ravi → Arjun ₹1,950",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Dev & Ravi",
+      "truth": "Dev → Ravi ₹850",
+      "groupOs": "Ravi → Dev ₹400",
+      "exact": false,
+      "off": -1250
+    },
+    {
+      "pair": "Priya & Ravi",
+      "truth": "Priya → Ravi ₹800",
+      "groupOs": "Priya → Ravi ₹800",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Ravi & Sita",
+      "truth": "Sita → Ravi ₹2,050",
+      "groupOs": "Sita → Ravi ₹800",
+      "exact": false,
+      "off": 1250
+    },
+    {
+      "pair": "Arjun & Priya",
+      "truth": "Priya → Arjun ₹4,000",
+      "groupOs": "Priya → Arjun ₹4,000",
+      "exact": true,
+      "off": 0
+    }
+  ]
+}

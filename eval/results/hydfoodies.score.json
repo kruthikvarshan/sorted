@@ -1,0 +1,74 @@
+{
+  "group": "hydfoodies",
+  "title": "Hyderabad Foodies 🍛",
+  "messages": 805,
+  "read": 780,
+  "taggedEvents": 16,
+  "pairsExact": "8/9",
+  "paymentsFound": "0/0",
+  "rows": [
+    {
+      "pair": "Abhi & Neha",
+      "truth": "Neha → Abhi ₹1,325",
+      "groupOs": "Neha → Abhi ₹1,325",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Abhi & Zoya",
+      "truth": "Zoya → Abhi ₹3,125",
+      "groupOs": "Zoya → Abhi ₹3,125",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Abhi & Kiran",
+      "truth": "Kiran → Abhi ₹2,285",
+      "groupOs": "Kiran → Abhi ₹2,285",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Abhi & Ritu",
+      "truth": "Ritu → Abhi ₹2,500",
+      "groupOs": "Ritu → Abhi ₹1,500",
+      "exact": false,
+      "off": 1000
+    },
+    {
+      "pair": "Kiran & Neha",
+      "truth": "Kiran → Neha ₹960",
+      "groupOs": "Kiran → Neha ₹960",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Kiran & Zoya",
+      "truth": "Zoya → Kiran ₹840",
+      "groupOs": "Zoya → Kiran ₹840",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Kiran & Ritu",
+      "truth": "Ritu → Kiran ₹840",
+      "groupOs": "Ritu → Kiran ₹840",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Neha & Zoya",
+      "truth": "Zoya → Neha ₹1,800",
+      "groupOs": "Zoya → Neha ₹1,800",
+      "exact": true,
+      "off": 0
+    },
+    {
+      "pair": "Neha & Ritu",
+      "truth": "Ritu → Neha ₹1,800",
+      "groupOs": "Ritu → Neha ₹1,800",
+      "exact": true,
+      "off": 0
+    }
+  ]
+}

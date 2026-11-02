@@ -1,0 +1,32 @@
+{
+  "group": "greenmeadows",
+  "title": "Green Meadows Block B 🏢",
+  "messages": 2299,
+  "read": 2274,
+  "taggedEvents": 7,
+  "pairsExact": "0/3",
+  "paymentsFound": "2/2",
+  "rows": [
+    {
+      "pair": "Faisal & Mr. Reddy",
+      "truth": "Mr. Reddy → Faisal ₹20,000",
+      "groupOs": "settled",
+      "exact": false,
+      "off": 20000
+    },
+    {
+      "pair": "Faisal & Mrs. Iyer",
+      "truth": "Mrs. Iyer → Faisal ₹20,000",
+      "groupOs": "settled",
+      "exact": false,
+      "off": 20000
+    },
+    {
+      "pair": "Faisal & Gupta ji",
+      "truth": "Gupta ji → Faisal ₹20,000",
+      "groupOs": "settled",
+      "exact": false,
+      "off": 20000
+    }
+  ]
+}

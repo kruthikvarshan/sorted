@@ -1,0 +1,231 @@
+{
+  "at": "2026-10-31T19:02:46.979Z",
+  "messages": 1983,
+  "topics": [
+    {
+      "title": "Rent & bills, August",
+      "n": 113,
+      "status": "closed"
+    },
+    {
+      "title": "Arjun Hyd-Blr weekend trip",
+      "n": 2,
+      "status": "open"
+    },
+    {
+      "title": "Sunday cricket, Gachibowli",
+      "n": 202,
+      "status": "closed"
+    },
+    {
+      "title": "Rent & bills, September",
+      "n": 90,
+      "status": "open"
+    },
+    {
+      "title": "Ravi's birthday gift",
+      "n": 118,
+      "status": "closed"
+    },
+    {
+      "title": "Tap leak repair",
+      "n": 6,
+      "status": "closed"
+    },
+    {
+      "title": "Rent & bills, October",
+      "n": 103,
+      "status": "open"
+    },
+    {
+      "title": "Fridge repair",
+      "n": 90,
+      "status": "open"
+    },
+    {
+      "title": "Goa trip, Nov",
+      "n": 409,
+      "status": "open"
+    },
+    {
+      "title": "Rent & bills, November",
+      "n": 107,
+      "status": "open"
+    },
+    {
+      "title": "Sita's wedding, Dec",
+      "n": 171,
+      "status": "open"
+    }
+  ],
+  "topicScores": [
+    {
+      "real": "rent_aug",
+      "coverage": 0.9741379310344828,
+      "purity": 1,
+      "split": 1,
+      "best": "t_rent_bills_august"
+    },
+    {
+      "real": "cricket",
+      "coverage": 0.9795918367346939,
+      "purity": 0.9504950495049505,
+      "split": 1,
+      "best": "t_sunday_cricket_gachibowli"
+    },
+    {
+      "real": "rent_sep",
+      "coverage": 0.8130841121495327,
+      "purity": 0.9666666666666667,
+      "split": 1,
+      "best": "t_rent_bills_september"
+    },
+    {
+      "real": "birthday",
+      "coverage": 0.9915966386554622,
+      "purity": 1,
+      "split": 1,
+      "best": "t_ravi_s_birthday_gift"
+    },
+    {
+      "real": "rent_oct",
+      "coverage": 0.8771929824561403,
+      "purity": 0.970873786407767,
+      "split": 1,
+      "best": "t_rent_bills_october"
+    },
+    {
+      "real": "fridge",
+      "coverage": 0.9777777777777777,
+      "purity": 0.9777777777777777,
+      "split": 1,
+      "best": "t_fridge_repair"
+    },
+    {
+      "real": "goa",
+      "coverage": 0.973170731707317,
+      "purity": 0.9755501222493888,
+      "split": 1,
+      "best": "t_goa_trip_nov"
+    },
+    {
+      "real": "rent_nov",
+      "coverage": 0.981651376146789,
+      "purity": 1,
+      "split": 1,
+      "best": "t_rent_bills_november"
+    },
+    {
+      "real": "wedding",
+      "coverage": 1,
+      "purity": 1,
+      "split": 1,
+      "best": "t_sita_s_wedding_dec"
+    }
+  ],
+  "facts": [
+    {
+      "id": "rent-9000",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "elec-aug",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "wifi-aug",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "elec-sep",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "arjun-instalment",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "elec-oct-dispute",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "rent-9500",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "villa",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "priya-saturday",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "train",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "scuba-not-agreed",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "shack-dinner",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "gift-600",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "arjun-gift-friday",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "fridge-800",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "turf-400",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "six-am",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "wedding-date",
+      "found": true,
+      "rightTopic": true
+    },
+    {
+      "id": "wedding-gift",
+      "found": true,
+      "rightTopic": true
+    }
+  ],
+  "chatLeak": 0.023593466424682397,
+  "lostToChat": 0.023743016759776536,
+  "calls": 48,
+  "tokens": 147192,
+  "ms": 538038,
+  "corrections": [
+    "message m179 had no tag, so it went to general chat"
+  ]
+}

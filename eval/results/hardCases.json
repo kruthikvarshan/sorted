@@ -1,0 +1,147 @@
+{
+  "at": "2026-11-01T19:25:24.731Z",
+  "passed": 16,
+  "total": 20,
+  "results": [
+    {
+      "id": "equal-split",
+      "trap": "A plain split, the payer collects",
+      "pass": true,
+      "expect": "Aniket|Kruthik|800, Swapnil|Kruthik|800",
+      "got": "Aniket|Kruthik|800, Swapnil|Kruthik|800"
+    },
+    {
+      "id": "two-in-one-transfer",
+      "trap": "One transfer pays two bills (\"18000 rent + 1000 light\")",
+      "pass": true,
+      "expect": "Swapnil|Kruthik|19000",
+      "got": "Swapnil|Kruthik|19000"
+    },
+    {
+      "id": "part-payments",
+      "trap": "Paid in two halves on different days",
+      "pass": true,
+      "expect": "settled",
+      "got": "settled"
+    },
+    {
+      "id": "remaining-later",
+      "trap": "Half paid, \"the rest after my bonus\" is not a second debt",
+      "pass": true,
+      "expect": "Aniket|Kruthik|6000",
+      "got": "Aniket|Kruthik|6000"
+    },
+    {
+      "id": "loan-repaid-partly",
+      "trap": "A loan, then a part repayment",
+      "pass": true,
+      "expect": "Swapnil|Aniket|5000",
+      "got": "Swapnil|Aniket|5000"
+    },
+    {
+      "id": "recap-not-new",
+      "trap": "A later \"settling up\" recap repeats the bill",
+      "pass": true,
+      "expect": "Rohan|Arjun|6200",
+      "got": "Rohan|Arjun|6200"
+    },
+    {
+      "id": "outsider-payee",
+      "trap": "Paying the owner is not a debt inside the group",
+      "pass": true,
+      "expect": "Aniket|Kruthik|18000, Swapnil|Kruthik|18000",
+      "got": "Aniket|Kruthik|18000, Swapnil|Kruthik|18000"
+    },
+    {
+      "id": "name-not-a-member",
+      "trap": "A cricketer named in passing is not part of the bet",
+      "pass": false,
+      "expect": "Aniket|Kruthik|200, Aniket|Swapnil|200",
+      "got": "Aniket|Kruthik|200"
+    },
+    {
+      "id": "each-pays-own",
+      "trap": "\"Apna apna\" is no shared bill",
+      "pass": true,
+      "expect": "settled",
+      "got": "settled"
+    },
+    {
+      "id": "disputed-split",
+      "trap": "A split one person disputes is not counted until settled",
+      "pass": true,
+      "expect": "settled",
+      "got": "settled"
+    },
+    {
+      "id": "claim-not-confirmed",
+      "trap": "\"I paid\" without the receiver confirming is still owed",
+      "pass": true,
+      "expect": "Aniket|Kruthik|800",
+      "got": "Aniket|Kruthik|800"
+    },
+    {
+      "id": "claim-confirmed",
+      "trap": "The receiver confirms: settled",
+      "pass": true,
+      "expect": "settled",
+      "got": "settled"
+    },
+    {
+      "id": "running-total",
+      "trap": "A running tally of bets: the latest total counts",
+      "pass": false,
+      "expect": "Aniket|Swapnil|600",
+      "got": "settled"
+    },
+    {
+      "id": "telugu-english",
+      "trap": "Telugu in English letters: \"nenu kattanu\", \"pampanu\", \"vachindi\"",
+      "pass": true,
+      "expect": "Sita|Kiran|1000",
+      "got": "Sita|Kiran|1000"
+    },
+    {
+      "id": "amount-changed",
+      "trap": "The amount changes and everyone agrees",
+      "pass": false,
+      "expect": "Aniket|Kruthik|500, Swapnil|Kruthik|500",
+      "got": "Aniket|Kruthik|400, Swapnil|Kruthik|400"
+    },
+    {
+      "id": "surname-in-payment",
+      "trap": "\"Priya\" in the bill, \"Priya Sharma\" in the payment: one person",
+      "pass": false,
+      "expect": "settled",
+      "got": "Priya Sharma|Neha|500"
+    },
+    {
+      "id": "two-bills-netted",
+      "trap": "Each paid one bill: only the difference is owed",
+      "pass": true,
+      "expect": "Aniket|Kruthik|200",
+      "got": "Aniket|Kruthik|200"
+    },
+    {
+      "id": "dollars",
+      "trap": "A trip abroad in dollars stays in dollars",
+      "pass": true,
+      "expect": "Aniket|Kruthik|20, Swapnil|Kruthik|20",
+      "got": "Aniket|Kruthik|20, Swapnil|Kruthik|20"
+    },
+    {
+      "id": "cancelled-plan",
+      "trap": "A plan that was called off owes nothing",
+      "pass": true,
+      "expect": "settled",
+      "got": "settled"
+    },
+    {
+      "id": "same-promise-twice",
+      "trap": "The same debt said again later is still one debt",
+      "pass": true,
+      "expect": "Swapnil|Aniket|3000",
+      "got": "Swapnil|Aniket|3000"
+    }
+  ]
+}
