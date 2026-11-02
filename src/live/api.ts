@@ -177,7 +177,7 @@ export const forgetToken = (roomId: string) => {
 async function call<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(path, init);
   const body = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(body.error || body.message || `Request failed (${res.status})`);
+  if (!res.ok) throw Object.assign(new Error(body.error || body.message || `Request failed (${res.status})`), { status: res.status });
   return body as T;
 }
 

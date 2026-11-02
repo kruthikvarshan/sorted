@@ -43,20 +43,42 @@ export const LiveApp: React.FC = () => {
   }, []);
   // Everything needs an account: your groups and My Sorted live in it, on any device.
   const [account, setAccount] = useState<AccountSummary | null | undefined>(undefined);
+  const [reaching, setReaching] = useState(false);
   useEffect(() => {
     if (!session.get()) return setAccount(null);
-    api
-      .account()
-      .then(r => {
-        adoptAccount(r.account);
-        setAccount(r.account);
-      })
-      .catch(() => {
-        session.set(null);
-        setAccount(null);
-      });
+    let stop = false;
+    const check = () =>
+      api
+        .account()
+        .then(r => {
+          if (stop) return;
+          adoptAccount(r.account);
+          setAccount(r.account);
+        })
+        .catch((e: { status?: number }) => {
+          if (stop) return;
+          // Only the server saying this login is not valid ends it. A dropped connection or a server restarting keeps
+          // you logged in and tries again.
+          if (e.status === 401 || e.status === 403) {
+            session.set(null);
+            setAccount(null);
+            return;
+          }
+          setReaching(true);
+          setTimeout(check, 3000);
+        });
+    void check();
+    return () => {
+      stop = true;
+    };
   }, []);
-  if (account === undefined) return <div className="flex h-screen items-center justify-center bg-[#efeae2]"><Loader2 className="w-6 h-6 animate-spin text-slate-400" /></div>;
+  if (account === undefined)
+    return (
+      <div className="flex h-screen flex-col items-center justify-center gap-2 bg-[#efeae2]">
+        <Loader2 className="w-6 h-6 animate-spin text-slate-400" />
+        {reaching && <p className="text-xs text-slate-500">Reaching Sorted… trying again in a moment.</p>}
+      </div>
+    );
   if (account === null) return <Login onDone={(a, s) => { session.set(s); adoptAccount(a); setAccount(a); }} />;
   if (share) return <ShareInbox go={go} />;
   if (mePage) return <MyGroupOsPage />;
