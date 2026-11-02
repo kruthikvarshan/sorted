@@ -108,3 +108,14 @@ describe('phone numbers', () => {
     expect(normalizePhone('+1 202 555 0143')).toBe('12025550143');
   });
 });
+
+describe('judges from anywhere can sign up', () => {
+  it('a US number works with its country code, and 10 digits only count as Indian when they look Indian', () => {
+    expect(normalizePhone('+1 415 555 0123')).toBe('14155550123');
+    expect(normalizePhone('4155550123')).toBeUndefined();
+    expect(normalizePhone('98765 43210')).toBe('919876543210');
+  });
+  it('says to add the country code when the number cannot be read', () => {
+    expect(login('4155550123', '1234', { signup: true, name: 'Judge' }).error).toMatch(/country code/);
+  });
+});

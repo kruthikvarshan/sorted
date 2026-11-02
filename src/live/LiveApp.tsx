@@ -145,7 +145,7 @@ const Login: React.FC<{ onDone: (a: AccountSummary, session: string) => void }> 
             </label>
           )}
           <label className="block text-xs font-semibold text-slate-700">Mobile number
-            <input value={phone} onChange={e => setPhone(e.target.value)} inputMode="tel" autoComplete="tel" placeholder="+91 98765 43210" className={field} />
+            <input value={phone} onChange={e => setPhone(e.target.value)} inputMode="tel" autoComplete="tel" placeholder="+1 415 555 0123 or +91 98765 43210" className={field} />
           </label>
           <label className="block text-xs font-semibold text-slate-700">{signup ? 'Pick a 4-digit PIN' : '4-digit PIN'}
             <input value={pin} onChange={e => setPin(e.target.value.replace(/\D/g, '').slice(0, 4))} inputMode="numeric" type="password" autoComplete={signup ? 'new-password' : 'current-password'} placeholder="••••" className={`${field} tracking-widest`} onKeyDown={e => e.key === 'Enter' && submit()} />

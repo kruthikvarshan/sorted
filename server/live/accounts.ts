@@ -60,12 +60,12 @@ const failures = new Map<string, { n: number; at: number; until: number }>();
 export const validPin = (p: string) => /^\d{4}$/.test(p);
 const hash = (pin: string, salt: string) => scryptSync(pin, salt, 32).toString('hex');
 
-/** Digits with country code, as WhatsApp uses them. A 10-digit number is taken as Indian (+91). */
+/** Digits with country code, as WhatsApp uses them. A 10-digit number starting 6–9 is taken as Indian (+91). */
 export function normalizePhone(raw: string): string | undefined {
   let d = String(raw ?? '').replace(/[\s\-().]/g, '');
   if (!/^\+?\d+$/.test(d)) return undefined;
   d = d.replace(/^\+/, '').replace(/^00/, '');
-  if (d.length === 10) d = `91${d}`;
+  if (d.length === 10 && /^[6-9]/.test(d)) d = `91${d}`;
   // An Indian mobile number is 91 + exactly 10 digits starting 6–9: one digit short or long is a typo, not a number.
   if (d.startsWith('91') && d.length <= 13) return /^91[6-9]\d{9}$/.test(d) ? d : undefined;
   return d.length >= 11 && d.length <= 15 ? d : undefined;
@@ -86,7 +86,7 @@ export function saveAccount(a: Account) {
  */
 export function login(phone: string, pin: string, opts: { name?: string; signup?: boolean } = {}): { account?: Account; session?: string; isNew?: boolean; error?: string } {
   const p = normalizePhone(phone);
-  if (!p) return { error: 'Enter your mobile number, e.g. 98765 43210 or +91 98765 43210.' };
+  if (!p) return { error: 'Enter your mobile number with its country code, e.g. +1 415 555 0123 or +91 98765 43210.' };
   if (!validPin(pin)) return { error: 'The PIN is 4 digits.' };
   let account = getAccount(p);
   let isNew = false;
