@@ -38,7 +38,7 @@ export interface Snapshot {
   start: number;
   read: number;
   people: number;
-  /** The last message Group OS has read, and when it reads next (if new messages are waiting). */
+  /** The last message Sorted has read, and when it reads next (if new messages are waiting). */
   lastReadId?: string;
   nextReadAt?: number;
   burst: number;
@@ -126,7 +126,7 @@ export function adoptAccount(a: AccountSummary) {
 }
 const SCOPE = 'groupos_scope';
 
-/** Which groups My Group OS follows, on this phone. Not set yet means all of them. */
+/** Which groups My Sorted follows, on this phone. Not set yet means all of them. */
 export const scope = {
   get: (): string[] | null => {
     try {
@@ -231,7 +231,7 @@ export const api = {
   details: (seats: { roomId: string; token: string }[]) => post<unknown>('/live/api/details', { seats }),
   myGroups: (seats: { roomId: string; token: string }[]) =>
     post<{ groups: GroupSummary[] }>('/live/api/mine', { seats }),
-  /** Seats of the groups My Group OS follows. */
+  /** Seats of the groups My Sorted follows. */
   scopedSeats: () => api.seats().filter(s => scope.has(s.roomId)),
   ask: (seats: { roomId: string; token: string }[], text: string) => post<{ text: string; ok: boolean; groups: number }>('/live/api/private', { seats, text }),
   wrapped: (roomId: string, token: string) => call<{ stats: import('../engine/wrapped').Wrapped; art?: string }>(`/live/api/rooms/${roomId}/wrapped?token=${encodeURIComponent(token)}`),

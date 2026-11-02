@@ -3,7 +3,7 @@ import { AlertTriangle, Bell, CalendarClock, CheckSquare, ChevronDown, Square, W
 import { api } from './api';
 
 /**
- * The detail half of My Group OS, for the groups it follows: money group by group (with the bills behind every amount,
+ * The detail half of My Sorted, for the groups it follows: money group by group (with the bills behind every amount,
  * never netted across groups), reminders, your promises as a to-do list, and what is coming up. All worked out in code.
  */
 

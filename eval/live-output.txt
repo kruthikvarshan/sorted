@@ -3,7 +3,7 @@
 > tsx eval/run.ts --runs=3
 
 
-Group OS evaluation | model muse-spark-1.3 | 6 scenario(s) x 3 run(s)
+Sorted evaluation | model muse-spark-1.3 | 6 scenario(s) x 3 run(s)
 
 scenario              recall   traps hit  rejected  rounds  tokens   secs
 telugu_friends        88%      0          0         2       16673    20.4

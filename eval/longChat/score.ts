@@ -1,10 +1,10 @@
 /**
- * Scores a group read by Group OS against the answer key written with the chat: every money line was tagged by the
+ * Scores a group read by Sorted against the answer key written with the chat: every money line was tagged by the
  * generator ("owes" / "paid"), so the true balance between every two people is known to the rupee.
  *
  *   npx tsx eval/longChat/score.ts --group=gymsquad
  *
- * Prints each pair (truth vs Group OS), the payments Group OS found, and saves eval/results/<group>.score.json.
+ * Prints each pair (truth vs Sorted), the payments Sorted found, and saves eval/results/<group>.score.json.
  */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { buildPanel } from '../../src/engine/panel';
@@ -21,7 +21,7 @@ const add = (from: string, to: string, amount: number) => {
   const k = `${a}|${b}`;
   net.set(k, (net.get(k) ?? 0) + (from === a ? amount : -amount));
 };
-// Only what Group OS has read: example groups keep their newest messages unread on purpose, to be read live.
+// Only what Sorted has read: example groups keep their newest messages unread on purpose, to be read live.
 const readThrough = state.readThrough ?? data.messages.length;
 let tagged = 0;
 for (const m of data.messages.slice(0, readThrough))
@@ -37,7 +37,7 @@ const truth = [...net.entries()]
     return v > 0 ? { from: a, to: b, amount: Math.round(v) } : { from: b, to: a, amount: Math.round(-v) };
   });
 
-// What Group OS shows.
+// What Sorted shows.
 const messages = data.messages.map((m, i) => ({ id: `m${i + 1}`, conversationId: id, speakerId: `p_${m.speaker.toLowerCase().replace(/\W+/g, '_')}`, speakerName: m.speaker, timestamp: m.at.slice(11, 16), content: m.text, type: 'text' as const, createdAt: new Date(m.at).getTime() }));
 const ws = { id, title: data.title, category: 'Live', description: '', participants: data.people.map(n => ({ id: `p_${n.toLowerCase()}`, name: n, avatarColor: '' })), unreadCount: 0, lastActivity: '', iconName: 'Users' };
 const shown = buildPanel(ws as any, state, messages as any, { defaultCurrency: '₹' }).owes.map(o => ({ from: o.from, to: o.to, amount: Math.round(o.amount) }));
@@ -77,4 +77,4 @@ const report = { group: id, title: data.title, messages: data.messages.length, r
 mkdirSync('eval/results', { recursive: true });
 writeFileSync(`eval/results/${id}.score.json`, JSON.stringify(report, null, 2));
 console.log(`${data.title}: ${exact}/${rows.length} pairs exact · payments found ${found}/${paid} · ${tagged} tagged money lines`);
-rows.forEach(r => console.log(`  ${r.exact ? '✓' : '✗'} ${r.pair.padEnd(22)} truth: ${r.truth.padEnd(28)} Group OS: ${r.groupOs}`));
+rows.forEach(r => console.log(`  ${r.exact ? '✓' : '✗'} ${r.pair.padEnd(22)} truth: ${r.truth.padEnd(28)} Sorted: ${r.groupOs}`));

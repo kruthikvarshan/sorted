@@ -47,7 +47,7 @@ export const TripPlanSheet: React.FC<{ roomId: string; token: string; topicId: s
         {!q && !error && <div className="flex justify-center py-6"><Loader2 className="w-5 h-5 animate-spin text-slate-400" /></div>}
         {q && (
           <>
-            <p className="text-[11px] text-slate-500">Filled in from the chat where it says so. Fill in the rest: Group OS will not guess them.</p>
+            <p className="text-[11px] text-slate-500">Filled in from the chat where it says so. Fill in the rest: Sorted will not guess them.</p>
             {q.fields.map(f => {
               const fromChat = !!q.facts[f.key] && values[f.key] === q.facts[f.key];
               const empty = !(values[f.key] ?? '').trim();

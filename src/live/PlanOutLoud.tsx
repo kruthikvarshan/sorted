@@ -5,7 +5,7 @@ import { openMicrophone } from '../services/microphone';
 
 /**
  * Plan out loud: put the phone on the table and talk. Muse Voice separates the voices; you say which person each voice
- * is; every turn becomes a message in the group, and Group OS reads it like typed chat.
+ * is; every turn becomes a message in the group, and Sorted reads it like typed chat.
  */
 export const PlanOutLoud: React.FC<{ roomId: string; token: string; me: Person; members: Person[]; onClose: () => void }> = ({ roomId, token, me, members, onClose }) => {
   const [stage, setStage] = useState<'idle' | 'recording' | 'listening' | 'assign' | 'posting'>('idle');
@@ -79,7 +79,7 @@ export const PlanOutLoud: React.FC<{ roomId: string; token: string; me: Person; 
 
         {stage === 'idle' && (
           <>
-            <p className="text-xs text-slate-600">Put the phone in the middle and talk it out, in any language. Group OS separates the voices, you say who is who, and the plan lands in the chat.</p>
+            <p className="text-xs text-slate-600">Put the phone in the middle and talk it out, in any language. Sorted separates the voices, you say who is who, and the plan lands in the chat.</p>
             <button onClick={record} className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#008069] py-3 text-sm font-bold text-white"><Mic className="w-4 h-4" /> Start listening</button>
           </>
         )}

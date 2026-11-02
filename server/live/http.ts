@@ -31,7 +31,7 @@ import { act, addPerson, readFromScratch, remind, tripQuestions, readSoon, seats
  *   GET  /live/api/rooms/:id/events?token=  live updates (server-sent events)
  *   POST /live/api/rooms/:id/messages       send a message
  *   POST /live/api/rooms/:id/voice          send a voice note (audio body), transcribed by Muse Voice
- *   POST /live/api/rooms/:id/action         press a Group OS button
+ *   POST /live/api/rooms/:id/action         press a Sorted button
  *   POST /live/api/rooms/:id/me             set your phone number / UPI id (for Pay on WhatsApp)
  *   GET  /live/api/media/:file              play back a voice note
  */
@@ -65,7 +65,7 @@ const parseJson = (b: Buffer) => {
 /** The sample group: 1,983 messages over four months, and (when available) its results read in advance. */
 /** The demo groups, in the order Neha's phone lists them. Neha is in all of them. */
 export const DEMO_GROUPS = ['flat402', 'goa2026', 'raofamily', 'productsquad', 'iiitbatch', 'greenmeadows', 'gymsquad', 'hydfoodies'];
-/** The groups that start in Neha's private Group OS (she adds or removes the rest herself). */
+/** The groups that start in Neha's private Sorted (she adds or removes the rest herself). */
 export const DEMO_SCOPE = ['flat402', 'goa2026', 'raofamily', 'productsquad'];
 
 export function sample(id = 'flat402') {

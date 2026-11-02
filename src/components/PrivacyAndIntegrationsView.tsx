@@ -97,10 +97,10 @@ export const PrivacyAndIntegrationsView: React.FC<PrivacyAndIntegrationsViewProp
               </span>
             </div>
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
-              What Group OS can see
+              What Sorted can see
             </h1>
             <p className="text-xs sm:text-sm text-emerald-100 max-w-2xl leading-relaxed">
-              You decide which chats Group OS can read and whether it can speak in them. Everything is kept in this
+              You decide which chats Sorted can read and whether it can speak in them. Everything is kept in this
               browser tab only, and it is gone when you close the tab.
             </p>
           </div>
@@ -164,14 +164,14 @@ export const PrivacyAndIntegrationsView: React.FC<PrivacyAndIntegrationsViewProp
               <div className="flex items-center justify-between">
                 <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                   <Layers className="w-4 h-4 text-[#008069]" />
-                  <span>Which chats My Group OS can use</span>
+                  <span>Which chats My Sorted can use</span>
                 </h2>
                 <span className="text-[11px] font-medium text-slate-500">
                   {privacySettings.scopedWorkspaceIds.length} of {workspaces.length} groups enabled
                 </span>
               </div>
               <p className="text-xs text-slate-600 mt-1">
-                Choose which conversations Group OS is allowed to read. Excluded groups are completely walled off; no messages
+                Choose which conversations Sorted is allowed to read. Excluded groups are completely walled off; no messages
                 are analyzed and no data leaves the browser session.
               </p>
             </div>
@@ -235,7 +235,7 @@ export const PrivacyAndIntegrationsView: React.FC<PrivacyAndIntegrationsViewProp
                 Example: include the Goa trip and flatmates, leave out work.
               </span>
               <p className="text-[11px] text-slate-500">
-                Group OS respects clear conversational boundaries. When a chat is excluded, it will never be queried or
+                Sorted respects clear conversational boundaries. When a chat is excluded, it will never be queried or
                 used to answer your questions or build your to-do list.
               </p>
             </div>
@@ -302,7 +302,7 @@ export const PrivacyAndIntegrationsView: React.FC<PrivacyAndIntegrationsViewProp
                           )}
                         </div>
                         <p className="text-[11px] text-slate-500 leading-normal">
-                          Group OS works secretly for you. It tracks your tasks and reminders, but NEVER responds in the group chat.
+                          Sorted works secretly for you. It tracks your tasks and reminders, but NEVER responds in the group chat.
                         </p>
                       </button>
 
@@ -326,7 +326,7 @@ export const PrivacyAndIntegrationsView: React.FC<PrivacyAndIntegrationsViewProp
                           )}
                         </div>
                         <p className="text-[11px] text-slate-500 leading-normal">
-                          All members have invited Group OS. It can respond to <code className="text-[#008069]">@GroupOS</code>, detect contradictions, and post summaries.
+                          All members have invited Sorted. It can respond to <code className="text-[#008069]">@Sorted</code>, detect contradictions, and post summaries.
                         </p>
                       </button>
                     </div>
@@ -362,7 +362,7 @@ export const PrivacyAndIntegrationsView: React.FC<PrivacyAndIntegrationsViewProp
                 <span>What is kept while this tab is open</span>
               </h2>
               <p className="text-xs text-slate-600 mt-1">
-                Group OS keeps results only while this page stays open. Nothing is stored in your browser or on a server.
+                Sorted keeps results only while this page stays open. Nothing is stored in your browser or on a server.
               </p>
             </div>
 
@@ -447,7 +447,7 @@ export const PrivacyAndIntegrationsView: React.FC<PrivacyAndIntegrationsViewProp
                 this browser tab, as set under "What is kept", and disappear when you close it.
               </li>
               <li>
-                <b className="text-slate-900">See for yourself.</b> My Group OS lists every request sent to Meta this session: what
+                <b className="text-slate-900">See for yourself.</b> My Sorted lists every request sent to Meta this session: what
                 it was, which chat, and how much. It records only that, never the chat text or the reply.
               </li>
             </ul>

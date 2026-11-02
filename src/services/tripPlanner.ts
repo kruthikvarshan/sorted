@@ -106,12 +106,12 @@ Using web search, suggest for this exact trip (respect their dates, place, budge
 2. Two or three ways to get there from ${facts.from}, with typical fares and travel time.
 3. Four things to do there on those dates, with typical cost per person.
 4. Two or three spots there that people post about on Instagram (cafés, viewpoints, food), each with its public instagram.com page from the search.
-5. One money tip for this trip: where the costs add up, or how to save on them. This group already tracks and splits its costs in Group OS, so do not recommend any app or service for splitting or tracking expenses.
+5. One money tip for this trip: where the costs add up, or how to save on them. This group already tracks and splits its costs in Sorted, so do not recommend any app or service for splitting or tracking expenses.
 Be brief: one line per item. Mention the source for each item. Do not invent links; prices are typical, not live.
 Format: plain text, a short heading on its own line before each section (Stay, Getting there, Things to do, Seen on Instagram, Money tip), no asterisks or markdown. Start anything that looks off in their plan with "⚠️ Heads-up:" and only say it is off when the decisions above clearly show it.`;
 }
 
-/** Expense-splitting apps: Group OS is that, for this group, so trip ideas never point elsewhere. */
+/** Expense-splitting apps: Sorted is that, for this group, so trip ideas never point elsewhere. */
 const SPLIT_APPS = /\b(splitwise|tricount|settle ?up|splid|walnut|spliit|kittysplit|billr|evenly)\b/i;
 
 export function parseResponses(json: any): TripIdeas {
@@ -145,7 +145,7 @@ export function parseResponses(json: any): TripIdeas {
   }
   if (!parts.length && typeof json?.output_text === 'string') parts.push(json.output_text);
   // Links written into the text are reduced to their label; the sources list holds the real ones. A line that sends
-  // the group to another expense-splitting app is dropped: the group already splits its costs in Group OS.
+  // the group to another expense-splitting app is dropped: the group already splits its costs in Sorted.
   const text = parts
     .join('\n')
     .split('\n')

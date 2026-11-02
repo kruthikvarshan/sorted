@@ -107,7 +107,7 @@ function tracePage(): string {
     )
     .join('');
   return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Group OS · WhatsApp trace</title>
+<title>Sorted · WhatsApp trace</title>
 <style>
 body{font:14px system-ui,sans-serif;margin:0;padding:16px;background:#efeae2;color:#111b21}
 h1{font-size:18px;margin:0 0 4px} p{margin:0 0 12px;color:#54656f}
@@ -115,7 +115,7 @@ table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;over
 td{padding:8px;border-bottom:1px solid #e9edef;vertical-align:top} td:nth-child(5){white-space:pre-wrap}
 tr.model td{background:#f0f6ff} tr.out td{background:#f3fbf6} tr.note td{background:#fff4f2}
 </style></head><body>
-<h1>Group OS · WhatsApp trace</h1>
+<h1>Sorted · WhatsApp trace</h1>
 <p>Every WhatsApp message in and out, and every call to Meta AI, newest first. Phone numbers are masked. Refresh to update.</p>
 <table><tbody>${rows || '<tr><td>No activity yet.</td></tr>'}</tbody></table>
 </body></html>`;

@@ -157,7 +157,7 @@ export class MetaModelService {
             [
               {
                 role: 'system',
-                content: 'You are Group OS. Answer the user directly in 2 to 3 sentences with exact evidence IDs [m_...]. Be concise.',
+                content: 'You are Sorted. Answer the user directly in 2 to 3 sentences with exact evidence IDs [m_...]. Be concise.',
               },
               { role: 'user', content: userQueryText.slice(-1200) },
             ],
@@ -237,7 +237,7 @@ export class MetaModelService {
           .join('\n\n')
       : '';
 
-    const systemPrompt = `You are Group OS, an evidence-backed intelligence assistant powered by Meta's ${model}.
+    const systemPrompt = `You are Sorted, an evidence-backed intelligence assistant powered by Meta's ${model}.
 You are currently focused on the active workspace: "${context.workspaceTitle}".
 
 CRITICAL MULTI-WORKSPACE REASONING RULES:
@@ -262,7 +262,7 @@ ${conflictsSnippet || 'None'}
 RECENT MESSAGES:
 ${transcriptSnippet}
 
-${otherWorkspacesSnippet ? `OTHER USER WORKSPACES IN GROUP OS:\n${otherWorkspacesSnippet}\n` : ''}
+${otherWorkspacesSnippet ? `OTHER USER WORKSPACES IN SORTED:\n${otherWorkspacesSnippet}\n` : ''}
 USER QUESTION: "${query}"
 
 Provide an accurate, grounded answer with exact citations:`;

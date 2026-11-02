@@ -95,7 +95,7 @@ export const WhatsAppChatImporter: React.FC<WhatsAppChatImporterProps> = ({
                 <h1 className="text-lg font-bold text-slate-900 tracking-tight">Import a chat</h1>
               </div>
               <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">
-                Bring in a WhatsApp chat as an exported .txt file, or paste the text. Group OS reads it and finds what was decided,
+                Bring in a WhatsApp chat as an exported .txt file, or paste the text. Sorted reads it and finds what was decided,
                 who promised what, who owes whom, and where plans clash.
               </p>
               <p className="text-[11px] text-slate-500 mt-1">

@@ -1,4 +1,4 @@
-# Group OS: roadmap to submission (Nov 4, 9 PM ET)
+# Sorted: roadmap to submission (Nov 4, 9 PM ET)
 
 ## Status (Nov 1)
 
@@ -10,14 +10,14 @@ Track 1 is built and running at `/live` (dev) and in the production server. Ever
 | 2,000-message test group + eval | ✅ | `eval/longChat/` (generate, evaluate, `--save-state`) |
 | Live rooms, QR/link join, live updates | ✅ | Works in dev and production (`npm start`) |
 | Live analysis (incremental) | ✅ | 1 new message in the 1,983-message chat read in ~28 s |
-| Group OS speaks up (rules in code) | ✅ | Clashes, payment claims, new splits; buttons fit the clash |
-| @GroupOS in the group | ✅ | Topic-aware, knows who is asking |
+| Sorted speaks up (rules in code) | ✅ | Clashes, payment claims, new splits; buttons fit the clash |
+| @Sorted in the group | ✅ | Topic-aware, knows who is asking |
 | Live panel (topics, money, private) | ✅ | Phone sheet + desktop side panel |
 | Settle up: Pay on WhatsApp + UPI | ✅ | Fewest payments, simplify-debts across topics |
 | Receipts → checked payment claim | ✅ | Muse Spark vision; only the payee can confirm |
 | Payee confirming in chat settles it | ✅ | Checked in code: the message must be from the payee |
 | Voice notes in rooms | ✅ | Muse Voice, playable |
-| Private Group OS across rooms | ✅ | Nothing stored; forged seats ignored |
+| Private Sorted across rooms | ✅ | Nothing stored; forged seats ignored |
 | Chat screenshot → messages | ✅ | Muse Spark vision, "You" mapped to the sender |
 | Plan out loud (speaker separation) | ✅ | Muse Voice diarization, assign voices, posts turns |
 | Group Wrapped | ✅ | Stats in code, background by Muse Image (painted in advance) |
@@ -38,16 +38,16 @@ Twilio. A feature built once works everywhere.
 
 ---
 
-## Track 1: "Group OS Live" (the best possible experience without WhatsApp)
+## Track 1: "Sorted" (the best possible experience without WhatsApp)
 
 Not a fake WhatsApp screenshot: a real, multi-phone, live product that shows the full vision, including the part
-WhatsApp does not allow yet (Group OS as a member of the group). Our own brand and look, WhatsApp-familiar but
+WhatsApp does not allow yet (Sorted as a member of the group). Our own brand and look, WhatsApp-familiar but
 never using WhatsApp's name, logo or identity as ours.
 
 ### What the judge experiences
 
 1. Scans a QR code, types a name, and is inside a live group with us on their own phone.
-2. People type plans. Group OS stays quiet until something matters, then speaks up in the group:
+2. People type plans. Sorted stays quiet until something matters, then speaks up in the group:
    "⚠️ Alex booked the villa for Friday, but Priya can only leave Saturday. [Draft a message] [Different things]".
 3. A swipe-up panel on every phone updates live: decided, not settled, disagreements, who owes whom, plan and spend.
 4. Someone drops a UPI screenshot: "Kiran paid Sita ₹1,500, receipt matches. Sita, confirm?" Sita taps Confirm on
@@ -58,8 +58,8 @@ never using WhatsApp's name, logo or identity as ours.
    filled in). There is no API for friend-to-friend WhatsApp Pay, so the person always pays in their own app.
 6. A Telugu voice note in the group is transcribed and counted like any message.
 7. "Plan out loud": tap the mic, three people argue in the room, the plan fills the screen as they speak.
-8. Private Group OS: each person's own chat with Group OS ("what do I owe across groups?", scope, voice).
-9. Any real chat: share a screenshot (or export) of a real WhatsApp group into private Group OS and it is read
+8. Private Sorted: each person's own chat with Sorted ("what do I owe across groups?", scope, voice).
+9. Any real chat: share a screenshot (or export) of a real WhatsApp group into private Sorted and it is read
    in seconds.
 10. "Group Wrapped": one tap makes a shareable recap image (Muse Image).
 
@@ -82,7 +82,7 @@ with several plans interleaved. This is fixed first, because every other feature
    groups inside a group); the group total nets all open topics.
 7. **Checked in code.** Message ids must exist, every message gets exactly one topic, low-confidence ones go to
    "general". A topic can be merged or renamed by a person.
-8. **Search and questions.** "@GroupOS what did we decide about the villa?" finds the topic first, then its
+8. **Search and questions.** "@Sorted what did we decide about the villa?" finds the topic first, then its
    messages and results.
 9. **UI.** A topic list in the panel (open first, closed collapsed), each with its own decided / money / plan;
    a timeline of topics across months; jump from a result to the exact message.
@@ -103,12 +103,12 @@ Your real trip export, anonymized and with friends' consent, is the second test 
 | **P0** | Topics + incremental reading for 1,000s of messages, with the 2,000-message test group and its eval | Real groups are long; everything depends on it | 1 day |
 | **P0** | Live rooms: QR/link join, names, real-time messages on all phones (server-sent events), SQLite | Everything else sits on it | 0.5 day |
 | **P0** | Live analysis: after each burst of messages, read only the new ones, update state, push the panel to every phone | The core magic, live | 0.5 day |
-| **P0** | Group OS speaks up (clashes, payment claims, new splits), rate-limited, with action buttons | The agentic wow | 0.25 day |
-| **P0** | @GroupOS in the group: answers from group results only, never anyone's private data | The dream feature | 0.25 day |
+| **P0** | Sorted speaks up (clashes, payment claims, new splits), rate-limited, with action buttons | The agentic wow | 0.25 day |
+| **P0** | @Sorted in the group: answers from group results only, never anyone's private data | The dream feature | 0.25 day |
 | **P0** | Live panel on phone (swipe-up) and desktop (side) reusing today's engine views | The "stats beside the group" | 0.25 day |
 | **P1** | Settle up: fewest payments per topic or group; **Pay on WhatsApp** (opens the chat with the payee, note ready, then WhatsApp Pay) + **Pay with any UPI app**; collect each person's number once; mark paid → claim → payee confirms | Drives WhatsApp Pay usage; Splitwise moment | 0.5 day |
 | **P1** | Receipts in the group: photo → Muse Spark vision → claim + receipt check → one-tap confirm | Proof, not trust | 0.25 day (built) |
-| **P1** | Private Group OS inside the Live app, using the *same* bot as WhatsApp (server/whatsapp/bot.ts) | Parity with Track 2 | 0.25 day |
+| **P1** | Private Sorted inside the Live app, using the *same* bot as WhatsApp (server/whatsapp/bot.ts) | Parity with Track 2 | 0.25 day |
 | **P1** | Screenshot → chat: image of any real chat → vision reads speakers and lines → imported group | Works with real WhatsApp today | 0.5 day |
 | **P1** | Voice notes in Live rooms: record on any phone, transcribed by Muse Voice on the server, sent to everyone. Reuses the web recorder, server ffmpeg and transcription already built | Multilingual, cheap reuse | 0.25 day |
 | **P2** | Plan out loud: record a conversation, Muse Voice speaker separation, map "Speaker 1 = Priya", each turn becomes a message, plan fills live. The `diarize` option exists; the flow and screen do not | Jaw-drop live moment | 0.5 day |
@@ -122,16 +122,16 @@ Your real trip export, anonymized and with friends' consent, is the second test 
 - Analysis queue per room: debounce ~8 s after the last message (or every 15 messages), extract with Meta on the
   new messages + current state, apply with the existing reducer, compute ledger/plan, push a diff.
 - Speak-up rules (code, not model): new open conflict, new payment claim, new split that includes people, payment
-  confirmed. Max one Group OS message per event, at most one per 20 s per room.
+  confirmed. Max one Sorted message per event, at most one per 20 s per room.
 - Bot actions: one function per feature returning channel-neutral output; renderers for `live`, `cloud`, `twilio`.
 - Trace page extended to Live rooms (judges see every model call).
 
 ### UI
 
 - Mobile-first group chat, our own green-teal brand, bubbles, ticks, typing dots.
-- Group OS messages styled as a member with action buttons.
+- Sorted messages styled as a member with action buttons.
 - Swipe-up panel with tabs: Decided · Money · Plan · Disagreements. Desktop shows it beside the chat.
-- Private Group OS tab next to the group.
+- Private Sorted tab next to the group.
 - Join screen with QR and a big "you are in" moment.
 
 ### Demo safety
@@ -145,8 +145,8 @@ Your real trip export, anonymized and with friends' consent, is the second test 
 With topics added, P0 alone is about 2.75 days of work, so the order matters and P2 is likely to be cut.
 
 - **Nov 1:** topics + incremental reading; generate the 2,000-message group; run the eval.
-- **Nov 2:** live rooms, topic-aware live analysis, speak-up, @GroupOS, panel with topics; deploy on Render.
-- **Nov 3 (morning):** P1: settle up with UPI, receipt confirm, screenshot import, private Group OS. Test with
+- **Nov 2:** live rooms, topic-aware live analysis, speak-up, @Sorted, panel with topics; deploy on Render.
+- **Nov 3 (morning):** P1: settle up with UPI, receipt confirm, screenshot import, private Sorted. Test with
   2 to 3 friends on real phones.
 - **Nov 3 (evening):** README, screenshots, video recording.
 - **Nov 4:** fixes only; submit by noon ET, not at 9 PM. P2 (voice in groups, plan-out-loud, Wrapped, PWA) only
@@ -158,20 +158,20 @@ With topics added, P0 alone is about 2.75 days of work, so the order matters and
 
 ### What WhatsApp allows (and what it does not)
 
-- ✅ Private 1:1 chat with Group OS: text, voice notes, images, documents, reply buttons (3), lists (10 rows),
+- ✅ Private 1:1 chat with Sorted: text, voice notes, images, documents, reply buttons (3), lists (10 rows),
   images we send.
 - ✅ Free replies for 24 hours after the person's last message. Outside 24 h only approved templates.
-- ❌ Group OS inside WhatsApp groups (needs an Official Business Account; not realistic now).
+- ❌ Sorted inside WhatsApp groups (needs an Official Business Account; not realistic now).
 - ❌ Any panel inside WhatsApp's screen.
 
 ### How each Live feature maps to WhatsApp
 
 | Live feature | On WhatsApp (1:1) |
 |---|---|
-| Group OS in the group | Share an export or **screenshot** of the group into the private chat; re-share to update. Same title = same group. |
+| Sorted in the group | Share an export or **screenshot** of the group into the private chat; re-share to update. Same title = same group. |
 | Live panel | A short status message + **Open board** link to the same panel on the web (signed, per-person link). |
-| Group OS speaks up | After each import, a private alert: "⚠️ New disagreement in Goa: …" with buttons. |
-| @GroupOS | "@goa what about the hotel?" in the private chat routes to that group. |
+| Sorted speaks up | After each import, a private alert: "⚠️ New disagreement in Goa: …" with buttons. |
+| @Sorted | "@goa what about the hotel?" in the private chat routes to that group. |
 | Draft a message to the group | Button opens WhatsApp with the text filled in (`https://wa.me/?text=…`); the person picks the group and sends. |
 | Settle up | Each payment with **Pay on WhatsApp** (opens the chat with the payee, note ready, then WhatsApp Pay) and a **Pay with any UPI app** link. |
 | Receipt confirm | Send the payment screenshot; the payee gets [Confirm] [Dispute] buttons. |
@@ -196,4 +196,4 @@ With topics added, P0 alone is about 2.75 days of work, so the order matters and
 9. **Later, optional:** submit utility templates ("group_update") for alerts outside 24 h.
 
 Already built for Track 2: `server/whatsapp/` (webhook verification, signatures, Cloud API + Twilio, text, voice,
-exports, SQLite, trace page, private Group OS commands).
+exports, SQLite, trace page, private Sorted commands).

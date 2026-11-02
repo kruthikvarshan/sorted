@@ -4,7 +4,7 @@ import { api } from './api';
 
 /**
  * Where the phone's share menu lands (Android, installed app): an image or text shared from WhatsApp or anywhere else.
- * The person picks which of their groups it is for; Group OS then reads it there.
+ * The person picks which of their groups it is for; Sorted then reads it there.
  */
 export const ShareInbox: React.FC<{ go: (path: string) => void }> = ({ go }) => {
   const [image, setImage] = useState<Blob | null>(null);
@@ -54,7 +54,7 @@ export const ShareInbox: React.FC<{ go: (path: string) => void }> = ({ go }) => 
     <div className="min-h-screen bg-[#efeae2] px-4 py-8">
       <div className="mx-auto max-w-sm space-y-4 rounded-2xl bg-white p-5 shadow-sm">
         <h1 className="text-base font-bold text-slate-900">Send to which group?</h1>
-        {preview ? <img src={preview} alt="Shared image" className="max-h-64 w-full rounded-lg object-contain bg-slate-50" /> : text ? <p className="rounded-lg bg-slate-50 p-3 text-sm text-slate-700">{text}</p> : <p className="flex items-center gap-2 text-sm text-slate-500"><ImageIcon className="w-4 h-4" /> Nothing was shared. Share a screenshot to Group OS from your phone's share menu, or <button onClick={() => go('/live')} className="font-semibold text-[#008069] underline">go to my groups</button>.</p>}
+        {preview ? <img src={preview} alt="Shared image" className="max-h-64 w-full rounded-lg object-contain bg-slate-50" /> : text ? <p className="rounded-lg bg-slate-50 p-3 text-sm text-slate-700">{text}</p> : <p className="flex items-center gap-2 text-sm text-slate-500"><ImageIcon className="w-4 h-4" /> Nothing was shared. Share a screenshot to Sorted from your phone's share menu, or <button onClick={() => go('/live')} className="font-semibold text-[#008069] underline">go to my groups</button>.</p>}
         {rooms === null ? (
           <Loader2 className="mx-auto w-5 h-5 animate-spin text-slate-400" />
         ) : rooms.length === 0 ? (

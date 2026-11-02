@@ -7,7 +7,7 @@ import path from 'node:path';
  * A quiet safety net for the Meta credit: every call to Meta's API is counted in dollars from Meta's own usage
  * numbers, and work pauses calmly before the credit could run out. Nothing a person sees ever says "out of tokens":
  *  - up to the soft limit, everything runs;
- *  - past it, background reading waits ("Group OS will read these a little later");
+ *  - past it, background reading waits ("Sorted will read these a little later");
  *  - past the hard limit, new Meta calls wait; everything already worked out (chat, money, settle-up) keeps working.
  * One group also has a daily share, so a single group cannot use everyone's credit.
  * Prices: Muse Spark $1.25 / $4.25 per million input / output tokens, web search $2.50 per 1,000 searches.
@@ -33,10 +33,10 @@ export class Resting extends Error {
   constructor(public why: 'background' | 'all' | 'room') {
     super(
       why === 'background'
-        ? 'Group OS will read these a little later.'
+        ? 'Sorted will read these a little later.'
         : why === 'room'
-          ? 'Group OS has done a lot in this group today and will pick up again soon. Everything already worked out still works.'
-          : 'Group OS is resting for a bit. Everything already worked out (chat, money, settle-up) still works.'
+          ? 'Sorted has done a lot in this group today and will pick up again soon. Everything already worked out still works.'
+          : 'Sorted is resting for a bit. Everything already worked out (chat, money, settle-up) still works.'
     );
   }
 }

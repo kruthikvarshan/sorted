@@ -13,11 +13,11 @@ interface PanelProps {
   onJump: (messageId: string) => void;
   onPaid: (to: string, amount: number, currency: string) => void;
   onSaveMe: (patch: { phone?: string; upi?: string }) => Promise<void>;
-  /** Which tab is open; the room controls it so the header's "My Group OS" button can open it. */
+  /** Which tab is open; the room controls it so the header's "My Sorted" button can open it. */
   tab?: Tab;
   onTab?: (t: Tab) => void;
   onPlan?: (topicId: string) => Promise<void>;
-  /** Group OS is still reading: topics found so far are shown even before their results are in. */
+  /** Sorted is still reading: topics found so far are shown even before their results are in. */
   reading?: boolean;
   /** Example group: made-up people, so no real numbers can be added. */
   example?: boolean;
@@ -53,7 +53,7 @@ const HowRead: React.FC<{ readBy?: PanelProps['readBy']; onReadFromScratch?: Pan
           className="w-full rounded-lg border border-[#008069] bg-white py-1.5 text-[12px] font-bold text-[#008069] disabled:opacity-50"
           data-testid="read-from-scratch"
         >
-          {busy ? 'Starting…' : '🔁 Watch Group OS read this whole group from scratch'}
+          {busy ? 'Starting…' : '🔁 Watch Sorted read this whole group from scratch'}
         </button>
       )}
       {note && <p className="text-rose-700">{note}</p>}
@@ -162,7 +162,7 @@ const People: React.FC<{ me: Person; members: Person[]; example?: boolean; onAdd
             </button>
           </div>
           {note && <p className={`text-[11px] ${note.ok ? 'text-emerald-700' : 'text-rose-700'}`}>{note.message}</p>}
-          <p className="text-[10px] text-slate-400">When they log in to Group OS with this number, this group is theirs, as themselves.</p>
+          <p className="text-[10px] text-slate-400">When they log in to Sorted with this number, this group is theirs, as themselves.</p>
         </div>
       )}
     </div>
@@ -331,7 +331,7 @@ export const LivePanel: React.FC<PanelProps> = ({ panel, me, members, onClose, o
         <div className="flex gap-1">
           {(['topics', 'money', 'me'] as Tab[]).map(t => (
             <button key={t} onClick={() => setTab(t)} className={`rounded-full px-3 py-1 text-xs font-semibold ${tab === t ? 'bg-[#008069] text-white' : 'text-slate-600 hover:bg-slate-100'}`}>
-              {t === 'topics' ? `Topics (${open.length})` : t === 'money' ? 'Money' : '🔒 My Group OS'}
+              {t === 'topics' ? `Topics (${open.length})` : t === 'money' ? 'Money' : '🔒 My Sorted'}
             </button>
           ))}
         </div>
@@ -346,8 +346,8 @@ export const LivePanel: React.FC<PanelProps> = ({ panel, me, members, onClose, o
         {tab === 'topics' && (
           <>
             {example && <HowRead readBy={readBy} onReadFromScratch={onReadFromScratch} />}
-            {panel.topics.length === 0 && reading && <p className="p-4 text-center text-xs text-slate-500">Group OS is sorting the chat into topics. They appear here as they are found.</p>}
-            {panel.topics.length === 0 && !reading && <p className="p-4 text-center text-xs text-slate-500">Nothing yet. As the group talks, Group OS sorts the chat into topics here: trips, bills, plans, each with what's decided and who owes whom.</p>}
+            {panel.topics.length === 0 && reading && <p className="p-4 text-center text-xs text-slate-500">Sorted is splitting the chat into topics. They appear here as they are found.</p>}
+            {panel.topics.length === 0 && !reading && <p className="p-4 text-center text-xs text-slate-500">Nothing yet. As the group talks, Sorted splits the chat into topics here: trips, bills, plans, each with what's decided and who owes whom.</p>}
             {open.map(t => <TopicView key={t.id} t={t} onJump={onJump} reading={reading} onPlan={onPlan} />)}
             {closed.length > 0 && <div className="pt-2 text-[10px] font-bold uppercase tracking-wide text-slate-400">Finished</div>}
             {closed.map(t => <TopicView key={t.id} t={t} onJump={onJump} onPlan={onPlan} />)}
@@ -386,7 +386,7 @@ export const LivePanel: React.FC<PanelProps> = ({ panel, me, members, onClose, o
                 {panel.settle.map((s, i) => {
                   const isMine = s.from.toLowerCase() === me.name.toLowerCase();
                   const payee = person(s.to);
-                  const note = `Group OS: settling up with ${s.to}`;
+                  const note = `Sorted: settling up with ${s.to}`;
                   return (
                     <li key={i} className={`rounded-lg border p-2 ${isMine ? 'border-[#008069] bg-emerald-50/50' : 'border-slate-200'}`} data-testid="settle-row">
                       <div className="text-xs">
@@ -396,7 +396,7 @@ export const LivePanel: React.FC<PanelProps> = ({ panel, me, members, onClose, o
                       {isMine && (
                         <div className="mt-1.5 flex flex-wrap gap-1.5">
                           {payee?.phone ? (
-                            <a href={whatsappPayLink(payee.phone, `Sending ${formatMoney(s.amount, s.currency)} (Group OS settle-up). I'll pay with WhatsApp Pay here.`)} target="_blank" rel="noreferrer" className="rounded-md bg-[#25d366] px-2.5 py-1 text-[11px] font-bold text-white">
+                            <a href={whatsappPayLink(payee.phone, `Sending ${formatMoney(s.amount, s.currency)} (Sorted settle-up). I'll pay with WhatsApp Pay here.`)} target="_blank" rel="noreferrer" className="rounded-md bg-[#25d366] px-2.5 py-1 text-[11px] font-bold text-white">
                               Pay on WhatsApp
                             </a>
                           ) : (

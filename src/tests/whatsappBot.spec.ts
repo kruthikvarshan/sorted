@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { SCENARIOS, toWhatsAppExport } from '../data/scenarios';
 import type { Proposal } from '../engine/eventReducer';
 
-// WhatsApp and Meta are replaced with fakes: these tests check what Group OS does with a message, not the network.
+// WhatsApp and Meta are replaced with fakes: these tests check what Sorted does with a message, not the network.
 const sent: { to: string; text: string }[] = [];
 vi.mock('../../server/whatsapp/channels', async importOriginal => ({
   ...(await importOriginal<typeof import('../../server/whatsapp/channels')>()),
@@ -45,7 +45,7 @@ beforeEach(() => {
   process.env.MODEL_API_KEY = 'test-key';
 });
 
-describe('Group OS over WhatsApp', () => {
+describe('Sorted over WhatsApp', () => {
   it('greets a new person and explains how to bring in a group, without posting anywhere else', async () => {
     await say('hi');
     expect(last()).toMatch(/Export chat/);

@@ -20,7 +20,7 @@ const STATUS_WORDS: Record<string, string> = {
   unresolved: 'Open question',
 };
 
-const WHO_WORDS: Record<string, string> = { model: 'Meta AI', user: 'A person', system: 'Group OS' };
+const WHO_WORDS: Record<string, string> = { model: 'Meta AI', user: 'A person', system: 'Sorted' };
 
 const statusTone = (status: string) =>
   status === 'confirmed'

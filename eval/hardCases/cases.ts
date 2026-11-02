@@ -1,5 +1,5 @@
 /**
- * Hard money cases: short real-looking chats, each built around one trap that broke Group OS before or could. Each has
+ * Hard money cases: short real-looking chats, each built around one trap that broke Sorted before or could. Each has
  * the exact balances a careful person would write down. Run with eval/hardCases/run.ts against the real Meta pipeline.
  */
 export interface HardCase {

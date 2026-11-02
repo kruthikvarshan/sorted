@@ -1,5 +1,5 @@
 /**
- * Runs every hard money case through the real Group OS pipeline (Muse Spark reading, code checking) and compares the
+ * Runs every hard money case through the real Sorted pipeline (Muse Spark reading, code checking) and compares the
  * balances with the expected ones, to the rupee.
  *
  *   npx tsx eval/hardCases/run.ts            all cases

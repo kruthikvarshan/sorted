@@ -154,7 +154,7 @@ export const PrivatePersonalAssistant: React.FC<PrivatePersonalAssistantProps> =
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-sm sm:text-base font-bold text-slate-900 tracking-tight">
-                My Group OS
+                My Sorted
               </h2>
               <span className="text-[10px] font-mono bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full border border-indigo-200 font-bold">
                 Viewing as {currentUser.name}

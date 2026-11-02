@@ -1,4 +1,4 @@
-// Group OS service worker: only one job, receiving images shared from the phone's share menu (Android).
+// Sorted service worker: only one job, receiving images shared from the phone's share menu (Android).
 // The shared image is kept in this phone's cache until the person picks a group; then it is removed.
 const SHARE_CACHE = 'groupos-share';
 

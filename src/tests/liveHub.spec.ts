@@ -35,22 +35,30 @@ describe('live rooms', () => {
     expect(hub.snapshot(room.id, 'forged')).toBeUndefined();
   });
 
-  it('@GroupOS gets an answer in the group', async () => {
+  it('@Sorted gets an answer in the group', async () => {
+    const room = hub.createRoom('Goa gang');
+    const neha = hub.joinRoom(room.id, 'Neha').member!;
+    hub.postMessage(room.id, neha.token, '@Sorted how much is the villa?');
+    await new Promise(r => setTimeout(r, 10));
+    const last = hub.snapshot(room.id, neha.token)!.messages.at(-1)!;
+    expect(last.speakerName).toBe('Sorted');
+    expect(last.content).toMatch(/4,000 each/);
+  });
+
+  it('still answers @GroupOS, its old name', async () => {
     const room = hub.createRoom('Goa gang');
     const neha = hub.joinRoom(room.id, 'Neha').member!;
     hub.postMessage(room.id, neha.token, '@GroupOS how much is the villa?');
     await new Promise(r => setTimeout(r, 10));
-    const last = hub.snapshot(room.id, neha.token)!.messages.at(-1)!;
-    expect(last.speakerName).toBe('Group OS');
-    expect(last.content).toMatch(/4,000 each/);
+    expect(hub.snapshot(room.id, neha.token)!.messages.at(-1)!.speakerName).toBe('Sorted');
   });
 
-  it('reads only people\'s messages, never Group OS\'s own', async () => {
+  it('reads only people\'s messages, never Sorted\'s own', async () => {
     const room = hub.createRoom('Goa gang');
     const neha = hub.joinRoom(room.id, 'Neha').member!;
     hub.postMessage(room.id, neha.token, 'rent 9000 each');
     const entry = hub.roomEntry(room.id)!;
-    hub.botMessage(entry, 'I am Group OS');
+    hub.botMessage(entry, 'I am Sorted');
     vi.mocked(analyzeGroup).mockResolvedValue({ state: { ...empty(), readThrough: 1 }, report: { newMessages: 1, batches: 1, topicsCreated: [], topicsUpdated: [], corrections: [], tokens: 0, calls: 0, failedTopics: [], ms: 1 } });
     await hub.analyse(entry);
     const sent = vi.mocked(analyzeGroup).mock.calls[0][0];
@@ -69,7 +77,7 @@ describe('seats in the sample group', () => {
   });
 });
 
-describe('Group OS speaks up, by rules', () => {
+describe('Sorted speaks up, by rules', () => {
   const setup = () => {
     const room = hub.createRoom('Flat');
     const neha = hub.joinRoom(room.id, 'Neha').member!;
@@ -127,7 +135,7 @@ describe('limits on a public link', () => {
   });
 });
 
-describe('when Group OS reads', () => {
+describe('when Sorted reads', () => {
   const report = { newMessages: 0, batches: 0, topicsCreated: [], topicsUpdated: [], corrections: [], tokens: 0, calls: 0, failedTopics: [], ms: 1 };
   const tick = () => new Promise(r => setTimeout(r, 20));
 
@@ -158,15 +166,15 @@ describe('when Group OS reads', () => {
     expect(hub.readNow(room.id, neha.token)).toEqual({ ok: true, message: 'Everything is already read' });
   });
 
-  it('reads the new messages before answering @GroupOS', async () => {
+  it('reads the new messages before answering @Sorted', async () => {
     const room = hub.createRoom('Group');
     const neha = hub.joinRoom(room.id, 'Neha').member!;
     vi.mocked(analyzeGroup).mockImplementation(async (messages: any) => ({ state: { ...empty(), readThrough: messages.length }, report }));
     hub.postMessage(room.id, neha.token, 'villa is 24000');
-    hub.postMessage(room.id, neha.token, '@GroupOS how much is the villa?');
+    hub.postMessage(room.id, neha.token, '@Sorted how much is the villa?');
     await tick();
     expect(analyzeGroup).toHaveBeenCalled();
-    expect(hub.snapshot(room.id, neha.token)!.messages.at(-1)!.speakerName).toBe('Group OS');
+    expect(hub.snapshot(room.id, neha.token)!.messages.at(-1)!.speakerName).toBe('Sorted');
   });
 });
 
@@ -236,7 +244,7 @@ describe('payment screenshots', () => {
   });
 });
 
-describe('people acting while Group OS reads', () => {
+describe('people acting while Sorted reads', () => {
   it('a payment screenshot sent during a read is still there when the read finishes', async () => {
     let finish!: (v: any) => void;
     vi.mocked(analyzeGroup).mockImplementation((_m: any, start: any) => new Promise(res => (finish = () => res({ state: { ...start, readThrough: 1 }, report: { newMessages: 1, batches: 1, topicsCreated: [], topicsUpdated: [], corrections: [], tokens: 0, calls: 1, failedTopics: [], ms: 1 } }))));
@@ -268,7 +276,7 @@ describe('people acting while Group OS reads', () => {
 });
 
 describe('joining safely', () => {
-  it('refuses a name Group OS could mix up with someone already there, and a seat kept for a phone number', () => {
+  it('refuses a name Sorted could mix up with someone already there, and a seat kept for a phone number', () => {
     const room = hub.createRoom('Flat');
     const k = hub.joinRoom(room.id, 'Kruthik').member!;
     hub.joinRoom(room.id, 'Ravi K');

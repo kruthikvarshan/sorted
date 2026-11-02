@@ -3,13 +3,13 @@ import { topicMessages } from '../engine/topics';
 import { MetaModelService } from './metaModelService';
 
 /**
- * "@GroupOS what did we decide about the villa?" in a long group chat. The question is matched to the topics it is
+ * "@Sorted what did we decide about the villa?" in a long group chat. The question is matched to the topics it is
  * about first, so the model sees those topics' results and recent messages, not 2,000 lines. The answer is posted in
  * the group, so only group information is used, never anyone's private data.
  */
 
 const words = (s: string) => new Set((s.toLowerCase().match(/[\p{L}\p{N}]{3,}/gu) ?? []).filter(w => !STOP.has(w)));
-const STOP = new Set(['what', 'did', 'the', 'and', 'for', 'who', 'how', 'much', 'are', 'was', 'were', 'about', 'with', 'that', 'this', 'have', 'has', 'groupos', 'decide', 'decided', 'does', 'any']);
+const STOP = new Set(['what', 'did', 'the', 'and', 'for', 'who', 'how', 'much', 'are', 'was', 'were', 'about', 'with', 'that', 'this', 'have', 'has', 'groupos', 'sorted', 'decide', 'decided', 'does', 'any']);
 
 /** Topics most likely meant by the question, best first. Ties go to the most recently active. */
 export function relevantTopics(question: string, topics: Topic[], state: GroupIntelligenceState, max = 3): Topic[] {
@@ -42,7 +42,7 @@ export function buildGroupQuestion(question: string, groupTitle: string, topics:
   return [
     {
       role: 'system' as const,
-      content: `You are Group OS, a member of the WhatsApp group "${groupTitle}". Answer the question in 1 to 4 short lines, in the language the question is written in, like a helpful friend.
+      content: `You are Sorted, a member of the WhatsApp group "${groupTitle}". Answer the question in 1 to 4 short lines, in the language the question is written in, like a helpful friend.
 Use only the facts below. Name the topic you are answering from. If something is not decided yet or people disagree, say so plainly. Money totals in "Money" were worked out by the app: quote them exactly, never add numbers yourself. If the facts do not answer it, say you could not find it in the chat.${asker ? `\nThe question is from ${asker}: "I", "me" and "my" mean ${asker}. Answer them directly ("You owe…").` : ''}`,
     },
     {

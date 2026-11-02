@@ -1,4 +1,4 @@
-# Group OS: future scope
+# Sorted: future scope
 
 Grouped by when it can happen. **Hackathon** = can be built or switched on before the deadline. **Next** = a few weeks. **Ultimate** = the version Meta could ship inside WhatsApp. Each item says why it matters.
 
@@ -46,9 +46,9 @@ Grouped by when it can happen. **Hackathon** = can be built or switched on befor
 | Item | When | Why |
 |---|---|---|
 | Approved reminder template (`group_os_reminder`) | Hackathon (submitted) | Reminders reach anyone, not only people who messaged in the last 24 hours |
-| Incoming messages (webhook): forward messages, screenshots and voice notes to the Group OS number; it asks which group and files them; "What do I owe?" answered in WhatsApp | Hackathon / Next | The private Group OS lives in WhatsApp; needs the fixed address and the app published |
-| A verified business number named "Group OS" | Next | Reminders show "Group OS", not "Test Number", and reach anyone |
-| Inside WhatsApp groups | Ultimate | The Groups API needs an Official Business Account and still cannot join existing groups. Only Meta can put this inside WhatsApp groups, next to @Meta AI. This app is the blueprint: Message Summaries recap what you missed; Group OS remembers what the group agreed and keeps everyone to it |
+| Incoming messages (webhook): forward messages, screenshots and voice notes to the Sorted number; it asks which group and files them; "What do I owe?" answered in WhatsApp | Hackathon / Next | The private Sorted lives in WhatsApp; needs the fixed address and the app published |
+| A verified business number named "Sorted" | Next | Reminders show "Sorted", not "Test Number", and reach anyone |
+| Inside WhatsApp groups | Ultimate | The Groups API needs an Official Business Account and still cannot join existing groups. Only Meta can put this inside WhatsApp groups, next to @Meta AI. This app is the blueprint: Message Summaries recap what you missed; Sorted remembers what the group agreed and keeps everyone to it |
 
 ## 5. Features
 
@@ -56,12 +56,12 @@ Grouped by when it can happen. **Hackathon** = can be built or switched on befor
 |---|---|---|
 | "Seen on Instagram" spots in trip ideas (public Instagram pages from Meta web search) | Hackathon | Tested: the search returns public Instagram profiles and posts |
 | Plan out loud moved into a "+" menu; the composer simplified | Hackathon | Two audio buttons side by side confuse people |
-| Polls inside the chat that Group OS counts ("Saturday or Sunday?") | Next | Decisions become explicit |
+| Polls inside the chat that Sorted counts ("Saturday or Sunday?") | Next | Decisions become explicit |
 | Calendar export of "Coming up" (.ics) | Next | Plans land where people look |
 | Shared lists (packing, groceries) from the chat | Next | Another common group job |
-| Group OS speaking up proactively ("Rohan still owes for the villa; trip is in 3 days") with quiet hours | Next | The member who keeps track also reminds, politely |
+| Sorted speaking up proactively ("Rohan still owes for the villa; trip is in 3 days") with quiet hours | Next | The member who keeps track also reminds, politely |
 | Languages beyond Hindi and Telugu written in English letters (Tamil, Kannada, Bengali, native scripts) | Next | India's groups |
-| Ray-Ban Meta glasses: "Hey Meta, what do I owe in Flat 7B?" | Ultimate | Hands-free, same private Group OS |
+| Ray-Ban Meta glasses: "Hey Meta, what do I owe in Flat 7B?" | Ultimate | Hands-free, same private Sorted |
 | Groups on Messenger and Instagram DMs | Ultimate | Same brain, every Meta surface |
 
 ## 6. Easier to use

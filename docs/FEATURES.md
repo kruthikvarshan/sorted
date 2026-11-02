@@ -1,6 +1,6 @@
-# Group OS: everything a person can do
+# Sorted: everything a person can do
 
-Group OS is a group chat with a member that keeps track: what the group decided, who owes whom, who promised what, and what is coming up. It runs on Meta AI (Muse Spark, Muse Voice, Muse Image, Meta web search); every amount it shows is calculated in code from quoted messages, never guessed.
+Sorted is a group chat with a member that keeps track: what the group decided, who owes whom, who promised what, and what is coming up. It runs on Meta AI (Muse Spark, Muse Voice, Muse Image, Meta web search); every amount it shows is calculated in code from quoted messages, never guessed.
 
 Legend: **Meta** = which Meta capability does the reading or making. **Checked by code** = what is verified before anything is shown.
 
@@ -12,7 +12,7 @@ Legend: **Meta** = which Meta capability does the reading or making. **Checked b
 | Example groups | Nothing: 8 groups (800–5,000 messages) arrive with the account, already read, under the person's own name | Muse Spark read them | Marked EXAMPLE, made-up people, nobody can join as them; a character whose name clashes with the person's is renamed |
 | Real groups | Start a group, invite by QR or link | — | Only the creator can delete it for everyone |
 | Add people by phone | Add a name + number in the group | — | When that person signs up with the number, the group appears for them, as themselves; nobody else can take that seat |
-| My Group OS follows | Choose which groups the private view follows | — | Each group counted on its own, never netted with another |
+| My Sorted follows | Choose which groups the private view follows | — | Each group counted on its own, never netted with another |
 | Delete a group | Delete (for everyone if you made it) | — | Deleted groups never come back, even if a read was running |
 
 ## 2. Chatting
@@ -22,13 +22,13 @@ Legend: **Meta** = which Meta capability does the reading or making. **Checked b
 | Text chat | Type as in WhatsApp; live on every phone | — | — |
 | Voice notes | Hold the mic | **Muse Voice** transcribes (Hindi, Telugu, English…) | Shown as a voice note with the audio kept |
 | Plan out loud | Record the group talking around a table | **Muse Voice** separates speakers | People assign each voice to a member before anything is posted |
-| @GroupOS questions | "@GroupOS what's the villa cost each?" | **Muse Spark** answers from the group's results | Answer quotes the messages it is based on |
+| @Sorted questions | "@Sorted what's the villa cost each?" | **Muse Spark** answers from the group's results | Answer quotes the messages it is based on |
 | Payment screenshot | Send a GPay/PhonePe/UPI screenshot | **Muse Spark vision** reads amount, payer, payee, reference | Matched against what you owe that person; the same screenshot twice is caught; the receiver must confirm |
 | Chat screenshot | Send a screenshot of any chat | **Muse Spark vision** copies every message word for word | Added as messages marked "from a screenshot", then read like the rest |
 | Group Wrapped | Tap ✨ | **Muse Image** paints the background | Every number on the card counted in code |
-| Reading status | See how far Group OS has read and when it reads next; Read now | — | Reads after 15 new messages or a quiet minute; never re-reads |
+| Reading status | See how far Sorted has read and when it reads next; Read now | — | Reads after 15 new messages or a quiet minute; never re-reads |
 
-## 3. What Group OS works out (the panel)
+## 3. What Sorted works out (the panel)
 
 | Feature | What the person sees | Meta | Checked by code |
 |---|---|---|---|
@@ -55,7 +55,7 @@ Legend: **Meta** = which Meta capability does the reading or making. **Checked b
 | 🧭 Plan this trip | On a trip topic, check the form (where to, from, dates, budget, people) and fill anything missing | **Muse Spark + Meta web search** | Facts come only from agreed or proposed decisions (with quotes); nothing assumed; searches only when all five are known |
 | Ideas with sources | Stays, travel, things to do, a money tip, "⚠️ Heads-up" if the plan looks off | **Meta web search** | Only links the search returned; at most two per website; no other splitting app is ever suggested |
 
-## 6. My Group OS (private)
+## 6. My Sorted (private)
 
 | Feature | What the person sees | Meta | Checked by code |
 |---|---|---|---|

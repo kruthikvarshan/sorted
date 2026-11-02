@@ -8,11 +8,11 @@ import {createForwarder} from './server/proxy';
 function metaProxy(serverKey: string | undefined, env: Record<string, string>): Plugin {
   const forward = createForwarder({serverKey: process.env.ALLOW_PUBLIC_PROXY === '1' ? serverKey : undefined});
   return {
-    name: 'group-os-meta-proxy',
+    name: 'sorted-meta-proxy',
     configureServer(server) {
       // The WhatsApp side runs in this same server during development, with the same handlers as production.
       for (const [k, v] of Object.entries(env)) if (/^(MODEL_API_KEY|META_API_BASE|WHATSAPP_|TWILIO_|PUBLIC_URL|GROUP_OS_DB)/.test(k)) process.env[k] = v;
-      // Live rooms (the multi-phone group with Group OS as a member), same handler as production.
+      // Live rooms (the multi-phone group with Sorted as a member), same handler as production.
       server.middlewares.use(async (req, res, next) => {
         if (!req.url?.startsWith('/live/api/')) return next();
         const {handleLive} = await server.ssrLoadModule('/server/live/http.ts');

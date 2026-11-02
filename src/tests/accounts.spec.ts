@@ -25,8 +25,8 @@ describe('accounts', () => {
     expect(login('9876543210', '4821').error).toMatch(/Too many wrong PINs/);
   });
 
-  it('nobody can sign up as "Group OS"', () => {
-    expect(login('9876543211', '1234', { name: 'Group OS', signup: true }).error).toMatch(/taken by Group OS/);
+  it('nobody can sign up as "Sorted"', () => {
+    expect(login('9876543211', '1234', { name: 'Sorted', signup: true }).error).toMatch(/taken by Sorted/);
   });
 
   it('one account per number: signing up twice is refused, logging in without an account is refused', () => {

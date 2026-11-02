@@ -14,7 +14,7 @@ import { exportText, titleFromFilename, toWav16k } from './media';
 import { addTrace, deleteEverything, deleteGroup, getGroup, getPerson, listGroups, Person, saveGroup, savePerson, StoredGroup } from './store';
 
 /**
- * Group OS inside WhatsApp, as a private 1:1 chat. A person shares a group's exported chat; Group OS reads it with
+ * Sorted inside WhatsApp, as a private 1:1 chat. A person shares a group's exported chat; Sorted reads it with
  * Meta AI using the same engine as the web app, and answers questions about the groups that person chose.
  * It never posts to a group and never mixes one person's groups with another's.
  */
@@ -26,7 +26,7 @@ const EMPTY: GroupIntelligenceState = { decisions: [], commitments: [], conflict
 /* ---------------- replies ---------------- */
 
 const INTRO = [
-  "Hi! I'm *Group OS*. I turn your WhatsApp group chats into what's decided, who owes whom, and what's next.",
+  "Hi! I'm *Sorted*. I turn your WhatsApp group chats into what's decided, who owes whom, and what's next.",
   '',
   '*Bring in a group:* open the group, tap ⋮ (or the group name) › Export chat › Without media, and share it to me. Please let the group know you are doing it.',
   '',
@@ -222,7 +222,7 @@ export async function handleInbound(msg: Inbound): Promise<void> {
       person = { phone: msg.from, scope: null, createdAt: new Date().toISOString() };
       savePerson(person);
     }
-    if (!key()) return reply('Group OS is not connected to Meta AI on this server yet. Please try again later.');
+    if (!key()) return reply('Sorted is not connected to Meta AI on this server yet. Please try again later.');
 
     // Files: a chat export, or a voice note.
     for (const m of msg.media) {

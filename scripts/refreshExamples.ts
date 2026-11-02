@@ -1,5 +1,5 @@
 /**
- * Replaces the example groups in one account with the latest versions (after a re-read), keeping which ones My Group OS
+ * Replaces the example groups in one account with the latest versions (after a re-read), keeping which ones My Sorted
  * follows. Real groups (and groups added with addGroupToAccount, like Flat 7B) are not touched.
  *
  *   npx tsx scripts/refreshExamples.ts --phone=+919876543210

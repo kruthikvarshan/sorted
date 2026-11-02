@@ -8,6 +8,7 @@ import {
   History,
   Calendar,
   Settings,
+  Check,
   CheckCircle2,
   Shield,
   MessageSquare,
@@ -66,11 +67,11 @@ export const SidebarLeft: React.FC<SidebarLeftProps> = ({
       <div className="bg-[#008069] px-4 py-3 flex items-center justify-between text-white shadow-xs">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-full bg-white/20 border border-white/30 flex items-center justify-center font-bold text-xs tracking-tight">
-            G·OS
+            <Check className="w-4 h-4" strokeWidth={3.5} aria-hidden />
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-bold text-sm tracking-tight">Group OS</span>
+              <span className="font-bold text-sm tracking-tight">Sorted</span>
             </div>
             <p className="text-[10px] text-emerald-100 font-medium leading-none mt-0.5">
               Your conversations are messy. Your plans shouldn't be.
@@ -127,7 +128,7 @@ export const SidebarLeft: React.FC<SidebarLeftProps> = ({
         >
           <div className="flex items-center gap-1.5">
             <UserCheck className="w-3.5 h-3.5" />
-            <span>My Group OS</span>
+            <span>My Sorted</span>
           </div>
           <span
             className={`text-[10px] px-1 py-0.2 rounded ${

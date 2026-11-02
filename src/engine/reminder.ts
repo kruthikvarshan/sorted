@@ -6,7 +6,7 @@ import { sameName } from './receiptVerifier';
 /**
  * The WhatsApp reminder one person gets about one group: what they owe (per person, netted inside the group, with the
  * bills behind it), what they promised, and payments to them waiting for their confirmation. Written in code from what
- * Group OS already worked out, never by the model, so every amount matches the group's panel.
+ * Sorted already worked out, never by the model, so every amount matches the group's panel.
  */
 
 export interface Reminder {
@@ -46,7 +46,7 @@ export function buildReminder(opts: { panel: Panel; commitments: Commitment[]; p
   const count = debts.length + promises.length + confirm.length;
   if (!count) return null;
 
-  const lines = [`Hi ${person} 👋 Group OS here, from "${group}". ${from} asked me to send you a reminder.`];
+  const lines = [`Hi ${person} 👋 Sorted here, from "${group}". ${from} asked me to send you a reminder.`];
   if (debts.length) {
     lines.push('', '💸 You owe:');
     debts.forEach(d => lines.push(`• ${d.to} ${formatMoney(d.amount, d.currency)}${d.why.length ? ` (${[...new Set(d.why)].slice(0, 3).join(', ')})` : ''}`));

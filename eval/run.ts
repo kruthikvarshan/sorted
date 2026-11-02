@@ -110,7 +110,7 @@ async function main() {
     console.error(`No scenario matches. Available: ${SCENARIOS.map(s => s.id).join(', ')}`);
     process.exit(1);
   }
-  console.log(`\nGroup OS evaluation | ${oracleMode ? 'ORACLE (offline, checks the harness)' : `model ${model}`} | ${chosen.length} scenario(s) x ${runs} run(s)\n`);
+  console.log(`\nSorted evaluation | ${oracleMode ? 'ORACLE (offline, checks the harness)' : `model ${model}`} | ${chosen.length} scenario(s) x ${runs} run(s)\n`);
   console.log(`${pad('scenario', 22)}${pad('recall', 9)}${pad('traps hit', 11)}${pad('rejected', 10)}${pad('rounds', 8)}${pad('tokens', 9)}secs`);
 
   const all: RunResult[] = [];

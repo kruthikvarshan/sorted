@@ -24,10 +24,10 @@ import { planTrip, tripBrief, tripFacts, TripFacts, TRIP_FACTS } from '../../src
 import { GroupIntelligenceState, Message, User, Workspace } from '../../src/types/groupOs';
 
 /**
- * Live rooms: a group chat that real people join from their phones (QR or link), with Group OS as a member.
+ * Live rooms: a group chat that real people join from their phones (QR or link), with Sorted as a member.
  * Messages are stored in SQLite and pushed to every phone at once (server-sent events). After each burst of messages
  * the room is read with the topic pipeline (only new messages), the panel is rebuilt in code and pushed, and
- * Group OS speaks up when something needs the group: a new disagreement, a payment someone says they made, a new
+ * Sorted speaks up when something needs the group: a new disagreement, a payment someone says they made, a new
  * split. When it speaks is decided by these rules, not by the model.
  */
 
@@ -53,13 +53,13 @@ export interface BotAction {
 
 export interface LiveMessage extends Message {
   actions?: BotAction[];
-  /** Group OS messages: what triggered it. */
+  /** Sorted messages: what triggered it. */
   reason?: string;
   audioUrl?: string;
   imageUrl?: string;
   /** Read from a screenshot someone shared, not typed in this room. */
   fromScreenshot?: boolean;
-  /** Web sources behind a Group OS message (trip ideas). Only links the search returned. */
+  /** Web sources behind a Sorted message (trip ideas). Only links the search returned. */
   sources?: { title: string; url: string }[];
 }
 
@@ -82,10 +82,12 @@ export interface Room {
 type Event = { type: 'message'; message: LiveMessage } | { type: 'panel'; panel: Panel; analysing: boolean; lastAnalysis?: Room['lastAnalysis']; read: number; people: number } | { type: 'members'; members: { id: string; name: string }[] } | { type: 'analysing'; on: boolean; label?: string }
   | { type: 'reading'; read: number; people: number; lastReadId?: string; nextReadAt?: number; burst: number };
 
-const BOT = 'Group OS';
+const BOT = 'Sorted';
+/** "@Sorted" asks Sorted a question ("@GroupOS", its old name, still works). */
+const MENTION = /@\s?(?:sorted|group\s?os)\b/i;
 /**
- * When Group OS reads, so a busy group is not re-read for every message: after BURST new messages, or once the chat
- * has been quiet for QUIET_MS, or straight away for @GroupOS, a payment screenshot or "Read now". Each read covers
+ * When Sorted reads, so a busy group is not re-read for every message: after BURST new messages, or once the chat
+ * has been quiet for QUIET_MS, or straight away for @Sorted, a payment screenshot or "Read now". Each read covers
  * only the new messages and the topics they touch.
  */
 export const QUIET_MS = Number(process.env.LIVE_QUIET_MS ?? 60000);
@@ -125,7 +127,7 @@ interface Entry {
   private: Map<string, LiveMessage[]>;
   /** Payment screenshots waiting for Meta AI to record the payment they prove. */
   receipts: { messageId: string; claimId: string }[];
-  /** What Group OS is doing right now, for phones that check in instead of listening. */
+  /** What Sorted is doing right now, for phones that check in instead of listening. */
   label?: string;
   /** When the next read will happen if nothing else arrives (epoch ms). */
   nextReadAt?: number;
@@ -200,7 +202,7 @@ const rooms = new Map<string, Entry>();
 // Background work (reads, paintings, answers) that fails is logged, never fatal: also covers the dev server.
 if (!(globalThis as any).__groupOsRejectionGuard) {
   (globalThis as any).__groupOsRejectionGuard = true;
-  process.on('unhandledRejection', err => console.error('[group-os] background error:', err));
+  process.on('unhandledRejection', err => console.error('[sorted] background error:', err));
 }
 
 function saveRoom(room: Room) {
@@ -284,8 +286,8 @@ export function joinRoom(roomId: string, name: string): { member?: LiveMember; e
   let member = entry.room.members.find(m => m.name.toLowerCase() === clean.toLowerCase());
   if (member && member.claimed !== false) return { error: `${member.name} is already in this group on another phone. Pick another name.` };
   // A seat kept for someone's phone number is theirs: it opens when they log in with that number.
-  if (member?.phone) return { error: `${member.name}'s place is kept for their phone number. They get in by logging in to Group OS with it.` };
-  // Two names Group OS could mix up ("Ravi" and "Ravi K") would mix up their money.
+  if (member?.phone) return { error: `${member.name}'s place is kept for their phone number. They get in by logging in to Sorted with it.` };
+  // Two names Sorted could mix up ("Ravi" and "Ravi K") would mix up their money.
   const near = !member && entry.room.members.find(m => sameName(m.name, clean) === true);
   if (near) return { error: `Someone called ${near.name} is already in this group. Use a name that is clearly different, for example with your surname.` };
   if (member) member.claimed = true;
@@ -353,7 +355,7 @@ export function seatsForPhone(phone: string): { roomId: string; token: string }[
 export const SCRATCH_MAX = 1000;
 
 /**
- * Forget everything Group OS worked out for an example group and read it again from the first message, live, so a
+ * Forget everything Sorted worked out for an example group and read it again from the first message, live, so a
  * person can watch real Meta reads build the topics and money. Only small example groups, once.
  */
 export function readFromScratch(roomId: string, token: string): { ok: boolean; message?: string } {
@@ -363,7 +365,7 @@ export function readFromScratch(roomId: string, token: string): { ok: boolean; m
   if (!entry.room.example) return { ok: false, message: 'Only example groups can be read again from scratch.' };
   if (peopleMessages(entry).length > SCRATCH_MAX) return { ok: false, message: 'This group is too long to read again here; Gym Squad is the one to watch.' };
   if (entry.room.rereadFromScratch) return { ok: false, message: 'This group was already read again from scratch.' };
-  if (entry.room.analysing) return { ok: false, message: 'Group OS is reading right now; try again in a moment.' };
+  if (entry.room.analysing) return { ok: false, message: 'Sorted is reading right now; try again in a moment.' };
   entry.room.rereadFromScratch = true;
   entry.room.state = { decisions: [], commitments: [], conflicts: [], evidenceMap: {}, history: [], topics: [], readThrough: 0 };
   saveRoom(entry.room);
@@ -405,7 +407,7 @@ export function snapshot(roomId: string, token: string) {
     messages: entry.messages.slice(-400),
     total: entry.messages.length,
     start: Math.max(0, entry.messages.length - 400),
-    /** People's messages Group OS has read (its own messages are never read). */
+    /** People's messages Sorted has read (its own messages are never read). */
     ...readingStatus(entry),
     panel: buildPanel(workspaceOf(entry.room), entry.room.state, entry.messages, { defaultCurrency: '₹' }),
     analysing: entry.room.analysing,
@@ -501,7 +503,7 @@ export function postMessage(roomId: string, token: string, text: string, opts: P
     ...(opts.imageUrl ? { imageUrl: opts.imageUrl } : {}),
   };
   append(entry, m);
-  if (/@\s?group\s?os\b/i.test(content)) void answerMention(entry, content, member.name);
+  if (MENTION.test(content)) void answerMention(entry, content, member.name);
   schedule(entry);
   return m;
 }
@@ -539,7 +541,7 @@ function schedule(entry: Entry, now = false) {
   }, wait);
 }
 
-/** Only people's messages are read: Group OS's own messages are never evidence. */
+/** Only people's messages are read: Sorted's own messages are never evidence. */
 const peopleMessages = (entry: Entry) => entry.messages.filter(m => m.speakerId !== 'groupos');
 
 export async function analyse(entry: Entry): Promise<void> {
@@ -663,15 +665,15 @@ async function answerMention(entry: Entry, question: string, asker?: string) {
   if (!key()) return void botMessage(entry, 'I’m not connected to Meta AI on this server yet.');
   // Read what is new first, so the answer includes the latest messages.
   if (peopleMessages(entry).length > (entry.room.state.readThrough ?? 0)) {
-    emit(entry, { type: 'analysing', on: true, label: 'Group OS is catching up on the latest messages…' });
+    emit(entry, { type: 'analysing', on: true, label: 'Sorted is catching up on the latest messages…' });
     if (!entry.room.analysing) await analyse(entry);
     for (let i = 0; i < 120 && entry.room.analysing; i++) await new Promise(r => setTimeout(r, 1000));
   }
   const deduped = dedupeBills(entry.room.state);
   const ledger = computeGroupLedger(workspaceOf(entry.room), deduped.decisions, deduped.commitments, { conflicts: entry.room.state.conflicts, evidenceMap: entry.room.state.evidenceMap, messages: entry.messages, defaultCurrency: '₹', topics: entry.room.state.topics });
   const moneyLines = ledger.pairs.map(p => `${p.from} owes ${p.to} ${p.currency}${p.amount.toLocaleString('en-IN')} (${p.items.map(i => i.reason).join(', ')})`);
-  emit(entry, { type: 'analysing', on: true, label: 'Group OS is typing…' });
-  const res = await answerGroupQuestion(key(), question.replace(/@\s?group\s?os/gi, '').trim(), {
+  emit(entry, { type: 'analysing', on: true, label: 'Sorted is typing…' });
+  const res = await answerGroupQuestion(key(), question.replace(new RegExp(MENTION.source, 'gi'), '').trim(), {
     groupTitle: entry.room.title,
     topics: entry.room.state.topics ?? [],
     state: entry.room.state,
@@ -680,7 +682,7 @@ async function answerMention(entry: Entry, question: string, asker?: string) {
     asker,
   });
   emit(entry, { type: 'analysing', on: entry.room.analysing });
-  trace(entry, `Meta ${res.model}: answered @GroupOS in "${entry.room.title}" from ${(entry.room.state.topics ?? []).length} topic(s)${res.ok ? '' : ' (failed)'}`);
+  trace(entry, `Meta ${res.model}: answered @Sorted in "${entry.room.title}" from ${(entry.room.state.topics ?? []).length} topic(s)${res.ok ? '' : ' (failed)'}`);
   botMessage(entry, res.text, { reason: 'mention', provenance: { source: res.ok ? 'meta' : 'local-fallback', model: res.model, visibility: 'group' } });
 }
 
@@ -770,7 +772,7 @@ export function postImage(roomId: string, token: string, reading: ImageReading |
     let state = applyProposals(
       entry.room.state,
       [{ kind: 'commitment', ownerName: member.name, description: `Paid ${payeeName} ${amount}`, status: 'completed', paymentClaim: true, payee: payeeName, ...(f.amount ? { amount: f.amount } : {}), currency, evidence: [{ messageId: m.id, quote: text }] }],
-      { conversationId: roomId, messages: entry.messages, actor: 'system', actorLabel: 'Group OS (payment screenshot)', now }
+      { conversationId: roomId, messages: entry.messages, actor: 'system', actorLabel: 'Sorted (payment screenshot)', now }
     ).state;
     const claim = state.commitments.find(c => state.evidenceMap[c.evidenceIds[0]]?.messageId === m.id);
     if (claim) {
@@ -941,10 +943,10 @@ export async function planTripFor(roomId: string, token: string, topicId: string
   }
 }
 
-/* ---------------- My Group OS details ---------------- */
+/* ---------------- My Sorted details ---------------- */
 
 /**
- * Everything My Group OS shows for one person, worked out in code from the groups they follow: money with the bills
+ * Everything My Sorted shows for one person, worked out in code from the groups they follow: money with the bills
  * behind it (each group on its own), what is coming up, their promises, and reminders.
  */
 export function privateDetails(seats: { roomId: string; token: string }[]) {
@@ -1017,7 +1019,7 @@ export function privateDetails(seats: { roomId: string; token: string }[]) {
 
 const formatMoneyLocal = (amount: number, currency: string) => `${currency || '₹'}${amount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
 
-/* ---------------- private Group OS ---------------- */
+/* ---------------- private Sorted ---------------- */
 
 /**
  * "What do I owe across my groups?" asked privately. The phone sends the seats it holds (room + token); only those
@@ -1107,7 +1109,7 @@ export function readNow(roomId: string, token: string): { ok: boolean; message?:
 /**
  * Remind one person on WhatsApp about this group: what they owe, what they promised, payments waiting for them to
  * confirm. The text is written in code from the group's results. With an approved template (WHATSAPP_REMINDER_TEMPLATE)
- * it always arrives; as plain text it only arrives if they wrote to the Group OS number in the last 24 hours.
+ * it always arrives; as plain text it only arrives if they wrote to the Sorted number in the last 24 hours.
  */
 export async function remind(roomId: string, token: string, name: string, link: string, opts: { preview?: boolean } = {}): Promise<{ ok: boolean; message: string; preview?: string; ready?: boolean }> {
   const found = memberFor(roomId, token);
@@ -1142,7 +1144,7 @@ export async function remind(roomId: string, token: string, name: string, link: 
   }
   addTrace({ channel: 'live', direction: 'out', phone: entry.room.id, summary: `WhatsApp reminder to ${target.name} (${r.count} item${r.count === 1 ? '' : 's'})${template ? ` via template ${template}` : ''}: ${r.short}` });
   botMessage(entry, `🔔 ${me.name} sent ${target.name} a WhatsApp reminder: ${r.short}.`);
-  return { ok: true, message: `Sent to ${target.name} on WhatsApp.${template ? '' : ' (As plain text it arrives only if they wrote to the Group OS number in the last 24 hours.)'}`, preview: r.text };
+  return { ok: true, message: `Sent to ${target.name} on WhatsApp.${template ? '' : ' (As plain text it arrives only if they wrote to the Sorted number in the last 24 hours.)'}`, preview: r.text };
 }
 
 /** WhatsApp's error codes in plain words, with what to do about them. */
@@ -1153,7 +1155,7 @@ export function whatsappProblem(raw: string, name: string): string {
       return `${name}'s number isn't on the test number's allowed list. Check the number is right, or add it in Meta's WhatsApp API Setup → "To".`;
     case '131047':
     case '131026':
-      return `WhatsApp could not deliver it: ${name} needs to send any message to the Group OS number first (or the reminder template must be approved).`;
+      return `WhatsApp could not deliver it: ${name} needs to send any message to the Sorted number first (or the reminder template must be approved).`;
     case '190':
       return 'The WhatsApp access token has expired. Put a new one in the server settings.';
     case '130429':

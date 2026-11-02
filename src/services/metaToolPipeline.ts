@@ -204,7 +204,7 @@ export const GROUP_OS_TOOLS = [
   },
 ];
 
-const SYSTEM_PROMPT = `You are the extraction agent inside Group OS, powered by Meta Muse Spark.
+const SYSTEM_PROMPT = `You are the extraction agent inside Sorted, powered by Meta Muse Spark.
 Read the group chat and record decisions, commitments and conflicts by calling the tools. Do not answer in prose.
 
 Rules:

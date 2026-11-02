@@ -35,7 +35,7 @@ async function drawCard(w: Wrapped, art?: string): Promise<string> {
     x.fillStyle = color;
     x.fillText(t, 72, y, W - 144);
   };
-  text('GROUP OS WRAPPED', 640, 30, '#7ee2c8', 800);
+  text('SORTED WRAPPED', 640, 30, '#7ee2c8', 800);
   text(w.title, 710, 64);
   text(w.span, 760, 32, '#cfe9e2', 500);
 

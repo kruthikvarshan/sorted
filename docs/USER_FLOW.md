@@ -1,6 +1,6 @@
-# Group OS: the user's journey
+# Sorted: the user's journey
 
-What a person sees and does, from opening the link to settling up. Every step names the screen and what Group OS does behind it.
+What a person sees and does, from opening the link to settling up. Every step names the screen and what Sorted does behind it.
 
 ## The whole journey at a glance
 
@@ -14,11 +14,11 @@ flowchart TD
     C -. someone added their number to a group .-> E2[That group appears too, as themselves]
     E --> F[Open a group]
     E --> G[Start a new group and invite friends by QR or link]
-    E --> H[🔒 My Group OS: private view across followed groups]
+    E --> H[🔒 My Sorted: private view across followed groups]
     G --> F
-    F --> I[Chat as usual: text, voice note, screenshots, @GroupOS questions]
-    I --> J[Group OS reads: after 15 new messages, a quiet minute, or Read now]
-    J --> K[Panel: Topics · Money · 🔒 My Group OS]
+    F --> I[Chat as usual: text, voice note, screenshots, @Sorted questions]
+    I --> J[Sorted reads: after 15 new messages, a quiet minute, or Read now]
+    J --> K[Panel: Topics · Money · 🔒 My Sorted]
     K --> L[Settle up: who owes whom, simplest payments, I paid this]
     K --> M[Remind on WhatsApp: preview, then Send]
     K --> N[🧭 Plan this trip: confirm facts, web ideas with sources]
@@ -31,7 +31,7 @@ flowchart TD
 ## Step by step
 
 ### 1. Getting in
-| Screen | What the person does | What Group OS does |
+| Screen | What the person does | What Sorted does |
 |---|---|---|
 | Login, "First time here" | Types name, mobile number (+91 or 10 digits), picks a 4-digit PIN | Creates one account per number. The PIN is stored only as a scrypt hash. |
 | Login, "I have an account" | Types number + PIN | Refuses a wrong PIN; "Sign up first" for an unknown number. |
@@ -40,14 +40,14 @@ flowchart TD
 
 ### 2. Home (the group list)
 - Every group shows its last message, size, topics, "you owe" / "owed" chips and open disagreements.
-- **Add to / In My Group OS** chooses which groups the private view follows.
+- **Add to / In My Sorted** chooses which groups the private view follows.
 - **Delete** removes a group (for everyone if they created it, or if it is an example).
 - **Start a new group** creates a group and opens a QR code and link to invite friends.
 
 ### 3. Inside a group
 - Chat like WhatsApp: type, record a voice note (Muse Voice turns it into text), send a picture.
-- **@GroupOS question** gets an answer from the group's own results, with quotes ("What's the villa cost per person?").
-- **Status bar** shows how far Group OS has read and when it reads next (after 15 new messages, or a minute after the chat goes quiet). **Read now** reads at once.
+- **@Sorted question** gets an answer from the group's own results, with quotes ("What's the villa cost per person?").
+- **Status bar** shows how far Sorted has read and when it reads next (after 15 new messages, or a minute after the chat goes quiet). **Read now** reads at once.
 - **Plan out loud**: record the group talking in the room; Muse Voice separates the speakers, and their words become messages.
 - **Picture button**:
   - payment screenshot → recorded as "X paid Y ₹N", checked against what X owes Y, the receiver is asked to confirm;
@@ -59,12 +59,12 @@ flowchart TD
 ### 4. The panel (side icon)
 - **Topics**: the chat sorted into threads (trip, rent, birthday…), each with what is decided, open questions, disagreements, promises, money and the messages behind each item (tap to jump).
 - **Money**: who owes whom (netted per pair), the simplest way to settle, **I paid this**, Pay on WhatsApp / UPI, and **Remind X on WhatsApp**.
-- **🔒 My Group OS** (in a group): a private chat to ask about your own money and promises; your WhatsApp number and UPI; **People in this group** (add someone by name and number).
+- **🔒 My Sorted** (in a group): a private chat to ask about your own money and promises; your WhatsApp number and UPI; **People in this group** (add someone by name and number).
 
 ### 5. Reminders on WhatsApp
 1. Tap **Remind Aniket on WhatsApp** (Money tab or People card).
-2. Group OS shows the exact message it will send: what Aniket owes, to whom, for which topics, and a link.
-3. **Send** sends it from the Group OS WhatsApp number; the group sees "🔔 Kruthik sent Aniket a reminder".
+2. Sorted shows the exact message it will send: what Aniket owes, to whom, for which topics, and a link.
+3. **Send** sends it from the Sorted WhatsApp number; the group sees "🔔 Kruthik sent Aniket a reminder".
 4. Aniket opens the link, signs up with his number, and lands in the group as himself.
 
 ### 6. Trip planner
@@ -72,7 +72,7 @@ flowchart TD
 2. A form shows where to, from, dates, budget and people, filled in from the chat (each with its quote). Anything the chat does not say is empty and must be filled: nothing is guessed.
 3. Muse Spark searches the web with Meta's search and posts stays, travel, things to do and a money tip into the group, with real source links and "⚠️ Heads-up" if something in the plan looks off.
 
-### 7. My Group OS (private, across groups)
+### 7. My Sorted (private, across groups)
 - Totals across the followed groups: you owe, you are owed, disagreements, things decided. Never netted across groups.
 - **Reminders**: what needs you (pay X, confirm Y's payment, your promises, disagreements).
 - **Who owes whom, group by group**, each with the bills behind it.

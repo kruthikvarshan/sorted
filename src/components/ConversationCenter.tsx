@@ -88,8 +88,8 @@ export const ConversationCenter: React.FC<ConversationCenterProps> = ({
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputText.trim()) return;
-    if (inputText.trim().startsWith('@GroupOS') || inputText.trim().startsWith('@group')) {
-      onAskGroupOs(inputText.replace(/@GroupOS|@group/gi, '').trim());
+    if (inputText.trim().toLowerCase().startsWith('@sorted') || inputText.trim().startsWith('@group')) {
+      onAskGroupOs(inputText.replace(/@Sorted|@GroupOS|@group/gi, '').trim());
     } else {
       onSendMessage(inputText.trim(), 'text');
     }
@@ -255,11 +255,11 @@ export const ConversationCenter: React.FC<ConversationCenterProps> = ({
         {filteredMessages.map((msg) => {
           const isHighlighted = highlightedMessageId === msg.id;
           const isMe = msg.speakerName === 'Alex' || msg.speakerId === 'u_alex';
-          const isBot = msg.speakerName.includes('Group OS') || msg.speakerId.includes('bot');
+          const isBot = msg.speakerName.includes('Sorted') || msg.speakerId.includes('bot');
           const userParticipant = workspace.participants.find((p) => p.id === msg.speakerId);
           const avatarColor = userParticipant?.avatarColor || '#008069';
 
-          // Bot / Group OS Response Bubble (Distinct High-Visibility WhatsApp Message)
+          // Bot / Sorted Response Bubble (Distinct High-Visibility WhatsApp Message)
           if (isBot) {
             return (
               <div
@@ -276,7 +276,7 @@ export const ConversationCenter: React.FC<ConversationCenterProps> = ({
                     <span className="w-2 h-2 rounded-full bg-[#008069] animate-pulse" />
                     <span className="text-xs font-bold text-[#008069] flex items-center gap-1">
                       <Sparkles className="w-3.5 h-3.5" />
-                      Group OS
+                      Sorted
                     </span>
                     {msg.provenance?.source === 'meta' ? (
                       <span
@@ -524,7 +524,7 @@ export const ConversationCenter: React.FC<ConversationCenterProps> = ({
             <button
               key={idx}
               type="button"
-              onClick={() => setInputText(`@GroupOS ${cp.query}`)}
+              onClick={() => setInputText(`@Sorted ${cp.query}`)}
               className="px-2.5 py-1 rounded-full bg-white hover:bg-emerald-50 text-slate-700 hover:text-[#008069] border border-slate-200 text-xs font-medium transition-colors shrink-0 flex items-center gap-1 shadow-2xs"
             >
               <Sparkles className="w-3 h-3 text-[#008069]" />
@@ -582,18 +582,18 @@ export const ConversationCenter: React.FC<ConversationCenterProps> = ({
         )}
 
         <form onSubmit={handleSend} className="flex items-center gap-2">
-          {/* @GroupOS Trigger Button */}
+          {/* @Sorted Trigger Button */}
           <button
             type="button"
             onClick={() => {
               const defaultQ = contextualPrompts[0]?.query || 'What are the current decisions?';
-              setInputText(`@GroupOS ${defaultQ}`);
+              setInputText(`@Sorted ${defaultQ}`);
             }}
-            title={`Ask Group OS about ${workspace.title}`}
+            title={`Ask Sorted about ${workspace.title}`}
             className="px-3 py-2 text-xs font-bold bg-[#008069] hover:bg-[#00705c] text-white rounded-lg transition-colors flex items-center gap-1 shrink-0 shadow-2xs"
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>@GroupOS</span>
+            <span>@Sorted</span>
           </button>
 
           {/* muse-image-1.0 Image Generator */}
@@ -632,7 +632,7 @@ export const ConversationCenter: React.FC<ConversationCenterProps> = ({
             type="text"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            placeholder="Type a message or ask @GroupOS..."
+            placeholder="Type a message or ask @Sorted..."
             className="flex-1 text-xs sm:text-sm bg-white border border-slate-200 rounded-lg px-3.5 py-2 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#008069] focus:ring-1 focus:ring-[#008069] shadow-2xs"
           />
 
@@ -647,7 +647,7 @@ export const ConversationCenter: React.FC<ConversationCenterProps> = ({
         </form>
 
         <div className="flex items-center justify-between text-[10px] text-slate-500 px-1">
-          <span>Type <code className="text-[#008069] font-bold">@GroupOS</code> to ask a question about this group.</span>
+          <span>Type <code className="text-[#008069] font-bold">@Sorted</code> to ask a question about this group.</span>
           <span className="font-semibold text-slate-600">Only groups you allow are shared with Meta AI</span>
         </div>
       </div>

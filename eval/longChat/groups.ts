@@ -2,7 +2,7 @@ import { Chunk, Person } from './story';
 
 /**
  * Five more real-size groups for the demo phone. Neha is in every one of them (flat, trip, family, office, college,
- * housing society), so her private Group OS has real money and plans to follow across groups. All fictional.
+ * housing society), so her private Sorted has real money and plans to follow across groups. All fictional.
  */
 
 export interface GroupStory {

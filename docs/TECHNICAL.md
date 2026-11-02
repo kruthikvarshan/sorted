@@ -1,4 +1,4 @@
-# Group OS: how it works
+# Sorted: how it works
 
 The model proposes, code verifies. Meta's models read messy group chats (Hinglish, Telugu-English, voice, screenshots) and propose structured facts with verbatim quotes; deterministic code checks every quote, keeps the state, and calculates every amount. Nothing the model says reaches a person unverified.
 
@@ -7,7 +7,7 @@ The model proposes, code verifies. Meta's models read messy group chats (Hinglis
 ```mermaid
 flowchart LR
     subgraph Phone["Phone (React 19 + Vite, PWA)"]
-      UI[Chat · Panel · My Group OS · Trip form]
+      UI[Chat · Panel · My Sorted · Trip form]
     end
     subgraph Server["Node server (Express / Vite dev middleware)"]
       HTTP[server/live/http.ts<br/>routes, accounts, rate limits]
@@ -47,7 +47,7 @@ flowchart LR
 5. **Payment sweep:** after a topic is read, any payment message still not backed by a recorded payment gets a focused look with the messages around it.
 6. **Results stream in** (`onPartial`) topic by topic, so the panel fills while reading.
 
-**When it reads** (`hub.ts` `schedule`): after 15 new messages, or 60 seconds after the chat goes quiet; immediately for @GroupOS, payment screenshots and Read now. Example groups start reading their newest messages the moment an account is created. Changes people make while a read runs (confirmations, screenshots) are recorded as patches and re-applied on top of the read's results, so nothing is lost.
+**When it reads** (`hub.ts` `schedule`): after 15 new messages, or 60 seconds after the chat goes quiet; immediately for @Sorted, payment screenshots and Read now. Example groups start reading their newest messages the moment an account is created. Changes people make while a read runs (confirmations, screenshots) are recorded as patches and re-applied on top of the read's results, so nothing is lost.
 
 ## 3. Verification: the model proposes, code verifies
 
@@ -81,7 +81,7 @@ flowchart LR
 
 | Capability | Endpoint | Used for |
 |---|---|---|
-| Muse Spark (tools) | `/v1/chat/completions` with tools | Topic tagging, extraction, claim checks, @GroupOS answers, private answers |
+| Muse Spark (tools) | `/v1/chat/completions` with tools | Topic tagging, extraction, claim checks, @Sorted answers, private answers |
 | Muse Spark (vision) | `/v1/chat/completions` with images | Payment and chat screenshots |
 | Muse Voice | `/v1/asr/transcribe` (with diarization) | Voice notes, plan out loud |
 | Muse Image | `/v1/images/generations` | Group Wrapped background (saved, shared across identical prompts, painted in the background) |
@@ -95,7 +95,7 @@ Every call is traced (what, tokens, time) in SQLite and visible on the trace pag
 - Phone + 4-digit PIN; scrypt hash with salt; constant-time compare; 5 wrong PINs lock the number for 15 minutes.
 - Rate limits keyed on the address the tunnel or host adds (not one a client can write): logins, sign-ups (5 per hour), new groups, joins, media, private questions, trip searches (6 per group per hour), reminders (10 per sender per hour).
 - Group ownership is recorded on the server when the group is created; only the creator can delete it for everyone.
-- Seats kept for a phone number can only be taken by that number's account; names Group OS could confuse ("Ravi" and "Ravi K") are refused on join.
+- Seats kept for a phone number can only be taken by that number's account; names Sorted could confuse ("Ravi" and "Ravi K") are refused on join.
 - The Meta key stays on the server; the old browser proxy lends it only when explicitly allowed. The trace page can be locked with a key.
 - WhatsApp settings are re-read when `.env.local` changes; tests never read the real file, so they can never send a real message.
 

@@ -1,6 +1,6 @@
 {
-  "name": "Group OS Live",
-  "short_name": "Group OS",
+  "name": "Sorted",
+  "short_name": "Sorted",
   "description": "A group chat with a member who keeps track: what's decided, who owes whom, what's still open.",
   "start_url": "/live",
   "display": "standalone",

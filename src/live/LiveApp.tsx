@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import QRCode from 'qrcode';
-import { ArrowLeft, AudioLines, ImagePlus, Loader2, Lock, Mic, PanelRightOpen, Plus, QrCode, Send, Sparkles, Square, Users } from 'lucide-react';
+import { ArrowLeft, AudioLines, Check, ImagePlus, Loader2, Lock, Mic, PanelRightOpen, Plus, QrCode, Send, Sparkles, Square, Users } from 'lucide-react';
 import { AccountSummary, adoptAccount, api, phoneText, forgetToken, GroupSummary, LiveEvent, LiveMessage, saveToken, savedToken, scope, session, Snapshot } from './api';
 import { formatMoney } from '../engine/ledger';
 import { LivePanel, Tab as PanelTab } from './Panel';
@@ -13,8 +13,8 @@ import { MyDetails } from './MyDetails';
 import { openMicrophone } from '../services/microphone';
 
 /**
- * Group OS Live: a group chat that people join from their phones, with Group OS as a member. It reads the chat by
- * topic as it happens, speaks up when something needs the group, answers @GroupOS, and keeps everyone's balance.
+ * Sorted: a group chat that people join from their phones, with Sorted as a member. It reads the chat by
+ * topic as it happens, speaks up when something needs the group, answers @Sorted, and keeps everyone's balance.
  */
 
 const roomFromPath = () => {
@@ -41,7 +41,7 @@ export const LiveApp: React.FC = () => {
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
-  // Everything needs an account: your groups and My Group OS live in it, on any device.
+  // Everything needs an account: your groups and My Sorted live in it, on any device.
   const [account, setAccount] = useState<AccountSummary | null | undefined>(undefined);
   useEffect(() => {
     if (!session.get()) return setAccount(null);
@@ -108,9 +108,9 @@ const Login: React.FC<{ onDone: (a: AccountSummary, session: string) => void }> 
     <div className="min-h-screen bg-[#efeae2] px-4 py-10">
       <div className="mx-auto max-w-sm space-y-5">
         <div className="space-y-2 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#008069] text-lg font-black text-white shadow-md">G·OS</div>
-          <h1 className="text-2xl font-bold text-slate-900">Group OS</h1>
-          <p className="text-sm text-slate-600">Your group chats, with a member who keeps track: what's decided, who owes whom, what's next.</p>
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#008069] text-white shadow-md"><Check className="h-8 w-8" strokeWidth={3.5} aria-hidden /></div>
+          <h1 className="text-2xl font-bold text-slate-900">Sorted</h1>
+          <p className="text-sm text-slate-600">Your group chat, sorted: what's decided, who owes whom, what's next.</p>
         </div>
         <div className="space-y-3 rounded-2xl bg-white p-5 shadow-sm">
           <div className="grid grid-cols-2 rounded-lg bg-slate-100 p-1 text-xs font-bold" role="tablist">
@@ -197,7 +197,7 @@ const ScopeToggle: React.FC<{ roomId: string; onChange: () => void }> = ({ roomI
       className={`shrink-0 rounded-full border px-2.5 py-1 text-[11px] font-bold ${inScope ? 'border-[#008069] bg-emerald-50 text-[#008069]' : 'border-slate-300 text-slate-600'}`}
       data-testid="scope-toggle"
     >
-      {inScope ? '🔒 In My Group OS' : '+ Add to My Group OS'}
+      {inScope ? '🔒 In My Sorted' : '+ Add to My Sorted'}
     </span>
   );
 };
@@ -227,10 +227,10 @@ const GroupRowView: React.FC<{ g: GroupSummary; onScope: () => void }> = ({ g, o
     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-200 text-sm font-bold text-slate-700">{g.title.charAt(0)}</span>
     <span className="min-w-0 flex-1">
       <span className="flex items-baseline justify-between gap-2">
-        <span className="flex min-w-0 items-center gap-1.5"><span className="truncate text-sm font-semibold text-slate-900">{g.title}</span>{g.example && <span className="shrink-0 rounded bg-slate-100 px-1 text-[9px] font-bold uppercase tracking-wide text-slate-500" title="Made-up people, to try Group OS">Example</span>}</span>
+        <span className="flex min-w-0 items-center gap-1.5"><span className="truncate text-sm font-semibold text-slate-900">{g.title}</span>{g.example && <span className="shrink-0 rounded bg-slate-100 px-1 text-[9px] font-bold uppercase tracking-wide text-slate-500" title="Made-up people, to try Sorted">Example</span>}</span>
         {g.last && <span className="shrink-0 text-[11px] text-slate-400">{when(g.last.at)}</span>}
       </span>
-      <span className="block truncate text-xs text-slate-500">{g.reading ? 'Group OS is reading…' : g.last ? `${g.last.speaker}: ${g.last.text}` : 'No messages yet'}</span>
+      <span className="block truncate text-xs text-slate-500">{g.reading ? 'Sorted is reading…' : g.last ? `${g.last.speaker}: ${g.last.text}` : 'No messages yet'}</span>
       <span className="mt-1 flex flex-wrap items-center gap-1.5 text-[10px]">
         <span className="text-slate-400">{g.total.toLocaleString('en-IN')} msgs · {g.topics} topics · as {g.me}{g.example ? ' · made-up people' : ''}</span>
         {g.unread > 0 && !g.reading && <span className="rounded bg-sky-50 px-1.5 py-0.5 font-semibold text-sky-700">{g.unread} not read yet</span>}
@@ -256,7 +256,7 @@ const MyGroups: React.FC = () => {
       <button onClick={() => go('/live/me')} className="flex w-full items-center gap-3 border-b border-slate-100 bg-emerald-50/50 px-4 py-3 text-left hover:bg-emerald-50">
         <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#008069] text-white"><Lock className="w-4 h-4" /></span>
         <span className="flex-1">
-          <span className="block text-sm font-bold text-slate-900">My Group OS</span>
+          <span className="block text-sm font-bold text-slate-900">My Sorted</span>
           <span className="block text-xs text-slate-500">Private · following {inScope} of {groups.length} groups</span>
         </span>
       </button>
@@ -265,7 +265,7 @@ const MyGroups: React.FC = () => {
   );
 };
 
-/** My Group OS: live numbers across the groups it follows, the private chat, and which groups it follows. */
+/** My Sorted: live numbers across the groups it follows, the private chat, and which groups it follows. */
 const MyGroupOsPage: React.FC = () => {
   const [tick, bump] = useState(0);
   const groups = useMyGroups(tick);
@@ -278,7 +278,7 @@ const MyGroupOsPage: React.FC = () => {
       <div className="flex items-center gap-2 bg-[#008069] px-3 py-3 text-white shadow">
         <button onClick={() => go('/live')} aria-label="Back" className="rounded-full p-1 hover:bg-white/10"><ArrowLeft className="w-5 h-5" /></button>
         <Lock className="w-4 h-4" />
-        <div className="flex-1 text-[15px] font-semibold">My Group OS</div>
+        <div className="flex-1 text-[15px] font-semibold">My Sorted</div>
         <span className="text-[11px] text-white/80">only you see this</span>
       </div>
       {!groups.loaded ? (
@@ -301,7 +301,7 @@ const MyGroupOsPage: React.FC = () => {
         <MyDetails go={go} refresh={tick} />
         <PrivateChat />
         <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
-          <div className="border-b border-slate-100 px-4 py-2 text-[11px] font-bold uppercase tracking-wide text-slate-500">Groups My Group OS follows</div>
+          <div className="border-b border-slate-100 px-4 py-2 text-[11px] font-bold uppercase tracking-wide text-slate-500">Groups in My Sorted</div>
           {followed.length ? followed.map(g => <GroupRowView key={g.roomId} g={g} onScope={() => bump(x => x + 1)} />) : <p className="px-4 py-3 text-xs text-slate-500">None yet. Add a group below.</p>}
         </div>
         {others.length > 0 && (
@@ -345,9 +345,9 @@ const Home: React.FC<{ account: AccountSummary; onLogout: () => void }> = ({ acc
     <div className="min-h-screen bg-[#efeae2] px-4 py-6">
       <div className="mx-auto max-w-md space-y-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#008069] text-sm font-black text-white shadow-md">G·OS</div>
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#008069] text-white shadow-md"><Check className="h-6 w-6" strokeWidth={3.5} aria-hidden /></div>
           <div className="flex-1">
-            <h1 className="text-lg font-bold text-slate-900">Group OS</h1>
+            <h1 className="text-lg font-bold text-slate-900">Sorted</h1>
             <p className="text-xs text-slate-600">Hi {account.name} · {account.phone ? phoneText(account.phone) : ''}</p>
           </div>
           <button onClick={onLogout} className="rounded-full border border-slate-300 bg-white px-3 py-1 text-xs font-semibold text-slate-600">Log out</button>
@@ -363,7 +363,7 @@ const Home: React.FC<{ account: AccountSummary; onLogout: () => void }> = ({ acc
           </button>
         </div>
         {error && <p className="text-center text-sm text-rose-700">{error}</p>}
-        <p className="text-center text-[11px] text-slate-500">Group OS runs on Meta AI: Muse Spark reads the chat and screenshots, Muse Voice hears voice notes, Muse Image paints your Group Wrapped, and Meta's web search plans trips. Every amount is calculated from the messages themselves, never guessed.</p>
+        <p className="text-center text-[11px] text-slate-500">Sorted runs on Meta AI: Muse Spark reads the chat and screenshots, Muse Voice hears voice notes, Muse Image paints your Group Wrapped, and Meta's web search plans trips. Every amount is calculated from the messages themselves, never guessed.</p>
       </div>
     </div>
   );
@@ -507,7 +507,7 @@ const Room: React.FC<{ roomId: string; token: string; onLeave: () => void }> = (
       const r = await api.addPerson(roomId, token, name, phone);
       const members = (await api.snapshot(roomId, token)).members;
       setSnap(s => (s ? { ...s, members } : s));
-      return { ok: true, message: r.joined ? `${r.name} already uses Group OS, so this group is on their phone now.` : `Added ${r.name}. The group shows up for them when they log in with that number.` };
+      return { ok: true, message: r.joined ? `${r.name} already uses Sorted, so this group is on their phone now.` : `Added ${r.name}. The group shows up for them when they log in with that number.` };
     } catch (e: any) {
       return { ok: false, message: e.message as string };
     }
@@ -735,10 +735,10 @@ const Room: React.FC<{ roomId: string; token: string; onLeave: () => void }> = (
           <div className="min-w-0 flex-1">
             <div className="truncate text-[15px] font-semibold">{snap.room.title}</div>
             <div className="truncate text-[11px] text-white/80">
-              {status.on ? (status.label ?? 'Group OS is reading…') : `${snap.members.map(m => m.name).join(', ')}, Group OS`}
+              {status.on ? (status.label ?? 'Sorted is reading…') : `${snap.members.map(m => m.name).join(', ')}, Sorted`}
             </div>
           </div>
-          <button onClick={() => { setPanelTab('me'); setPanelOpen(true); }} aria-label="My Group OS (private)" title="My Group OS: only you see it" className="flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1.5 text-[11px] font-bold hover:bg-white/25"><Lock className="w-3.5 h-3.5" /> <span className="hidden sm:inline">My Group OS</span></button>
+          <button onClick={() => { setPanelTab('me'); setPanelOpen(true); }} aria-label="My Sorted (private)" title="My Sorted: only you see it" className="flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1.5 text-[11px] font-bold hover:bg-white/25"><Lock className="w-3.5 h-3.5" /> <span className="hidden sm:inline">My Sorted</span></button>
           <button onClick={() => setShowWrapped(true)} aria-label="Group Wrapped" title="Group Wrapped" className="rounded-full p-2 hover:bg-white/10"><Sparkles className="w-5 h-5" /></button>
           <button onClick={() => setShare(true)} aria-label="Invite" className="rounded-full p-2 hover:bg-white/10"><QrCode className="w-5 h-5" /></button>
           <button onClick={() => { setPanelTab('topics'); setPanelOpen(true); }} aria-label={snap.panel.topics.some(t => t.disagreements.length) ? 'Open topics and money (there are disagreements)' : 'Open topics and money'} className="relative rounded-full p-2 hover:bg-white/10 lg:hidden">
@@ -751,16 +751,16 @@ const Room: React.FC<{ roomId: string; token: string; onLeave: () => void }> = (
           {status.on ? <Loader2 className="w-3 h-3 shrink-0 animate-spin" /> : <Sparkles className="w-3 h-3 shrink-0" />}
           <span className="min-w-0 flex-1 truncate">
           {status.on
-            ? status.label ?? 'Group OS is reading the new messages…'
+            ? status.label ?? 'Sorted is reading the new messages…'
             : unread > 0 && snap.note
             ? `${unread} new · ${snap.note}`
             : unread > 0
-            ? `${unread} new · Group OS reads them ${secondsLeft !== undefined && secondsLeft > 0 ? `in ${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, '0')}` : 'now'}`
+            ? `${unread} new · Sorted reads them ${secondsLeft !== undefined && secondsLeft > 0 ? `in ${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, '0')}` : 'now'}`
             : lastRead
-            ? `Group OS has read ${snap.read >= snap.people ? 'all ' : ''}${snap.read.toLocaleString('en-IN')} messages · ${snap.panel.topics.length} topic${snap.panel.topics.length === 1 ? '' : 's'}${lastRead.error ? ' · a few topics will be read again with the next message' : ''}`
+            ? `Sorted has read ${snap.read >= snap.people ? 'all ' : ''}${snap.read.toLocaleString('en-IN')} messages · ${snap.panel.topics.length} topic${snap.panel.topics.length === 1 ? '' : 's'}${lastRead.error ? ' · a few topics will be read again with the next message' : ''}`
             : snap.panel.topics.length
             ? `${snap.panel.topics.length} topic${snap.panel.topics.length === 1 ? '' : 's'} · read with Meta AI`
-            : `Group OS reads new messages after ${snap.burst} of them, or a minute after the chat goes quiet.`}
+            : `Sorted reads new messages after ${snap.burst} of them, or a minute after the chat goes quiet.`}
           </span>
           {!status.on && unread > 0 && !snap.note && (
             <button onClick={readNow} className="shrink-0 rounded-full bg-amber-200 px-2 py-0.5 text-[11px] font-bold text-amber-900 hover:bg-amber-300" data-testid="read-now">Read now</button>
@@ -844,7 +844,7 @@ const Room: React.FC<{ roomId: string; token: string; onLeave: () => void }> = (
                 {m.id === snap.lastReadId && unread > 0 && (
                   <div className="my-3 flex items-center gap-2 text-[11px] font-semibold text-[#008069]" data-testid="read-marker">
                     <span className="h-px flex-1 bg-[#008069]/30" />
-                    <Sparkles className="w-3 h-3" /> Group OS has read up to here · {unread} newer not read yet
+                    <Sparkles className="w-3 h-3" /> Sorted has read up to here · {unread} newer not read yet
                     <span className="h-px flex-1 bg-[#008069]/30" />
                   </div>
                 )}
@@ -877,8 +877,8 @@ const Room: React.FC<{ roomId: string; token: string; onLeave: () => void }> = (
           </div>
         )}
         <div className="flex items-center gap-2 bg-[#f0f2f5] px-2 py-2">
-          <button onClick={() => setInput(v => (v.includes('@GroupOS') ? v : `@GroupOS ${v}`))} className="shrink-0 rounded-full bg-white px-2.5 py-2 text-[12px] font-bold text-[#008069] shadow-xs">
-            @GroupOS
+          <button onClick={() => setInput(v => (v.includes('@Sorted') ? v : `@Sorted ${v}`))} className="shrink-0 rounded-full bg-white px-2.5 py-2 text-[12px] font-bold text-[#008069] shadow-xs">
+            @Sorted
           </button>
           <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={e => sendImage(e.target.files?.[0])} />
           <div className="relative shrink-0">
@@ -942,11 +942,11 @@ const Room: React.FC<{ roomId: string; token: string; onLeave: () => void }> = (
   );
 };
 
-/** A three-step first look at a group: what Group OS does, where its results are, and how to talk to it. */
+/** A three-step first look at a group: what Sorted does, where its results are, and how to talk to it. */
 const TOUR = [
-  { title: 'Group OS reads along', body: (name: string) => <>You're <b>{name}</b>. Chat as usual. Group OS (Meta AI) reads new messages after 15 of them or a quiet minute: the yellow bar shows how far it has read.</> },
+  { title: 'Sorted reads along', body: (name: string) => <>You're <b>{name}</b>. Chat as usual. Sorted (Meta AI) reads new messages after 15 of them or a quiet minute: the yellow bar shows how far it has read.</> },
   { title: 'Everything it works out', body: () => <>Tap the <b>panel</b> icon (top right): topics, what's decided, disagreements, and who owes whom, each linked to the messages it came from.</> },
-  { title: 'Ask, show, remind', body: () => <><b>@GroupOS</b> asks a question. <b>+</b> sends a payment or chat screenshot, or records the group planning out loud. <b>🔒</b> is your private view.</> },
+  { title: 'Ask, show, remind', body: () => <><b>@Sorted</b> asks a question. <b>+</b> sends a payment or chat screenshot, or records the group planning out loud. <b>🔒</b> is your private view.</> },
 ];
 const Tour: React.FC<{ name: string; onDone: () => void }> = ({ name, onDone }) => {
   const [i, setI] = useState(0);
@@ -997,14 +997,14 @@ const ShareSheet: React.FC<{ url: string; title: string; onClose: () => void }> 
         <div className="flex items-center justify-center gap-1.5 text-sm font-bold text-slate-900"><Users className="w-4 h-4" /> Invite to {title}</div>
         {qr ? <img src={qr} alt="QR code to join" className="mx-auto w-56" /> : qrFailed ? <p className="text-xs text-slate-500">The QR code could not be drawn; share the link instead.</p> : <Loader2 className="mx-auto w-5 h-5 animate-spin" />}
         {local ? (
-          <p className="text-xs text-amber-800">This link only works on this computer, so phones cannot open it yet. Open Group OS from its public link to invite people.</p>
+          <p className="text-xs text-amber-800">This link only works on this computer, so phones cannot open it yet. Open Sorted from its public link to invite people.</p>
         ) : (
           <p className="text-xs text-slate-600">Scan with a phone camera, or share the link.</p>
         )}
         <p className="break-all text-[10px] text-slate-400">{url}</p>
         <div className="flex gap-2">
           <button onClick={() => navigator.clipboard.writeText(url).then(() => setCopied(true)).catch(() => window.prompt('Copy this link', url))} className="flex-1 rounded-lg border border-slate-300 py-2 text-xs font-semibold">{copied ? 'Copied ✓' : 'Copy link'}</button>
-          <a href={`https://wa.me/?text=${encodeURIComponent(`Join our group on Group OS: ${url}`)}`} target="_blank" rel="noreferrer" className="flex-1 rounded-lg bg-[#25d366] py-2 text-xs font-bold text-white">Share on WhatsApp</a>
+          <a href={`https://wa.me/?text=${encodeURIComponent(`Join our group on Sorted: ${url}`)}`} target="_blank" rel="noreferrer" className="flex-1 rounded-lg bg-[#25d366] py-2 text-xs font-bold text-white">Share on WhatsApp</a>
         </div>
       </div>
     </div>

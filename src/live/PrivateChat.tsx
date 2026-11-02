@@ -3,7 +3,7 @@ import { Loader2, Lock, Send } from 'lucide-react';
 import { api } from './api';
 
 /**
- * My Group OS: ask privately across every group on this phone. Only results go to Meta AI, each group counted on its
+ * My Sorted: ask privately across every group on this phone. Only results go to Meta AI, each group counted on its
  * own; nothing asked here is stored.
  */
 export const PrivateChat: React.FC<{ compact?: boolean }> = ({ compact }) => {
@@ -27,8 +27,8 @@ export const PrivateChat: React.FC<{ compact?: boolean }> = ({ compact }) => {
   };
   return (
     <div className={`rounded-xl border border-slate-200 bg-white p-3 space-y-2 ${compact ? 'text-xs' : 'text-sm'}`} data-testid="private-chat">
-      <div className="flex items-center gap-1.5 font-bold text-slate-900"><Lock className="w-3.5 h-3.5 text-[#008069]" /> Ask Group OS privately</div>
-      <p className="text-[11px] text-slate-500">Only you see this. It covers the groups you added to My Group OS, each counted on its own. Nothing you ask is saved.</p>
+      <div className="flex items-center gap-1.5 font-bold text-slate-900"><Lock className="w-3.5 h-3.5 text-[#008069]" /> Ask Sorted privately</div>
+      <p className="text-[11px] text-slate-500">Only you see this. It covers the groups you added to My Sorted, each counted on its own. Nothing you ask is saved.</p>
       <div className="space-y-1.5">
         {thread.map((m, i) => (
           <div key={i} className={`rounded-lg px-2.5 py-1.5 ${m.who === 'me' ? 'ml-6 bg-[#d9fdd3]' : 'mr-6 bg-slate-100'} whitespace-pre-wrap`}>{m.text}</div>

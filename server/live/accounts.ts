@@ -4,9 +4,9 @@ import { mkdirSync } from 'node:fs';
 import path from 'node:path';
 
 /**
- * Accounts for Group OS Live: a phone number (one account per number) and a 4-digit PIN the person picks (stored only
+ * Accounts for Sorted: a phone number (one account per number) and a 4-digit PIN the person picks (stored only
  * as a scrypt hash), plus the name others see. An account keeps its seats
- * in groups, which groups My Group OS follows, and its sessions, so the same groups appear on any device. The demo
+ * in groups, which groups My Sorted follows, and its sessions, so the same groups appear on any device. The demo
  * groups are added to a new account once, never again.
  */
 
@@ -27,7 +27,7 @@ export interface Account {
   salt: string;
   pinHash: string;
   seats: Seat[];
-  /** Room ids My Group OS follows. */
+  /** Room ids My Sorted follows. */
   scope: string[];
   sessions: string[];
   seeded: boolean;
@@ -94,7 +94,7 @@ export function login(phone: string, pin: string, opts: { name?: string; signup?
     if (account) return { error: 'This number already has an account. Log in instead.' };
     const name = (opts.name ?? '').trim().slice(0, 30);
     if (!name) return { error: 'Type your name.' };
-    if (/^group\s*os$/i.test(name)) return { error: 'That name is taken by Group OS itself. Pick another.' };
+    if (/^(?:sorted|group\s*os)$/i.test(name)) return { error: 'That name is taken by Sorted itself. Pick another.' };
     const salt = randomBytes(16).toString('hex');
     account = { username: p, phone: p, name, salt, pinHash: hash(pin, salt), seats: [], scope: [], sessions: [], seeded: false, createdAt: Date.now() };
     isNew = true;

@@ -664,7 +664,7 @@ export default function App() {
     }
   };
 
-  // In-chat @GroupOS assistant query handler
+  // In-chat @Sorted assistant query handler
   const handleAskGroupOs = async (query: string) => {
     const userMsgId = `m_user_q_${Date.now()}`;
     const userMsg: Message = {
@@ -673,7 +673,7 @@ export default function App() {
       speakerId: currentUser.id,
       speakerName: currentUser.name,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      content: `@GroupOS ${query}`,
+      content: `@Sorted ${query}`,
       type: 'text',
       createdAt: Date.now(),
     };
@@ -765,7 +765,7 @@ export default function App() {
       id: botMsgId,
       conversationId: activeWorkspaceId,
       speakerId: 'u_groupos',
-      speakerName: 'Group OS',
+      speakerName: 'Sorted',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       content: botReply,
       type: 'text',

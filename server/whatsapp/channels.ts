@@ -4,7 +4,7 @@ import path from 'node:path';
 import { parse } from 'dotenv';
 
 /**
- * Two ways WhatsApp messages reach Group OS, turned into one shape:
+ * Two ways WhatsApp messages reach Sorted, turned into one shape:
  *  - Meta WhatsApp Cloud API (your own test or business number), JSON webhooks.
  *  - Twilio WhatsApp Sandbox (an official Meta partner's shared number), form-encoded webhooks.
  * Everything after this file is the same for both.
@@ -101,7 +101,7 @@ async function sendCloud(to: string, text: string) {
 }
 
 /**
- * A message Group OS starts (not a reply) must use a template Meta approved, unless the person wrote to the number in
+ * A message Sorted starts (not a reply) must use a template Meta approved, unless the person wrote to the number in
  * the last 24 hours. Template values cannot hold line breaks, tabs or long runs of spaces.
  */
 export async function sendCloudTemplate(to: string, name: string, values: string[], language = env('WHATSAPP_TEMPLATE_LANG') || 'en') {

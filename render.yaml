@@ -1,9 +1,9 @@
 # Deploy on Render (render.com → New → Blueprint → this repo).
-# Gives Group OS a permanent https address for the live app (/live) and the trace page (/whatsapp/trace).
+# Gives Sorted a permanent https address for the live app (/live) and the trace page (/whatsapp/trace).
 # Secrets are entered in Render's dashboard when asked, never here.
 services:
   - type: web
-    name: group-os
+    name: sorted
     runtime: node
     # Starter, not free: the free plan sleeps when idle and has no disk, so accounts and groups would be lost.
     plan: starter
@@ -15,7 +15,7 @@ services:
     # Accounts, groups, messages, images and the spend counter live in data/ (SQLite): kept on this disk across
     # restarts and redeploys.
     disk:
-      name: group-os-data
+      name: sorted-data
       mountPath: /opt/render/project/src/data
       sizeGB: 1
     envVars:

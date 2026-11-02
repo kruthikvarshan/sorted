@@ -16,7 +16,7 @@ const serverKey = process.env.MODEL_API_KEY?.trim() || undefined;
 const forward = createForwarder({ serverKey: process.env.ALLOW_PUBLIC_PROXY === '1' ? serverKey : undefined, upstream: process.env.META_API_BASE });
 
 // A stray failed promise (a Meta call that errors in the background) is logged; it never takes the server down.
-process.on('unhandledRejection', err => console.error('[group-os] background error:', err));
+process.on('unhandledRejection', err => console.error('[sorted] background error:', err));
 
 const app = express();
 
@@ -39,7 +39,7 @@ app.use('/meta-proxy', express.raw({ type: () => true, limit: '40mb' }), async (
   res.send(Buffer.from(result.body));
 });
 
-// Live rooms: the multi-phone group with Group OS as a member (reads its own request bodies).
+// Live rooms: the multi-phone group with Sorted as a member (reads its own request bodies).
 app.use(async (req, res, next) => {
   if (!(await handleLive(req, res))) next();
 });
@@ -62,5 +62,5 @@ app.get('*', (_req, res) => res.sendFile(path.join(dist, 'index.html')));
 
 const port = Number(process.env.PORT) || 8080;
 app.listen(port, () => {
-  console.log(`Group OS on http://localhost:${port} (${serverKey ? 'Meta key held on the server' : 'no server key: users paste their own in Settings'})`);
+  console.log(`Sorted on http://localhost:${port} (${serverKey ? 'Meta key held on the server' : 'no server key: users paste their own in Settings'})`);
 });

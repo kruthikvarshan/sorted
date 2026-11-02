@@ -83,7 +83,7 @@ export const SettingsAndApiView: React.FC<SettingsAndApiViewProps> = ({
       if (name === 'chat') {
         const reply = await MetaModelService.callChatCompletion(
           testKey,
-          [{ role: 'user', content: 'Reply with one short, friendly sentence confirming you are connected to Group OS.' }],
+          [{ role: 'user', content: 'Reply with one short, friendly sentence confirming you are connected to Sorted.' }],
           { temperature: 0.2, max_tokens: 1500 }
         );
         setResult({ name, status: 'ok', text: reply.trim() });
@@ -109,7 +109,7 @@ export const SettingsAndApiView: React.FC<SettingsAndApiViewProps> = ({
       <div className="max-w-3xl mx-auto space-y-5">
         <div>
           <h1 className="text-xl font-bold tracking-tight text-slate-900">Settings</h1>
-          <p className="text-xs text-slate-600 mt-1">Connect Meta AI and choose how Group OS reads your chats.</p>
+          <p className="text-xs text-slate-600 mt-1">Connect Meta AI and choose how Sorted reads your chats.</p>
         </div>
 
         {/* Connection */}
@@ -212,7 +212,7 @@ export const SettingsAndApiView: React.FC<SettingsAndApiViewProps> = ({
             <Mic className="w-4 h-4 text-[#008069]" /> Microphone for voice notes
           </h2>
           <p className="text-[11px] text-slate-500">
-            Group OS uses your computer's own microphone, not a phone nearby, unless you choose otherwise here.
+            Sorted uses your computer's own microphone, not a phone nearby, unless you choose otherwise here.
           </p>
           {mics === null ? (
             <button onClick={findMicrophones} className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">
