@@ -229,3 +229,30 @@ export function buildPanel(ws: Workspace, state: GroupIntelligenceState, message
     updatedAt: Date.now(),
   };
 }
+
+/** The pairs of a ledger, as the Money tab shows them: every screen and every answer uses the same numbers. */
+export function withPanelPairs(ledger: GroupLedger, panel: Panel): GroupLedger {
+  const pairs = panel.owes.map(o => {
+    const parts = panel.topics.flatMap(t => t.money.filter(m => sameName(m.from, o.from) === true && sameName(m.to, o.to) === true && m.currency === o.currency).map(m => ({ t, m })));
+    return {
+      from: o.from,
+      to: o.to,
+      amount: o.amount,
+      currency: o.currency,
+      items: parts.map(({ t, m }) => ({ reason: `${t.title}: ${m.reasons.join(', ')}`, amount: m.amount, direction: 'owes' as const, state: 'unpaid' as const, agreed: true })),
+      pending: parts.some(p => p.m.pending),
+    };
+  });
+  return { ...ledger, pairs };
+}
+
+/** What @Sorted may say about money: exactly the Money tab, by topic, and plainly "nothing" when nothing is owed. */
+export function answerMoneyLines(panel: Panel): string[] {
+  if (!panel.owes.length) return ['Nobody owes anybody anything right now.'];
+  return panel.owes.map(o => {
+    const parts = panel.topics.flatMap(t =>
+      t.money.filter(m => sameName(m.from, o.from) === true && sameName(m.to, o.to) === true).map(m => `${t.title}: ${formatMoney(m.amount, m.currency)}${m.reasons.length ? ` (${m.reasons.join(', ')})` : ''}`)
+    );
+    return `${o.from} owes ${o.to} ${formatMoney(o.amount, o.currency)} in total${parts.length ? `. By topic: ${parts.join('; ')}` : ''}`;
+  });
+}

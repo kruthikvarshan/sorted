@@ -3,7 +3,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { applyProposals, resolveConflict, ConflictChoice } from '../../src/engine/eventReducer';
-import { buildPanel, Panel } from '../../src/engine/panel';
+import { answerMoneyLines, buildPanel, Panel, withPanelPairs } from '../../src/engine/panel';
 import { computeWrapped } from '../../src/engine/wrapped';
 import { addTrace } from '../whatsapp/store';
 import { normalizePhone } from './accounts';
@@ -669,9 +669,7 @@ async function answerMention(entry: Entry, question: string, asker?: string) {
     if (!entry.room.analysing) await analyse(entry);
     for (let i = 0; i < 120 && entry.room.analysing; i++) await new Promise(r => setTimeout(r, 1000));
   }
-  const deduped = dedupeBills(entry.room.state);
-  const ledger = computeGroupLedger(workspaceOf(entry.room), deduped.decisions, deduped.commitments, { conflicts: entry.room.state.conflicts, evidenceMap: entry.room.state.evidenceMap, messages: entry.messages, defaultCurrency: '₹', topics: entry.room.state.topics });
-  const moneyLines = ledger.pairs.map(p => `${p.from} owes ${p.to} ${p.currency}${p.amount.toLocaleString('en-IN')} (${p.items.map(i => i.reason).join(', ')})`);
+  const moneyLines = answerMoneyLines(buildPanel(workspaceOf(entry.room), entry.room.state, entry.messages, { defaultCurrency: '₹' }));
   emit(entry, { type: 'analysing', on: true, label: 'Sorted is typing…' });
   const res = await answerGroupQuestion(key(), question.replace(new RegExp(MENTION.source, 'gi'), '').trim(), {
     groupTitle: entry.room.title,
@@ -882,7 +880,10 @@ export function myGroups(seats: { roomId: string; token: string }[]) {
     .filter((x): x is NonNullable<ReturnType<typeof memberFor>> => !!x)
     .map(({ entry, member }) => {
       const s = dedupeBills(entry.room.state);
-      const ledger = computeGroupLedger(workspaceOf(entry.room), s.decisions, s.commitments, { conflicts: s.conflicts, evidenceMap: s.evidenceMap, messages: entry.messages, defaultCurrency: '₹', topics: s.topics });
+      const ws = workspaceOf(entry.room);
+      const raw = computeGroupLedger(ws, s.decisions, s.commitments, { conflicts: s.conflicts, evidenceMap: s.evidenceMap, messages: entry.messages, defaultCurrency: '₹', topics: s.topics });
+      // The same amounts as the group's Money tab.
+      const ledger = withPanelPairs(raw, buildPanel(ws, entry.room.state, entry.messages, { defaultCurrency: '₹' }));
       const mine = computeMySettlement([ledger], member.name);
       const last = entry.messages[entry.messages.length - 1];
       return {
@@ -1034,7 +1035,7 @@ export async function privateAnswer(seats: { roomId: string; token: string }[], 
   const groups = mine.flatMap(({ entry, member }) => {
     const ws = workspaceOf(entry.room);
     const s = dedupeBills(entry.room.state);
-    const ledger = computeGroupLedger(ws, s.decisions, s.commitments, { conflicts: s.conflicts, evidenceMap: s.evidenceMap, messages: entry.messages, defaultCurrency: '₹', topics: entry.room.state.topics });
+    const ledger = withPanelPairs(computeGroupLedger(ws, s.decisions, s.commitments, { conflicts: s.conflicts, evidenceMap: s.evidenceMap, messages: entry.messages, defaultCurrency: '₹', topics: entry.room.state.topics }), buildPanel(ws, entry.room.state, entry.messages, { defaultCurrency: '₹' }));
     const mineHere = computeMySettlement([ledger], member.name);
     mineHere.oweTotals.forEach(t => sums.owe.set(normalizeCurrency(t.currency) ?? t.currency, (sums.owe.get(normalizeCurrency(t.currency) ?? t.currency) ?? 0) + t.amount));
     mineHere.owedTotals.forEach(t => sums.owed.set(normalizeCurrency(t.currency) ?? t.currency, (sums.owed.get(normalizeCurrency(t.currency) ?? t.currency) ?? 0) + t.amount));

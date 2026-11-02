@@ -108,3 +108,31 @@ describe('a kept promise and its payment are one transfer (Sunday Chai, Nov 3)',
     expect(buildPanel(chai, state([bill('Chai bill', 't1', 175, 'Kruthik'), bill('Rent', 't2', 150, 'Kruthik')], [elsewhere, screenshot]), []).owes).toEqual([{ from: 'Aniket', to: 'Kruthik', amount: 25, currency: '₹' }]);
   });
 });
+
+describe('every screen and answer uses the Money tab numbers (Flat 7B, Nov 3)', () => {
+  it('@Sorted money lines and the group list match the Money tab exactly', async () => {
+    const { readFileSync } = await import('node:fs');
+    const { answerMoneyLines, withPanelPairs } = await import('../engine/panel');
+    const { computeGroupLedger, computeMySettlement, dedupeBills } = await import('../engine/settle');
+    const chat = JSON.parse(readFileSync('src/data/longChat/trio.json', 'utf8'));
+    const raw = JSON.parse(readFileSync('src/data/longChat/trio.state.json', 'utf8'));
+    const st = raw.state ?? raw;
+    const messages = chat.messages ?? chat;
+    const flat: Workspace = { ...ws, participants: ['Kruthik', 'Aniket', 'Swapnil'].map(person) };
+    const panel = buildPanel(flat, st, messages, { defaultCurrency: '₹' });
+    expect(panel.owes.length).toBeGreaterThan(0);
+    const lines = answerMoneyLines(panel);
+    panel.owes.forEach((o, i) => expect(lines[i]).toContain(`${o.from} owes ${o.to}`));
+    expect(lines.join(' ')).not.toMatch(/Nobody owes/);
+    const d = dedupeBills(st);
+    const ledger = withPanelPairs(computeGroupLedger(flat, d.decisions, d.commitments, { conflicts: st.conflicts, evidenceMap: st.evidenceMap, messages, defaultCurrency: '₹', topics: st.topics }), panel);
+    const kruthik = computeMySettlement([ledger], 'Kruthik');
+    const owedToKruthik = panel.owes.filter(o => o.to === 'Kruthik').reduce((n, o) => n + o.amount, 0);
+    expect(kruthik.owedTotals.reduce((n, t) => n + t.amount, 0)).toBe(owedToKruthik);
+  });
+
+  it('says plainly that nothing is owed, so the model never invents a debt', async () => {
+    const { answerMoneyLines } = await import('../engine/panel');
+    expect(answerMoneyLines({ topics: [], owes: [], settle: [], spend: '', updatedAt: 0 })).toEqual(['Nobody owes anybody anything right now.']);
+  });
+});
