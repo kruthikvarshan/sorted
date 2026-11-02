@@ -378,14 +378,20 @@ export function applyProposals(
     d.supportingEvidenceIds.map(id => messagesById.get(state.evidenceMap[id]?.messageId ?? '')?.speakerName).find(Boolean);
   /**
    * A confirmed value may be replaced only by an explicit agreement: the model says "confirmed" and the cited
-   * messages come from two or more people, or from the person who set the value in the first place.
-   * A single other person contradicting it is a conflict, not a change.
+   * messages come from two or more people, or from the person who set the value in the first place. That person
+   * revising their own value ("bill 300 aaya" … "350 hua actually") is an update even when the model only calls it a
+   * proposal: nobody disagrees with themselves. A single other person contradicting it is a conflict, not a change.
    */
-  const isExplicitSupersession = (d: Decision, p: Proposal) => {
-    if (p.kind !== 'decision' || p.status !== 'confirmed' || d.status !== 'confirmed') return false;
+  const selfRevision = (d: Decision, p: Proposal) => {
     const speakers = speakersOf(p);
     const original = originalSpeaker(d);
-    return speakers.size >= 2 || (speakers.size === 1 && !!original && speakers.has(original));
+    return speakers.size === 1 && !!original && speakers.has(original);
+  };
+  const isExplicitSupersession = (d: Decision, p: Proposal) => {
+    if (p.kind !== 'decision' || d.status !== 'confirmed') return false;
+    if (p.status === 'proposed') return selfRevision(d, p);
+    if (p.status !== 'confirmed') return false;
+    return speakersOf(p).size >= 2 || selfRevision(d, p);
   };
   const ordered = proposals
     .map((proposal, position) => ({ proposal, position }))
@@ -476,20 +482,25 @@ export function applyProposals(
         // Both sides agreed to the change (or the person who set the value changed it themselves): the new value
         // takes over, and the old value, who agreed, and the evidence stay in history. Never silent.
         const previousValue = existing.currentValue;
+        // A revision only suggested by its setter stays a suggestion until the group agrees.
+        const newStatus = proposal.status === 'proposed' ? 'proposed' : 'confirmed';
         existing.history.push(
           historyEntry(existing, ctx, {
             previousValue,
             newValue: proposal.value.trim(),
             previousStatus: 'confirmed',
-            newStatus: 'confirmed',
-            reason: `Changed by agreement (${Array.from(speakersOf(proposal)).join(' and ')}). The earlier value "${previousValue}" is kept in the history.`,
+            newStatus,
+            reason: selfRevision(existing, proposal)
+              ? `Changed by ${lastMsg.speakerName}, who set it. The earlier value "${previousValue}" is kept in the history.`
+              : `Changed by agreement (${Array.from(speakersOf(proposal)).join(' and ')}). The earlier value "${previousValue}" is kept in the history.`,
             evidenceIds: evIds,
           })
         );
         existing.currentValue = proposal.value.trim();
         if (proposal.split) existing.split = proposal.split;
+        existing.status = newStatus;
         addUnique(existing.supportingEvidenceIds, evIds);
-        existing.confidence = computeConfidence('confirmed', existing.supportingEvidenceIds.length, existing.contradictingEvidenceIds.length);
+        existing.confidence = computeConfidence(newStatus, existing.supportingEvidenceIds.length, existing.contradictingEvidenceIds.length);
         existing.lastUpdatedAt = ctx.now;
         existing.updatedBy = lastMsg.speakerName;
         outcome = 'updated';

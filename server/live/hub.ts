@@ -90,7 +90,7 @@ const MENTION = /@\s?(?:sorted|group\s?os)\b/i;
  * has been quiet for QUIET_MS, or straight away for @Sorted, a payment screenshot or "Read now". Each read covers
  * only the new messages and the topics they touch.
  */
-export const QUIET_MS = Number(process.env.LIVE_QUIET_MS ?? 60000);
+export const QUIET_MS = Number(process.env.LIVE_QUIET_MS ?? 20000);
 export const BURST = Number(process.env.LIVE_BURST ?? 15);
 const SPEAK_GAP_MS = 15000;
 

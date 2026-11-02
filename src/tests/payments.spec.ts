@@ -63,3 +63,28 @@ describe('the receiver confirming in the chat', () => {
     expect(applyProposals(empty, [claim], ctx).state.commitments[0].status).toBe('needs_clarification');
   });
 });
+
+describe('the person who set a bill correcting it (Sunday Chai, Nov 3)', () => {
+  const chat = [msg('m1', 'Kruthik', 'Bill 300 aaya, 150 each'), msg('m2', 'Aniket', 'Theek hai'), msg('m3', 'Kruthik', 'Bhai chai samosa 350 hua actually'), msg('m4', 'Kruthik', 'So 175 per person'), msg('m5', 'Aniket', 'nahi yaar 300 hi tha')];
+  const ctx = { conversationId: 'w', messages: chat, actor: 'model' as const, actorLabel: 't', now: '9:00' };
+  const bill = (value: string, each: number, status: 'confirmed' | 'proposed', ids: string[]): Proposal => ({
+    kind: 'decision', topic: 'Chai bill', value, status, split: { perPerson: each, currency: '₹', among: ['Kruthik', 'Aniket'], collector: 'Kruthik' },
+    evidence: ids.map(id => ({ messageId: id, quote: chat.find(m => m.id === id)!.content })),
+  } as Proposal);
+  const first = applyProposals(empty(), [bill('300 total', 150, 'confirmed', ['m1', 'm2'])], ctx).state;
+
+  it('is an update with history, even when the model only calls it a proposal: no disagreement', () => {
+    const s = applyProposals(first, [bill('350 total', 175, 'proposed', ['m3', 'm4'])], ctx).state;
+    const d = s.decisions[0];
+    expect(d.currentValue).toBe('350 total');
+    expect(d.split?.perPerson).toBe(175);
+    expect(s.conflicts).toHaveLength(0);
+    expect(d.history.some(h => h.previousValue === '300 total' && /Kruthik, who set it/.test(h.reason))).toBe(true);
+  });
+
+  it('someone else changing it is still a disagreement', () => {
+    const s = applyProposals(first, [bill('250 total', 125, 'proposed', ['m5'])], ctx).state;
+    expect(s.decisions[0].currentValue).toBe('300 total');
+    expect(s.conflicts).toHaveLength(1);
+  });
+});

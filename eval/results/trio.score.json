@@ -1,0 +1,25 @@
+{
+  "group": "trio",
+  "title": "Flat 7B – K A S 🏠",
+  "messages": 7608,
+  "read": 7608,
+  "taggedEvents": 0,
+  "pairsExact": "0/2",
+  "paymentsFound": "0/0",
+  "rows": [
+    {
+      "pair": "Aniket & Kruthik",
+      "truth": "settled",
+      "groupOs": "Aniket → Kruthik ₹11,500",
+      "exact": false,
+      "off": 11500
+    },
+    {
+      "pair": "Aniket & Swapnil",
+      "truth": "settled",
+      "groupOs": "Swapnil → Aniket ₹3,200",
+      "exact": false,
+      "off": -3200
+    }
+  ]
+}

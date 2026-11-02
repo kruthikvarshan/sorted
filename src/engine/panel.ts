@@ -1,7 +1,7 @@
 import { Commitment, GroupIntelligenceState, Message, Topic, Workspace } from '../types/groupOs';
 import { formatMoney } from './ledger';
 import { computeGroupPlan, totalsText } from './plan';
-import { computeGroupLedger, dedupeBills, GroupLedger, isLoan, withAmount } from './settle';
+import { computeGroupLedger, dedupeBills, GroupLedger, isLoan, keptPromisesOnce, withAmount } from './settle';
 import { capByMessage } from './amounts';
 import { normalizeCurrency, sameName } from './receiptVerifier';
 
@@ -99,12 +99,13 @@ export function sharePayments(ws: Workspace, state: GroupIntelligenceState, mess
   const at = (c: Commitment) => Math.min(...c.evidenceIds.map(e => order.get(state.evidenceMap[e]?.messageId ?? '') ?? Infinity));
   const name = (n: string) => ws.participants.find(p => sameName(p.name, n) === true)?.name ?? n;
   const out = new Map<string, Commitment[]>(ids.map(id => [key(id), []]));
-  const payments = capByMessage(
-    state.commitments.map(c => withAmount(c, state.evidenceMap)).filter(c => c.status === 'completed' && c.payee && c.amount && !isLoan(c, state.commitments, messages, state.evidenceMap, state.decisions)).sort((a, b) => at(a) - at(b)),
-    state.evidenceMap
-  );
+  const completed = state.commitments.map(c => withAmount(c, state.evidenceMap)).filter(c => c.status === 'completed' && c.payee && c.amount && !isLoan(c, state.commitments, messages, state.evidenceMap, state.decisions)).sort((a, b) => at(a) - at(b));
+  const kept = keptPromisesOnce(completed, at);
+  // A promise its payment kept is that payment: it is not counted again anywhere.
+  const absorbed = new Set(completed.filter(c => !kept.includes(c)).map(c => c.id));
+  const payments = capByMessage(kept, state.evidenceMap);
   const ids_ = new Set(payments.map(c => c.id));
-  for (const c of state.commitments) if (!ids_.has(c.id)) out.get(key(c.topicId))?.push(c);
+  for (const c of state.commitments) if (!ids_.has(c.id) && !absorbed.has(c.id)) out.get(key(c.topicId))?.push(c);
   for (const c of payments) {
     const k = `${name(c.ownerName).toLowerCase()}>${name(c.payee!).toLowerCase()}`;
     let rest = c.amount!;

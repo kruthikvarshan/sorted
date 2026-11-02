@@ -17,7 +17,7 @@ flowchart TD
     E --> H[🔒 My Sorted: private view across followed groups]
     G --> F
     F --> I[Chat as usual: text, voice note, screenshots, @Sorted questions]
-    I --> J[Sorted reads: after 15 new messages, a quiet minute, or Read now]
+    I --> J[Sorted reads: after 15 new messages, 20 quiet seconds, or Read now]
     J --> K[Panel: Topics · Money · 🔒 My Sorted]
     K --> L[Settle up: who owes whom, simplest payments, I paid this]
     K --> M[Remind on WhatsApp: preview, then Send]
@@ -47,7 +47,7 @@ flowchart TD
 ### 3. Inside a group
 - Chat like WhatsApp: type, record a voice note (Muse Voice turns it into text), send a picture.
 - **@Sorted question** gets an answer from the group's own results, with quotes ("What's the villa cost per person?").
-- **Status bar** shows how far Sorted has read and when it reads next (after 15 new messages, or a minute after the chat goes quiet). **Read now** reads at once.
+- **Status bar** shows how far Sorted has read and when it reads next (after 15 new messages, or 20 seconds after the chat goes quiet). **Read now** reads at once.
 - **Plan out loud**: record the group talking in the room; Muse Voice separates the speakers, and their words become messages.
 - **Picture button**:
   - payment screenshot → recorded as "X paid Y ₹N", checked against what X owes Y, the receiver is asked to confirm;

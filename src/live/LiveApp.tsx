@@ -295,7 +295,7 @@ const MyGroupOsPage: React.FC = () => {
             <div><div className="text-[11px] text-slate-500">Things decided</div><div className="text-base font-bold text-slate-900">{followed.reduce((a, g) => a + g.decided, 0)}</div></div>
           </div>
           <div className="mt-2 text-[11px] text-slate-500">
-            {reading ? `Reading new messages in ${reading} group${reading === 1 ? '' : 's'}… these numbers update when it finishes.` : unread ? `${unread} new message${unread === 1 ? '' : 's'} not read yet; each group reads them after a few more messages or a quiet minute.` : 'Up to date with every group. Each group is counted on its own: money in one group never cancels out money in another.'}
+            {reading ? `Reading new messages in ${reading} group${reading === 1 ? '' : 's'}… these numbers update when it finishes.` : unread ? `${unread} new message${unread === 1 ? '' : 's'} not read yet; each group reads them after a few more messages or 20 quiet seconds.` : 'Up to date with every group. Each group is counted on its own: money in one group never cancels out money in another.'}
           </div>
         </div>
         <MyDetails go={go} refresh={tick} />
@@ -760,7 +760,7 @@ const Room: React.FC<{ roomId: string; token: string; onLeave: () => void }> = (
             ? `Sorted has read ${snap.read >= snap.people ? 'all ' : ''}${snap.read.toLocaleString('en-IN')} messages · ${snap.panel.topics.length} topic${snap.panel.topics.length === 1 ? '' : 's'}${lastRead.error ? ' · a few topics will be read again with the next message' : ''}`
             : snap.panel.topics.length
             ? `${snap.panel.topics.length} topic${snap.panel.topics.length === 1 ? '' : 's'} · read with Meta AI`
-            : `Sorted reads new messages after ${snap.burst} of them, or a minute after the chat goes quiet.`}
+            : `Sorted reads new messages after ${snap.burst} of them, or 20 seconds after the chat goes quiet.`}
           </span>
           {!status.on && unread > 0 && !snap.note && (
             <button onClick={readNow} className="shrink-0 rounded-full bg-amber-200 px-2 py-0.5 text-[11px] font-bold text-amber-900 hover:bg-amber-300" data-testid="read-now">Read now</button>
@@ -944,7 +944,7 @@ const Room: React.FC<{ roomId: string; token: string; onLeave: () => void }> = (
 
 /** A three-step first look at a group: what Sorted does, where its results are, and how to talk to it. */
 const TOUR = [
-  { title: 'Sorted reads along', body: (name: string) => <>You're <b>{name}</b>. Chat as usual. Sorted (Meta AI) reads new messages after 15 of them or a quiet minute: the yellow bar shows how far it has read.</> },
+  { title: 'Sorted reads along', body: (name: string) => <>You're <b>{name}</b>. Chat as usual. Sorted (Meta AI) reads new messages after 15 of them or 20 quiet seconds: the yellow bar shows how far it has read.</> },
   { title: 'Everything it works out', body: () => <>Tap the <b>panel</b> icon (top right): topics, what's decided, disagreements, and who owes whom, each linked to the messages it came from.</> },
   { title: 'Ask, show, remind', body: () => <><b>@Sorted</b> asks a question. <b>+</b> sends a payment or chat screenshot, or records the group planning out loud. <b>🔒</b> is your private view.</> },
 ];

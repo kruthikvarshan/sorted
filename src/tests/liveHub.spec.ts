@@ -139,7 +139,7 @@ describe('when Sorted reads', () => {
   const report = { newMessages: 0, batches: 0, topicsCreated: [], topicsUpdated: [], corrections: [], tokens: 0, calls: 0, failedTopics: [], ms: 1 };
   const tick = () => new Promise(r => setTimeout(r, 20));
 
-  it('waits for 15 new messages or a quiet minute, and says when it will read next', async () => {
+  it('waits for 15 new messages or 20 quiet seconds, and says when it will read next', async () => {
     const room = hub.createRoom('Busy group');
     const neha = hub.joinRoom(room.id, 'Neha').member!;
     vi.mocked(analyzeGroup).mockImplementation(async (messages: any) => ({ state: { ...empty(), readThrough: messages.length }, report }));

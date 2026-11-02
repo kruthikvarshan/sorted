@@ -97,6 +97,38 @@ const ckey = (c: string) => normalizeCurrency(c) ?? '';
 const numbersIn = (text: string) => (text.replace(/(\d),(\d)/g, '$1$2').match(/\d+(?:\.\d+)?/g) ?? []).map(Number);
 const near = (a: number, b: number) => Math.abs(a - b) <= Math.max(1, b * 0.01);
 
+/** A payment that happened: a screenshot, or the model's past-tense record ("Paid Kruthik ₹150"). */
+const PAID = /^\s*(paid|sent|transferred|gave|returned|repaid)\b/i;
+/** A promise to pay ("Pay chai share to Kruthik"), which the model marks completed once the receiver says they got it. */
+const WILL_PAY = /^\s*(pay|send|transfer|give|return|repay)\b/i;
+
+/**
+ * A kept promise and the payment that kept it are one transfer. "Abhi bhejta hoon", then a payment screenshot, then
+ * "mil gaya": the model completes the promise and the screenshot is confirmed, but only 150 moved. Each payment absorbs
+ * one completed promise from the same payer to the same person for the same amount, in the same thread (or within a
+ * few messages when either has no thread).
+ */
+export function keptPromisesOnce(payments: Commitment[], at: (c: Commitment) => number): Commitment[] {
+  const isPayment = (c: Commitment) => !!c.verification?.receipt || PAID.test(c.description);
+  const absorbed = new Set<string>();
+  for (const paid of payments.filter(c => isPayment(c) && c.payee && c.amount)) {
+    const promise = payments.find(
+      p =>
+        !absorbed.has(p.id) &&
+        !isPayment(p) &&
+        WILL_PAY.test(p.description) &&
+        !!p.payee &&
+        !!p.amount &&
+        sameName(p.ownerName, paid.ownerName) === true &&
+        sameName(p.payee, paid.payee!) === true &&
+        Math.abs(p.amount - paid.amount!) < 1 &&
+        (p.topicId && paid.topicId ? p.topicId === paid.topicId : Math.abs(at(p) - at(paid)) <= 10)
+    );
+    if (promise) absorbed.add(promise.id);
+  }
+  return absorbed.size ? payments.filter(c => !absorbed.has(c.id)) : payments;
+}
+
 /** Where a debt stands, from payments the chat or a person recorded for it. */
 function stateOf(debt: { from: string; to?: string; amount: number }, decision: Decision | undefined, commitments: Commitment[]): ShareState {
   const own = decision ? shareStateFor(decision, debt.from, commitments) : 'unpaid';
@@ -652,11 +684,14 @@ export function computeGroupLedger(ws: Workspace, allDecisions: Decision[], comm
   const shareInTopic = (c: Commitment) =>
     debts.find(d => !!d.decisionId && !!d.to && decisionTopic.get(d.decisionId) === c.topicId && sameName(d.from, c.ownerName) === true && sameName(d.to, c.payee!) === true)?.amount;
   const paymentList = capByMessage(
-    (context.payments ?? commitments)
-      .map(c => withAmount(c, context.evidenceMap))
-      .map(c => (!c.amount && c.status === 'completed' && c.payee && shareInTopic(c) ? { ...c, amount: shareInTopic(c) } : c))
-      .filter(c => c.status === 'completed')
-      .sort((a, b) => first(a) - first(b)),
+    keptPromisesOnce(
+      (context.payments ?? commitments)
+        .map(c => withAmount(c, context.evidenceMap))
+        .map(c => (!c.amount && c.status === 'completed' && c.payee && shareInTopic(c) ? { ...c, amount: shareInTopic(c) } : c))
+        .filter(c => c.status === 'completed')
+        .sort((a, b) => first(a) - first(b)),
+      first
+    ),
     context.evidenceMap ?? {}
   );
   for (const c of paymentList) {

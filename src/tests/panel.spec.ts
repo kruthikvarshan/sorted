@@ -80,3 +80,31 @@ describe('the 1,983-message sample group', () => {
     expect(p.topics.filter(t => /rent/i.test(t.title)).flatMap(t => t.money).some(m => m.from === 'Ravi')).toBe(false);
   });
 });
+
+describe('a kept promise and its payment are one transfer (Sunday Chai, Nov 3)', () => {
+  const chai: Workspace = { ...ws, participants: ['Kruthik', 'Aniket'].map(person) };
+  const done = (id: string, description: string, extra: Partial<Commitment> = {}): Commitment => ({
+    id, conversationId: 'g', ownerName: 'Aniket', description, status: 'completed', evidenceIds: [], confidence: 1, lastUpdatedAt: '', topicId: 't1', payee: 'Kruthik', amount: 150, currency: '₹', ...extra,
+  } as Commitment);
+  const promise = done('c1', 'Pay chai share to Kruthik');
+  const screenshot = done('c2', 'Paid Kruthik ₹150', { verification: { state: 'confirmed', reasons: [], decidedBy: 'Kruthik', decidedAt: '', basis: 'recipient_only', receipt: { amount: 150, currency: 'INR', payer: 'Aniket', payee: 'Kruthik', reference: '423156786855', date: null, status: 'Success', summary: '' } } as Commitment['verification'] });
+
+  it('"abhi bhejta hoon", a ₹150 screenshot and "mil gaya", then the bill goes up to ₹175 each: Aniket still owes ₹25', () => {
+    const p = buildPanel(chai, state([bill('Chai bill', 't1', 175, 'Kruthik')], [promise, screenshot]), []);
+    expect(p.owes).toEqual([{ from: 'Aniket', to: 'Kruthik', amount: 25, currency: '₹' }]);
+  });
+
+  it('at ₹150 each the same payment settles it, counted once', () => {
+    expect(buildPanel(chai, state([bill('Chai bill', 't1', 150, 'Kruthik')], [promise, screenshot]), []).owes).toEqual([]);
+  });
+
+  it('two real payments stay two: a second screenshot is not a promise', () => {
+    const second = done('c3', 'Paid Kruthik ₹150', { verification: { ...screenshot.verification!, receipt: { ...screenshot.verification!.receipt!, reference: '999999990001' } } });
+    expect(buildPanel(chai, state([bill('Chai bill', 't1', 400, 'Kruthik')], [screenshot, second]), []).owes).toEqual([{ from: 'Aniket', to: 'Kruthik', amount: 100, currency: '₹' }]);
+  });
+
+  it('a promise in another thread is a different payment', () => {
+    const elsewhere = { ...promise, id: 'c4', topicId: 't2' };
+    expect(buildPanel(chai, state([bill('Chai bill', 't1', 175, 'Kruthik'), bill('Rent', 't2', 150, 'Kruthik')], [elsewhere, screenshot]), []).owes).toEqual([{ from: 'Aniket', to: 'Kruthik', amount: 25, currency: '₹' }]);
+  });
+});

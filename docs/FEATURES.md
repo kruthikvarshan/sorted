@@ -26,7 +26,7 @@ Legend: **Meta** = which Meta capability does the reading or making. **Checked b
 | Payment screenshot | Send a GPay/PhonePe/UPI screenshot | **Muse Spark vision** reads amount, payer, payee, reference | Matched against what you owe that person; the same screenshot twice is caught; the receiver must confirm |
 | Chat screenshot | Send a screenshot of any chat | **Muse Spark vision** copies every message word for word | Added as messages marked "from a screenshot", then read like the rest |
 | Group Wrapped | Tap ✨ | **Muse Image** paints the background | Every number on the card counted in code |
-| Reading status | See how far Sorted has read and when it reads next; Read now | — | Reads after 15 new messages or a quiet minute; never re-reads |
+| Reading status | See how far Sorted has read and when it reads next; Read now | — | Reads after 15 new messages or 20 quiet seconds; never re-reads |
 
 ## 3. What Sorted works out (the panel)
 

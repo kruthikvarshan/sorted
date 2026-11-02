@@ -151,7 +151,7 @@ describe('group-specific behaviours', () => {
     const rent = state.decisions.find(d => /rent split/i.test(d.topic))!;
     expect(rent.currentValue).toContain('9,000');
     expect(rent.status).toBe('confirmed');
-    expect(rent.history.some(h => h.previousValue?.includes('12,000') && /Changed by agreement/.test(h.reason))).toBe(true);
+    expect(rent.history.some(h => h.previousValue?.includes('12,000') && /Changed by (agreement|Aman, who set it)/.test(h.reason))).toBe(true);
     expect(state.conflicts.filter(c => /rent/i.test(c.topic))).toHaveLength(0);
   });
 
