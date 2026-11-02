@@ -5,6 +5,9 @@ third phone/laptop on a stand filming both phones. Everything is real: real acco
 a real WhatsApp message. Phone numbers on screen get blurred in the edit, so don't worry about them.
 
 How to record: **phone screen recording** (Control Center → Screen Recording; long-press → mic on when you talk).
+**No stand?** Prop any spare phone against a bottle or books for CAM, or skip CAM entirely: both phones screen-record
+and I put them side by side in the edit (then in C5, A keeps his phone **unlocked on the home screen** so the WhatsApp
+banner shows in his recording). Faces are optional: 5–10 s of you two in total, or hands and phones only.
 Start recording 2 seconds before the first tap, stop 2 seconds after the last thing appears. If a take goes wrong, just
 do it again: retakes are cheap. Keep phones in **light mode**, **portrait**, brightness up, Focus mode = only WhatsApp.
 
