@@ -1,0 +1,73 @@
+import { Scenario, scenarioKit } from './types';
+
+const { id, rows } = scenarioKit('hf');
+
+/** Hindi in English letters. Money: split changes, claims, refunds, and a promise that is pushed back. */
+export const hinglishFlat: Scenario = {
+  id: 'hinglish_flat',
+  title: 'Flat 7B Rent & Bills (Hinglish)',
+  languages: ['Hindi (romanized)', 'English'],
+  blurb: 'Flatmates split rent. A new person moves in mid-month, one payment is claimed, one promise is moved to later.',
+  stresses: [
+    'romanized Hindi ("bhej dunga", "pakka")',
+    'a split that changes after being confirmed',
+    'payment claims and refunds',
+    'a promise that is updated ("ignore kal wala")',
+    'questions that must not become decisions',
+  ],
+  messages: rows([
+    ['Aman', 'guys is month ka rent 36000 hai, teen log 12000 each'],
+    ['Neha', 'done, main aaj hi bhej deti hoon'],
+    ['Rohit', 'bhai paise kal tak bhej dunga, abhi salary nahi aayi'],
+    ['Zoya', 'wait, hum 4 log hain na? main last week shift hui hoon'],
+    ['Aman', 'oh haan, 4 log hain. toh 9000 each'],
+    ['Neha', 'pehle 12000 bola tha, ab 9000? confirm karo'],
+    ['Aman', 'haan pakka, 9000 each'],
+    ['Neha', 'maine 12000 bhej diye the, 3000 wapas karna'],
+    ['Aman', 'ok Neha ko 3000 wapas kar dunga'],
+    ['Rohit', 'WiFi ka bill 1200 aaya, split karna hai?'],
+    ['Zoya', 'haan 300 each, main pay kar deti hoon, baad mein de dena'],
+    ['Aman', 'Rohit abhi tak paise nahi aaye tumhare'],
+    ['Rohit', 'kal pakka'],
+    ['Rohit', 'sorry bhai ignore kal wala, salary Friday ko aayegi, tab bhejunga'],
+    ['Zoya', 'WiFi pay kar diya'],
+    ['Neha', 'electricity bill kitna aaya? 2400?'],
+    ['Zoya', 'haan 2400, main meter reading check karungi'],
+  ]),
+  oracle: [
+    { kind: 'decision', topic: 'Rent split', value: '₹12,000 each (3 people)', status: 'confirmed',
+      evidence: [{ messageId: id(1), quote: 'ka rent 36000 hai, teen log 12000 each', translation: 'rent is 36000, three people ₹12000 each' }] },
+    { kind: 'decision', topic: 'Rent split', value: '₹9,000 each (4 people)', status: 'confirmed',
+      evidence: [{ messageId: id(5), quote: '4 log hain. toh 9000 each', translation: 'there are 4 of us, so 9000 each' },
+                 { messageId: id(7), quote: 'haan pakka, 9000 each', translation: 'yes definitely, 9000 each' }] },
+    { kind: 'decision', topic: 'WiFi bill split', value: '₹300 each', status: 'confirmed',
+      evidence: [{ messageId: id(10), quote: 'WiFi ka bill 1200 aaya' }, { messageId: id(11), quote: 'haan 300 each', translation: 'yes 300 each' }] },
+    { kind: 'commitment', ownerName: 'Neha', description: 'Send rent payment today', status: 'accepted',
+      evidence: [{ messageId: id(2), quote: 'main aaj hi bhej deti hoon', translation: 'I will send it today itself' }] },
+    { kind: 'commitment', ownerName: 'Neha', description: 'Sent ₹12,000 rent', status: 'completed', paymentClaim: true,
+      evidence: [{ messageId: id(8), quote: 'maine 12000 bhej diye the', translation: 'I had sent 12000' }] },
+    { kind: 'commitment', ownerName: 'Rohit', description: 'Pay rent', status: 'accepted', dueAt: 'Friday',
+      evidence: [{ messageId: id(3), quote: 'paise kal tak bhej dunga', translation: "I'll send the money by tomorrow" },
+                 { messageId: id(14), quote: 'salary Friday ko aayegi, tab bhejunga', translation: 'salary comes Friday, will send then' }] },
+    { kind: 'commitment', ownerName: 'Aman', description: 'Refund Neha ₹3,000', status: 'accepted',
+      evidence: [{ messageId: id(9), quote: 'Neha ko 3000 wapas kar dunga', translation: "I'll give Neha 3000 back" }] },
+    { kind: 'commitment', ownerName: 'Zoya', description: 'Pay the WiFi bill', status: 'completed', paymentClaim: true,
+      evidence: [{ messageId: id(11), quote: 'main pay kar deti hoon', translation: "I'll pay it" }, { messageId: id(15), quote: 'WiFi pay kar diya', translation: 'WiFi paid' }] },
+    { kind: 'commitment', ownerName: 'Zoya', description: 'Check the electricity meter reading', status: 'accepted',
+      evidence: [{ messageId: id(17), quote: 'main meter reading check karungi', translation: "I'll check the meter reading" }] },
+  ],
+  expect: [
+    // Aman set the 3-way split and changed it himself once Zoya's move was pointed out: an explicit change.
+    { id: 'hf-rent-changed', kind: 'decision', any: ['9,000', '9000'], status: ['confirmed', 'conflicted'], why: 'The split became 9,000 each after the fourth flatmate' },
+    { id: 'hf-wifi', kind: 'decision', any: ['wifi'], why: 'WiFi split 300 each (two people discuss it, so confirmed or proposed)' },
+    { id: 'hf-wifi-claim', kind: 'commitment', any: ['wifi'], status: ['needs_clarification'], why: 'Zoya says she paid, unverified' },
+    { id: 'hf-neha-claim', kind: 'commitment', any: ['neha'], status: ['needs_clarification'], why: 'Neha says she sent her rent, unverified (the model may drop the amount, so match by person)' },
+    { id: 'hf-refund', kind: 'commitment', any: ['refund', 'return', '3000', '3,000'], why: 'Aman will give Neha 3000 back' },
+    { id: 'hf-rohit', kind: 'commitment', any: ['rohit'], why: 'Rohit promised to pay on Friday' },
+    { id: 'hf-meter', kind: 'commitment', any: ['meter'], why: 'Zoya will check the meter' },
+  ],
+  forbid: [
+    { id: 'hf-rohit-not-paid', kind: 'commitment', any: ['rohit'], status: ['completed'], why: 'Rohit never paid' },
+    { id: 'hf-claims-unverified', kind: 'commitment', any: ['wifi', 'sent', 'send', 'pay', 'rent'], status: ['completed'], why: 'Payment claims must not be marked completed' },
+  ],
+};

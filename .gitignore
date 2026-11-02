@@ -21,7 +21,7 @@ private/
 *.tar.gz
 
 # WhatsApp bot database: real people's messages, never commit
-data/
+/data/
 
 # Local tool settings
 .claude/
