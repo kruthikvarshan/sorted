@@ -18,7 +18,12 @@ export function amountFromQuotes(quotes: string[]): number | undefined {
       .map(t => (/k$/i.test(t.trim()) ? parseFloat(t) * 1000 : parseFloat(t)))
       .filter(n => n >= 10);
     if (nums.length === 1) found.push(nums[0]);
-    else if (nums.length > 1 && /\+/.test(q)) found.push(nums.reduce((a, b) => a + b, 0));
+    else if (nums.length > 1 && /\+/.test(q)) {
+      // "19k bheja, 18k rent + 1k light": one figure is the others added up, so it is the total, counted once.
+      const top = Math.max(...nums);
+      const rest = nums.reduce((a, b) => a + b, 0) - top;
+      found.push(Math.abs(rest - top) < 1 ? top : rest + top);
+    }
   }
   return found.length ? Math.max(...found) : undefined;
 }

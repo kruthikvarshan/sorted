@@ -37,3 +37,13 @@ describe('flat numbers are not money', () => {
     expect(amountInText('Pay 1000 electricity share')).toBe(1000);
   });
 });
+
+describe('a transfer and its breakdown in one message (Flat 7B, July rent)', () => {
+  it('"19k bheja Kruthik ko 18k rent + 1k light wala" is 19,000, not 38,000', () => {
+    expect(amountFromQuotes(['19k bheja Kruthik ko 18k rent + 1k light wala'])).toBe(19000);
+  });
+  it('a sum with no total written still adds up', () => {
+    expect(amountFromQuotes(['18k rent + 1k light Kruthik ko'])).toBe(19000);
+    expect(amountFromQuotes(['18000 rent + 1000 light = 19000 bhej diya'])).toBe(19000);
+  });
+});
