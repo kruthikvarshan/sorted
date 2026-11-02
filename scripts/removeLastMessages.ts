@@ -12,6 +12,11 @@ const title = arg('group');
 const last = Number(arg('last') ?? 0);
 const really = process.argv.includes('--yes');
 if (!title || !(last > 0)) throw new Error('Usage: --group="<name>" --last=<n> [--yes]');
+// Meant for the live server: on any other computer it would change a local copy instead.
+if (!process.env.RENDER && !process.argv.includes('--local')) {
+  console.log('This is not the Render server, so nothing was changed. Run it in Render → sorted → Shell (add --local to use it here on purpose).');
+  process.exit(1);
+}
 
 const db = new DatabaseSync(process.env.GROUP_OS_DB ?? 'data/groupos.db');
 const rooms = (db.prepare('SELECT id, data FROM live_rooms').all() as { id: string; data: string }[])
