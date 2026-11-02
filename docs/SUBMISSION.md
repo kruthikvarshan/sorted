@@ -4,7 +4,7 @@ Copy each part into the matching field of the form. Shorter versions are given w
 
 **Name:** Sorted
 
-**Tagline (one line):** Your group chat, sorted: a member of the group, built on Meta AI, that keeps what's decided, who owes whom and what's next.
+**Tagline (one line):** Group chats that actually get things done. Sorted is a new member of your group, powered by Meta AI: it keeps what was decided, who owes whom and what happens next, in your own language.
 
 **Live app:** https://sorted-n8v4.onrender.com · **Code:** https://github.com/kruthikvarshan/sorted
 
@@ -15,7 +15,7 @@ Group chats are where friends, flatmates and families plan their lives, and wher
 A real flat group: 7,600 messages in four months. Rent, Wi-Fi, a Manali trip and a hall AC, all paid by different people, half-agreed, half-forgotten. Nobody can answer "who owes whom?" without scrolling for an hour. Splitwise only works if someone types every bill in; groups don't. The truth is already in the chat. It just isn't sorted.
 
 ## What it does
-- **Reads the group live**, topic by topic, in Hinglish, Telugu-English and English, and keeps what is decided, what is open and where people disagree, each with a link to the exact message.
+- **Reads the group live**, topic by topic, in whatever language the group chats in (Hindi, Telugu, English or a mix of all three), and keeps what is decided, what is open and where people disagree, each with a link to the exact message.
 - **Exact money**: bills, splits, revisions, loans, part-payments and repayments become balances, settled in the fewest payments. Every amount comes from a quote in the chat.
 - **Payment screenshots**: Muse Spark reads a UPI screenshot; code checks it against the bill; the receiver confirms; the same screenshot sent twice is caught by its reference.
 - **@Sorted** answers questions in the group ("Aniket ne mujhe kitna dena hai?") from the same numbers the Money tab shows.
