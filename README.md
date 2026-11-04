@@ -5,7 +5,7 @@
 Sorted is a new member of your group chat, powered by Meta AI. It reads along, in whatever language your group talks in (Hindi, Telugu, English, or all three in one sentence), and keeps what was decided, who owes whom, and what happens next. Every number it shows is worked out in code from a message you can tap to see.
 
 ### ▶ Try it live: **https://sorted-n8v4.onrender.com**
-### 🎬 3-minute demo: *(video link)*
+### 🎬 3-minute demo: [youtu.be/vI0NgU80QUQ](https://youtu.be/vI0NgU80QUQ)
 
 ---
 
