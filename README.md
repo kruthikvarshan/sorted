@@ -4,14 +4,14 @@
 
 Sorted is a new member of your group chat, powered by Meta AI. It reads along, in whatever language your group talks in (Hindi, Telugu, English, or all three in one sentence), and keeps what was decided, who owes whom, and what happens next. Every number it shows is worked out in code from a message you can tap to see.
 
-### ▶ Try it live: **https://sorted-n8v4.onrender.com**
+### ▶ The hosted demo has been retired after the hackathon. Watch the video below, or [run it yourself](#run-it-yourself).
 ### 🎬 3-minute demo: [youtu.be/vI0NgU80QUQ](https://youtu.be/vI0NgU80QUQ)
 
 ---
 
-## Try it in 2 minutes
+## Try it in 2 minutes (once it's running)
 
-1. **Open https://sorted-n8v4.onrender.com on your phone** (works on a laptop too).
+1. **[Run it yourself](#run-it-yourself)**, then open http://localhost:3000/live.
 2. Tap **First time here**. Enter your name, your mobile number **with country code** (e.g. `+1 415 555 0123`) and any 4-digit PIN you choose.
 3. You get **8 example groups, already read**, in English, Hindi-English and Telugu-English, 800 to 5,000 messages each. You appear in each one as a member.
 4. Things to try:
